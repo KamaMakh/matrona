@@ -1,0 +1,139 @@
+<template>
+  <div class="main-component-news">
+    <v-form ref="form" v-model="valid" lazy-validation>
+      <v-row>
+        <v-col cols="12" sm="6" md="5">
+          <v-text-field
+            v-model="article.short_name"
+            label="Кароткия заголовок для картинки"
+            placeholder="Введите кароткий заголовок"
+            :rules="rules"
+          ></v-text-field>
+          <v-text-field
+            v-model="article.name"
+            label="Заголовок"
+            placeholder="Введите заголовок"
+            :rules="rules"
+          ></v-text-field>
+          <v-text-field
+            v-model="article.position"
+            label="Позиция"
+            placeholder="Позиция"
+            type="number"
+            :rules="rules"
+          ></v-text-field>
+          <v-file-input
+            v-model="article.card_file"
+            label="Обложка для карточки"
+            filled
+            prepend-icon="mdi-camera"
+            show-size
+          ></v-file-input>
+          <v-divider color="#333"></v-divider>
+          <v-radio-group
+            class="mt-10 mb-8"
+            v-model="article.back_file"
+            :rules="rules"
+          >
+            <v-radio :value="1" class="mb-12">
+              <template v-slot:label>
+                <v-file-input
+                  v-model="article.show_file"
+                  label="Обложка для экрана просмотра"
+                  filled
+                  prepend-icon="mdi-camera"
+                  show-size
+                  hide-details
+                ></v-file-input>
+              </template>
+            </v-radio>
+            <v-radio :value="2">
+              <template v-slot:label>
+                <v-text-field
+                  v-model="article.video_link"
+                  label="Адрес видео-обложки"
+                  placeholder="Введите ссылку"
+                  hide-details
+                ></v-text-field>
+              </template>
+            </v-radio>
+          </v-radio-group>
+          <v-divider color="#333"></v-divider>
+          <v-radio-group class="mt-6" v-model="article.type" row :rules="rules">
+            <v-radio :value="1" label="Новость"></v-radio>
+            <v-radio :value="2" label="Статья"></v-radio>
+          </v-radio-group>
+          <v-divider color="#333"></v-divider>
+          <v-checkbox
+            v-model="article.mobile_notify"
+            class="mx-2"
+            label="Мобильное уведомление"
+          ></v-checkbox>
+          <v-divider color="#333"></v-divider>
+          <v-checkbox
+            v-model="article.publish"
+            class="mx-2"
+            label="Опубликовать"
+          ></v-checkbox>
+        </v-col>
+      </v-row>
+    </v-form>
+    <v-row>
+      <v-col cols="6" sm="12">
+        <v-btn
+          small
+          color="primary"
+          class="mr-md-4 mr-lg-4 mr-sm-0 mb-4"
+          @click="save"
+          :disabled="!valid"
+          :loading="loading"
+          >Сохранить</v-btn
+        >
+        <v-btn small color="error" class="mb-4" @click="remove">Удалить</v-btn>
+      </v-col>
+    </v-row>
+    <v-btn color="pink" dark fixed bottom right fab @click="create">
+      <v-icon>mdi-plus</v-icon>
+    </v-btn>
+  </div>
+</template>
+
+<script>
+export default {
+  name: "MainComponentNews",
+  data() {
+    return {
+      article: {},
+      valid: true,
+      rules: [v => !!v || "Required"],
+      loading: false
+    };
+  },
+  methods: {
+    save() {
+      if (!this.$refs.form.validate()) {
+        this.loading = false;
+        return;
+      }
+    },
+    remove() {
+      alert("Тут будет удаление");
+    },
+    create() {
+      this.$refs.form.resetValidation();
+      this.$refs.form.reset();
+      this.article = {};
+    }
+  }
+};
+</script>
+
+<style scoped lang="scss">
+.main-component-news {
+  width: 100%;
+  .v-radio {
+    .v-input {
+    }
+  }
+}
+</style>
