@@ -71,7 +71,7 @@
         </v-btn>
         <v-divider vertical></v-divider>
 
-        <v-btn text to="/">
+        <v-btn text :to="{ name: 'MainComponentUserSettings' }">
           Профиль пользователя
         </v-btn>
       </v-slide-group>

@@ -11,6 +11,7 @@ import MainComponentHeading from "@/components/MainComponent/components/MainComp
 import MainComponentFaq from "@/components/MainComponent/components/MainComponentFaq";
 import MainComponentShareMechs from "@/components/MainComponent/components/MainComponentShareMechs";
 import MainComponentSettings from "@/components/MainComponent/components/MainComponentSettings";
+import MainComponentUserSettings from "@/components/MainComponent/components/MainComponentUserSettings";
 
 Vue.use(VueRouter);
 
@@ -49,6 +50,11 @@ const routes = [
         path: "/settings",
         name: "MainComponentSettings",
         component: MainComponentSettings
+      },
+      {
+        path: "/user-settings",
+        name: "MainComponentUserSettings",
+        component: MainComponentUserSettings
       }
     ]
   },
