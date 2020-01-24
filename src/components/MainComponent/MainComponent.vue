@@ -1,22 +1,7 @@
 <template>
   <div class="main-component">
     <v-navigation-drawer v-model="drawer" app>
-      <v-list dense>
-        <v-list-item>
-          <v-list-item-content>
-            <v-list-item-title>
-              Статья 1
-            </v-list-item-title>
-          </v-list-item-content>
-        </v-list-item>
-        <v-list-item link>
-          <v-list-item-content>
-            <v-list-item-title>
-              Статья 2
-            </v-list-item-title>
-          </v-list-item-content>
-        </v-list-item>
-      </v-list>
+      <MainComponentLeftNav />
     </v-navigation-drawer>
 
     <v-app-bar app color="indigo" dark max-width="100%">
@@ -60,7 +45,7 @@
 
         <v-divider vertical></v-divider>
 
-        <v-btn text to="/">
+        <v-btn text :to="{ name: 'MainComponentPromo' }">
           Акции
         </v-btn>
 
@@ -89,8 +74,12 @@
 </template>
 
 <script>
+import MainComponentLeftNav from "./components/MainComponentLeftNav";
 export default {
   name: "MainComponent",
+  components: {
+    MainComponentLeftNav
+  },
   data() {
     return {
       drawer: null

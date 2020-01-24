@@ -12,6 +12,7 @@ import MainComponentFaq from "@/components/MainComponent/components/MainComponen
 import MainComponentShareMechs from "@/components/MainComponent/components/MainComponentShareMechs";
 import MainComponentSettings from "@/components/MainComponent/components/MainComponentSettings";
 import MainComponentUserSettings from "@/components/MainComponent/components/MainComponentUserSettings";
+import MainComponentPromo from "@/components/MainComponent/components/MainComponentPromo";
 
 Vue.use(VueRouter);
 
@@ -55,6 +56,11 @@ const routes = [
         path: "/user-settings",
         name: "MainComponentUserSettings",
         component: MainComponentUserSettings
+      },
+      {
+        path: "/promo",
+        name: "MainComponentPromo",
+        component: MainComponentPromo
       }
     ]
   },
