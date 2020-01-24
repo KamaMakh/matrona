@@ -33,7 +33,7 @@
 
         <v-divider vertical></v-divider>
 
-        <v-btn text to="/">
+        <v-btn text :to="{ name: 'MainComponentPosition' }">
           Позиции каталога
         </v-btn>
 

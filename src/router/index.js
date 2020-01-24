@@ -13,6 +13,7 @@ import MainComponentShareMechs from "@/components/MainComponent/components/MainC
 import MainComponentSettings from "@/components/MainComponent/components/MainComponentSettings";
 import MainComponentUserSettings from "@/components/MainComponent/components/MainComponentUserSettings";
 import MainComponentPromo from "@/components/MainComponent/components/MainComponentPromo";
+import MainComponentPosition from "@/components/MainComponent/components/MainComponentPosition";
 
 Vue.use(VueRouter);
 
@@ -61,6 +62,11 @@ const routes = [
         path: "/promo",
         name: "MainComponentPromo",
         component: MainComponentPromo
+      },
+      {
+        path: "/position",
+        name: "MainComponentPosition",
+        component: MainComponentPosition
       }
     ]
   },
