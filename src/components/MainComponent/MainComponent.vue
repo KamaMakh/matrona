@@ -42,7 +42,7 @@
 
         <v-divider vertical></v-divider>
 
-        <v-btn text to="/">
+        <v-btn text :to="{ name: 'MainComponentHeading' }">
           Рубрики каталога
         </v-btn>
 
