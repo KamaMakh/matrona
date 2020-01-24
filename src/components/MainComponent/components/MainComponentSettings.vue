@@ -55,9 +55,6 @@
         </v-col>
       </v-row>
     </v-form>
-    <v-btn color="pink" dark fixed bottom right fab @click="create">
-      <v-icon>mdi-plus</v-icon>
-    </v-btn>
   </div>
 </template>
 
