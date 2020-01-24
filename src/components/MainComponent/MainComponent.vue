@@ -36,7 +36,7 @@
 
         <v-divider vertical></v-divider>
 
-        <v-btn text to="/">
+        <v-btn text :to="{ name: 'MainComponentFaq' }">
           Вопросы и ответы
         </v-btn>
 

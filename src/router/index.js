@@ -8,6 +8,7 @@ import AuthComponentLogin from "@/components/AuthComponent/components/AuthCompon
 import MainComponentNews from "@/components/MainComponent/components/MainComponentNews";
 import MainComponentShop from "@/components/MainComponent/components/MainComponentShop";
 import MainComponentHeading from "@/components/MainComponent/components/MainComponentHeading";
+import MainComponentFaq from "@/components/MainComponent/components/MainComponentFaq";
 
 Vue.use(VueRouter);
 
@@ -31,6 +32,11 @@ const routes = [
         path: "/heading",
         name: "MainComponentHeading",
         component: MainComponentHeading
+      },
+      {
+        path: "/faq",
+        name: "MainComponentFaq",
+        component: MainComponentFaq
       }
     ]
   },
