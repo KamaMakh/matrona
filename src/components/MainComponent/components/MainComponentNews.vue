@@ -77,21 +77,24 @@
           ></v-checkbox>
         </v-col>
       </v-row>
+
+      <v-row>
+        <v-col cols="6" sm="12">
+          <v-btn
+            small
+            color="primary"
+            class="mr-md-4 mr-lg-4 mr-sm-0 mb-4"
+            @click="save"
+            :disabled="!valid"
+            :loading="loading"
+            >Сохранить</v-btn
+          >
+          <v-btn small color="error" class="mb-4" @click="remove"
+            >Удалить</v-btn
+          >
+        </v-col>
+      </v-row>
     </v-form>
-    <v-row>
-      <v-col cols="6" sm="12">
-        <v-btn
-          small
-          color="primary"
-          class="mr-md-4 mr-lg-4 mr-sm-0 mb-4"
-          @click="save"
-          :disabled="!valid"
-          :loading="loading"
-          >Сохранить</v-btn
-        >
-        <v-btn small color="error" class="mb-4" @click="remove">Удалить</v-btn>
-      </v-col>
-    </v-row>
     <v-btn color="pink" dark fixed bottom right fab @click="create">
       <v-icon>mdi-plus</v-icon>
     </v-btn>
@@ -131,9 +134,5 @@ export default {
 <style scoped lang="scss">
 .main-component-news {
   width: 100%;
-  .v-radio {
-    .v-input {
-    }
-  }
 }
 </style>
