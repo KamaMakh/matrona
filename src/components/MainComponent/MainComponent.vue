@@ -54,7 +54,7 @@
 
         <v-divider vertical></v-divider>
 
-        <v-btn text to="/">
+        <v-btn text :to="{ name: 'MainComponentShareMechs' }">
           Механики акций
         </v-btn>
 
