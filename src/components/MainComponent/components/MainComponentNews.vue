@@ -35,8 +35,11 @@
             v-model="article.back_file"
             :rules="rules"
           >
-            <v-radio :value="1" class="mb-12">
-              <template v-slot:label>
+            <v-row class="align-center mb-12">
+              <v-col cols="2">
+                <v-radio :value="1"></v-radio>
+              </v-col>
+              <v-col>
                 <v-file-input
                   v-model="article.show_file"
                   label="Обложка для экрана просмотра"
@@ -45,18 +48,21 @@
                   show-size
                   hide-details
                 ></v-file-input>
-              </template>
-            </v-radio>
-            <v-radio :value="2">
-              <template v-slot:label>
+              </v-col>
+            </v-row>
+            <v-row class="align-center">
+              <v-col cols="2">
+                <v-radio :value="2"></v-radio>
+              </v-col>
+              <v-col>
                 <v-text-field
                   v-model="article.video_link"
                   label="Адрес видео-обложки"
                   placeholder="Введите ссылку"
                   hide-details
                 ></v-text-field>
-              </template>
-            </v-radio>
+              </v-col>
+            </v-row>
           </v-radio-group>
           <v-divider color="#333"></v-divider>
           <v-radio-group class="mt-6" v-model="article.type" row :rules="rules">
