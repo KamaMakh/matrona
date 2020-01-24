@@ -10,6 +10,7 @@ import MainComponentShop from "@/components/MainComponent/components/MainCompone
 import MainComponentHeading from "@/components/MainComponent/components/MainComponentHeading";
 import MainComponentFaq from "@/components/MainComponent/components/MainComponentFaq";
 import MainComponentShareMechs from "@/components/MainComponent/components/MainComponentShareMechs";
+import MainComponentSettings from "@/components/MainComponent/components/MainComponentSettings";
 
 Vue.use(VueRouter);
 
@@ -43,6 +44,11 @@ const routes = [
         path: "/share-mechs",
         name: "MainComponentShareMechs",
         component: MainComponentShareMechs
+      },
+      {
+        path: "/settings",
+        name: "MainComponentSettings",
+        component: MainComponentSettings
       }
     ]
   },

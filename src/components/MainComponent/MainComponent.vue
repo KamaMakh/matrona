@@ -66,7 +66,7 @@
 
         <v-divider vertical></v-divider>
 
-        <v-btn text to="/">
+        <v-btn text :to="{ name: 'MainComponentSettings' }">
           Настройки
         </v-btn>
         <v-divider vertical></v-divider>
