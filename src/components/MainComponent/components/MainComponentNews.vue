@@ -2,7 +2,7 @@
   <div class="main-component-news">
     <v-form ref="form" v-model="valid" lazy-validation>
       <v-row>
-        <v-col cols="12" sm="6" md="5">
+        <v-col cols="12" sm="8" md="5">
           <v-text-field
             v-model="article.short_name"
             label="Кароткия заголовок для картинки"

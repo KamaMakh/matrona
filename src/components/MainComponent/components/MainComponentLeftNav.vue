@@ -23,7 +23,7 @@
       ></v-select>
     </div>
     <v-list dense>
-      <v-list-item link>
+      <v-list-item link class="elevation-3">
         <v-list-item-content>
           <v-list-item-title>
             Статья 1
