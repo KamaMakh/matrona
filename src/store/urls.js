@@ -1,0 +1,10 @@
+const serverUrl =
+  process.env.NODE_ENV === "development"
+    ? "//matrona.uniiq.ru"
+    : "//matrona.uniiq.ru";
+const loginUrl = `${serverUrl}/web-panel-login`;
+
+export {
+  serverUrl,
+  loginUrl
+};

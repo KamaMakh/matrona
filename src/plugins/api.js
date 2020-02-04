@@ -15,7 +15,6 @@ let axiosInstance = axios.create({
   },
 
   transformRequest: [(data, headers) => {
-    headers["Accept-Language"] = VueCookies.get("lang") || "en";
     if (VueCookies.get("token")) {
       headers["Authorization"] = "Bearer " + VueCookies.get("token")
     }
@@ -32,9 +31,8 @@ let axiosInstance = axios.create({
       router.push("/auth");
     } else if(
       VueCookies.get("token") &&
-      ( document.location.pathname.includes("auth") ||
-      document.location.pathname.includes("register") )) {
-      router.push("/furniture");
+      ( document.location.pathname.includes("auth") )) {
+      router.push("/main");
     } else {
       return true;
     }

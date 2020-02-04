@@ -38,6 +38,7 @@
 </template>
 
 <script>
+import { mapState } from "vuex";
 export default {
   name: "AuthComponentLogin",
   data() {
@@ -55,21 +56,35 @@ export default {
         return;
       }
       //пока бэк не готов
-      // this.$store
-      //   .dispatch("user/login", {
-      //     login: this.form.login,
-      //     password: this.form.password,
-      //   })
-      //   .then(() => {
-      //     this.$router.push({ name: "MainComponent" });
-      //   })
-      //   .catch(() => {
-      //     // console.log(error);
-      //   })
-      //   .finally(() => {
-      //     this.loading = false;
-      //   });
+      let formData = new FormData();
+      formData.append("email", this.form.login);
+      formData.append("password", this.form.password);
+      this.$store
+        .dispatch("user/login", formData)
+        .then(() => {
+          this.$router.push({ name: "MainComponent" });
+        })
+        /* eslint-disable */
+        .catch((error) => {
+          if(error.response && error.response.error && error.response.error.message) {
+            this.snackBar.value = true;
+            this.snackBar.text = error.response.error.message;
+            this.snackBar.color = "error";
+          } else {
+            this.snackBar.value = true;
+            this.snackBar.text = "Ошибка!";
+            this.snackBar.color = "error";
+          }
+        })
+        .finally(() => {
+          this.loading = false;
+        });
     }
+  },
+  computed: {
+    ...mapState({
+      snackBar: state => state.snackBar
+    })
   }
 };
 </script>
