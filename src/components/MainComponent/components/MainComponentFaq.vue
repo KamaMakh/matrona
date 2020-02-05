@@ -4,17 +4,19 @@
       <v-row>
         <v-col cols="12" sm="6" md="5">
           <v-textarea
+            v-model="faq.text_question"
             label="Вопрос"
             placeholder="Текст вопроса"
             :rules="rules"
           ></v-textarea>
           <v-textarea
+            v-model="faq.text_answer"
             label="Ответ"
             placeholder="Текст ответа"
             :rules="rules"
           ></v-textarea>
           <v-text-field
-            v-model="faq.name"
+            v-model="faq.position"
             label="Позиция"
             placeholder="Позиция"
             :rules="rules"

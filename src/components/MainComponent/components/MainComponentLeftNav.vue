@@ -35,6 +35,7 @@
 </template>
 
 <script>
+import "../assets/MainComponentLeftNav.css";
 export default {
   name: "MainComponentLeftNav",
   data() {
@@ -44,11 +45,3 @@ export default {
   }
 };
 </script>
-
-<style scoped lang="scss">
-.main-component-left-nav {
-  .params {
-    padding: 10px;
-  }
-}
-</style>
