@@ -29,6 +29,7 @@
 </template>
 
 <script>
+import "../assets/MainComponentTopNav.css";
 export default {
   name: "MainComponentTopNav",
   data() {
@@ -75,13 +76,3 @@ export default {
   }
 };
 </script>
-
-<style scoped lang="scss">
-.main-component-top-nav {
-  a {
-    text-transform: none;
-    font-size: 13px;
-    padding: 0 10px;
-  }
-}
-</style>
