@@ -122,6 +122,7 @@
 
 <script>
 import { mapState } from "vuex";
+import { serverUrl } from "@/store/urls";
 import "../assets/css/MainComponentNews.css";
 export default {
   name: "MainComponentNews",
@@ -129,7 +130,8 @@ export default {
     return {
       valid: true,
       rules: [v => !!v || "Required"],
-      loading: false
+      loading: false,
+      serverUrl: serverUrl
     };
   },
   methods: {
@@ -147,35 +149,74 @@ export default {
       }
       for (let key in this.article) {
         if (this.article.hasOwnProperty(key)) {
-          if (key === "articleStatus") {
-            if (this.article[key]) {
-              formData.append(`article[${key}]`, "1");
+          if (
+            [
+              "publishedDt",
+              "previewCoverUrl",
+              "coverUrl",
+              "createdDt",
+              "updatedDt",
+              "articleid",
+              "cover",
+              "previewCover"
+            ].indexOf(key) < 0
+          ) {
+            if (key === "articleStatus") {
+              if (this.article[key]) {
+                formData.append(`article[${key}]`, "1");
+              } else {
+                formData.append(`article[${key}]`, "0");
+              }
+            } else if (key === "createNotification") {
+              if (this.article[key]) {
+                formData.append(`article[${key}]`, "1");
+              } else {
+                formData.append(`article[${key}]`, "0");
+              }
             } else {
-              formData.append(`article[${key}]`, "0");
+              formData.append(`article[${key}]`, this.article[key]);
             }
-          } else if (key === "createNotification") {
-            if (this.article[key]) {
-              formData.append(`article[${key}]`, "1");
-            } else {
-              formData.append(`article[${key}]`, "0");
-            }
-          } else {
-            formData.append(`article[${key}]`, this.article[key]);
           }
         }
       }
 
       /* eslint-disable */
-      if (this.article.id) {
-        //ignore
+      if (this.article.articleid !== undefined) {
+        this.$store
+          .dispatch("news/updateNews", {
+            data: formData,
+            article: this.article
+          })
+          .then(response => {
+            console.log(response);
+          })
+          .catch(error => {
+            if(error.response && error.response.error && error.response.error.message) {
+              this.snackBar.value = true;
+              this.snackBar.text = error.response.error.message;
+              this.snackBar.color = "error";
+            } else {
+              this.snackBar.value = true;
+              this.snackBar.text = "Ошибка!";
+              this.snackBar.color = "error";
+            }
+          });
       } else {
         this.$store
           .dispatch("news/createNews", formData)
           .then(response => {
             console.log(response);
           })
-          .catch(e => {
-            console.error(e);
+          .catch(error => {
+            if(error.response && error.response.error && error.response.error.message) {
+              this.snackBar.value = true;
+              this.snackBar.text = error.response.error.message;
+              this.snackBar.color = "error";
+            } else {
+              this.snackBar.value = true;
+              this.snackBar.text = "Ошибка!";
+              this.snackBar.color = "error";
+            }
           });
       }
     },
