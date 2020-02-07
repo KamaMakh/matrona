@@ -3,6 +3,7 @@
     <v-slide-group
       v-if="windowWidth > 960"
       class="main-component-top-nav__v-slide-group"
+      show-arrows
     >
       <v-btn
         v-for="(item, key) in list"

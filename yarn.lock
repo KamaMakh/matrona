@@ -8025,11 +8025,6 @@ vue-window-size@^0.2.5:
   dependencies:
     vue "^2.5.22"
 
-vue-zoomer@^0.3.6:
-  version "0.3.6"
-  resolved "https://registry.yarnpkg.com/vue-zoomer/-/vue-zoomer-0.3.6.tgz#4203cd64dc7050fed3042ee193d3d71901e352f9"
-  integrity sha512-MzouVy32Lbwg6+5XzBy/BIRKxg3ulyi3TGpn3WaVFxLlomoxsDx81Q6i5JF+o7sP3dGRq+PJzjuymJcVCJoRDA==
-
 vue@^2.5.22, vue@^2.6.10:
   version "2.6.11"
   resolved "https://registry.yarnpkg.com/vue/-/vue-2.6.11.tgz#76594d877d4b12234406e84e35275c6d514125c5"

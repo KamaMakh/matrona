@@ -160,6 +160,7 @@ export default {
         this.loading = false;
         return;
       }
+      this.loading = true;
       let formData = new FormData();
       if (!this.article.hasOwnProperty("articleStatus")) {
         this.article["articleStatus"] = false;
@@ -224,6 +225,9 @@ export default {
               this.snackBar.text = "Ошибка!";
               this.snackBar.color = "error";
             }
+          })
+          .finally(() => {
+            this.loading = false;
           });
       } else {
         this.$store
@@ -245,6 +249,9 @@ export default {
               this.snackBar.text = "Ошибка!";
               this.snackBar.color = "error";
             }
+          })
+          .finally(() => {
+            this.loading = false;
           });
       }
     },

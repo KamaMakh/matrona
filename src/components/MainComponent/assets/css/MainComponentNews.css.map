@@ -1,6 +1,6 @@
 {
 "version": 3,
-"mappings": "AAAA,oBAAqB;EACnB,KAAK,EAAE,IAAI;EACX,yDAAqC;IACnC,OAAO,EAAE,EAAE",
+"mappings": "AAAA,oBAAqB;EACnB,KAAK,EAAE,IAAI;EACX,yDAAqC;IACnC,OAAO,EAAE,EAAE;EAEb,gCAAc;IACZ,SAAS,EAAE,IAAI;IACf,KAAK,EAAE,IAAI;IACX,MAAM,EAAE,IAAI",
 "sources": ["MainComponentNews.scss"],
 "names": [],
 "file": "MainComponentNews.css"
