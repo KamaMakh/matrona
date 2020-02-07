@@ -31,7 +31,7 @@
           <v-row class="align-center mb-5">
             <v-col v-if="article.articleid && this.article.cover" cols="2">
               <viewer
-                class="viewer"
+                class="main-component-news__viewer"
                 :images="[serverUrl + this.article.coverUrl]"
               >
                 <img :src="serverUrl + this.article.coverUrl" alt="" />

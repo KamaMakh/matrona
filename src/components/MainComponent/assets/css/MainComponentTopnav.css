@@ -4,39 +4,6 @@
   padding: 0 10px;
 }
 
-.main-component-top-nav__v-slide-group .v-slide-group__wrapper {
-  width: 1792px;
-  overflow: auto;
-  overflow-y: auto;
-}
-
-/* Customize website's scrollbar like Mac OS
-Not supports in Firefox and IE */
-/* total width */
-.main-component-top-nav__v-slide-group
-  .v-slide-group__wrapper::-webkit-scrollbar {
-  display: none;
-}
-/* background of the scrollbar except button or resizer */
-.main-component-top-nav__v-slide-group
-  .v-slide-group__wrapper::-webkit-scrollbar-track {
-  display: none;
-}
-/* scrollbar itself */
-.main-component-top-nav__v-slide-group
-  .v-slide-group__wrapper::-webkit-scrollbar-thumb {
-  display: none;
-}
-/* set button(top and bottom of the scrollbar) */
-.main-component-top-nav__v-slide-group
-  .v-slide-group__wrapper::-webkit-scrollbar-button {
-  display: none;
-}
-
-.main-component-top-nav__v-slide-group .v-slide-group__content {
-  width: 100%;
-}
-
 @media (max-width: 960px) {
   .main-component-top-nav {
     height: 100%;
