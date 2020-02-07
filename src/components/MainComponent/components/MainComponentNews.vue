@@ -4,13 +4,13 @@
       <v-row>
         <v-col cols="12" sm="8" md="5">
           <v-text-field
-            v-model="article.short_name"
-            label="Кароткия заголовок для картинки"
+            v-model="article.articletitleShort"
+            label="Кароткий заголовок для картинки"
             placeholder="Введите кароткий заголовок"
             :rules="rules"
           ></v-text-field>
           <v-text-field
-            v-model="article.name"
+            v-model="article.articletitle"
             label="Заголовок"
             placeholder="Введите заголовок"
             :rules="rules"
@@ -22,37 +22,45 @@
             type="number"
             :rules="rules"
           ></v-text-field>
+          <v-textarea
+            label="Содержимое"
+            placeholder="Введите текст"
+            v-model="article.articlecontent"
+            :rules="rules"
+          ></v-textarea>
           <v-file-input
-            v-model="article.card_file"
+            v-model="article.previewCoverFile"
             label="Обложка для карточки"
             filled
             prepend-icon="mdi-camera"
             show-size
+            accept=".png, .jpg, .jpeg, .gif"
           ></v-file-input>
           <v-divider color="#333"></v-divider>
           <v-radio-group
             class="mt-10 mb-8"
-            v-model="article.back_file"
+            v-model="article.articlecoverType"
             :rules="rules"
           >
             <v-row class="align-center mb-12">
               <v-col cols="2">
-                <v-radio :value="1"></v-radio>
+                <v-radio :value="'image'"></v-radio>
               </v-col>
               <v-col>
                 <v-file-input
-                  v-model="article.show_file"
+                  v-model="article.coverFile"
                   label="Обложка для экрана просмотра"
                   filled
                   prepend-icon="mdi-camera"
                   show-size
                   hide-details
+                  accept=".png, .jpg, .jpeg, .gif"
                 ></v-file-input>
               </v-col>
             </v-row>
             <v-row class="align-center">
               <v-col cols="2">
-                <v-radio :value="2"></v-radio>
+                <v-radio :value="'video'"></v-radio>
               </v-col>
               <v-col>
                 <v-text-field
@@ -65,21 +73,21 @@
             </v-row>
           </v-radio-group>
           <v-divider color="#333"></v-divider>
-          <v-radio-group class="mt-6" v-model="article.type" row :rules="rules">
-            <v-radio :value="1" label="Новость"></v-radio>
-            <v-radio :value="2" label="Статья"></v-radio>
+          <v-radio-group class="mt-6" v-model="article.articleType" row :rules="rules">
+            <v-radio :value="'1'" label="Новость"></v-radio>
+            <v-radio :value="'2'" label="Статья"></v-radio>
           </v-radio-group>
           <v-divider color="#333"></v-divider>
           <v-checkbox
-            v-model="article.mobile_notify"
+            v-model="article.createNotification"
             class="mx-2"
             label="Мобильное уведомление"
           ></v-checkbox>
           <v-divider color="#333"></v-divider>
           <v-checkbox
-            v-model="article.publish"
+            v-model="article.articleStatus"
             class="mx-2"
-            label="Опубликовать"
+            label="Публикация"
           ></v-checkbox>
         </v-col>
       </v-row>
@@ -108,6 +116,8 @@
 </template>
 
 <script>
+import { mapState } from "vuex";
+import "../assets/css/MainComponentNews.css";
 export default {
   name: "MainComponentNews",
   data() {
@@ -124,6 +134,42 @@ export default {
         this.loading = false;
         return;
       }
+      /* eslint-disable */
+      console.log(this.article);
+      let formData = new FormData();
+      for(let key in this.article) {
+        if(this.article.hasOwnProperty(key)) {
+          if(key === "articleStatus") {
+            if(this.article[key]) {
+              formData.append(`article[${key}]`, "1");
+            } else {
+              formData.append(`article[${key}]`, "0");
+            }
+          }
+          else if (key === "createNotification") {
+            if(this.article[key]) {
+              formData.append(`article[${key}]`, "1");
+            } else {
+              formData.append(`article[${key}]`, "0");
+            }
+          } else {
+            formData.append(`article[${key}]`, this.article[key]);
+          }
+        }
+      }
+
+      if (this.article.id) {
+
+      }
+      else {
+        this.$store.dispatch("news/createNews", formData)
+          .then(response => {
+            console.log(response);
+          })
+          .catch(e => {
+            console.error(e);
+          });
+      }
     },
     remove() {
       alert("Тут будет удаление");
@@ -133,12 +179,12 @@ export default {
       this.$refs.form.reset();
       this.article = {};
     }
+  },
+  computed: {
+    ...mapState({
+      news: state => state.news.news,
+      oneNews: state => state.news.oneNews
+    })
   }
 };
 </script>
-
-<style scoped lang="scss">
-.main-component-news {
-  width: 100%;
-}
-</style>

@@ -1,0 +1,7 @@
+{
+"version": 3,
+"mappings": "AAAA,oBAAqB;EACnB,KAAK,EAAE,IAAI;EACX,yDAAqC;IACnC,OAAO,EAAE,EAAE",
+"sources": ["MainComponentNews.scss"],
+"names": [],
+"file": "MainComponentNews.css"
+}

@@ -3,8 +3,10 @@ const serverUrl =
     ? "//matrona.uniiq.ru"
     : "//matrona.uniiq.ru";
 const loginUrl = `${serverUrl}/web-panel-login`;
+const createNewsUrl = `${serverUrl}/article/new`;
 
 export {
   serverUrl,
-  loginUrl
+  loginUrl,
+  createNewsUrl
 };
