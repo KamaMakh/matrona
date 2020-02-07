@@ -1,6 +1,9 @@
 <template>
   <div class="main-component-top-nav">
-    <v-slide-group v-if="windowWidth > 960">
+    <v-slide-group
+      v-if="windowWidth > 960"
+      class="main-component-top-nav__v-slide-group"
+    >
       <v-btn
         v-for="(item, key) in list"
         :key="key"

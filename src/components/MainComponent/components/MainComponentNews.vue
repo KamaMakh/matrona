@@ -211,7 +211,11 @@ export default {
             console.log(response);
           })
           .catch(error => {
-            if(error.response && error.response.error && error.response.error.message) {
+            if (
+              error.response &&
+              error.response.error &&
+              error.response.error.message
+            ) {
               this.snackBar.value = true;
               this.snackBar.text = error.response.error.message;
               this.snackBar.color = "error";
@@ -228,7 +232,11 @@ export default {
             console.log(response);
           })
           .catch(error => {
-            if(error.response && error.response.error && error.response.error.message) {
+            if (
+              error.response &&
+              error.response.error &&
+              error.response.error.message
+            ) {
               this.snackBar.value = true;
               this.snackBar.text = error.response.error.message;
               this.snackBar.color = "error";
@@ -260,11 +268,3 @@ export default {
   }
 };
 </script>
-
-<style scoped>
-.viewer img {
-  max-width: 100%;
-  width: 100%;
-  height: 100%;
-}
-</style>

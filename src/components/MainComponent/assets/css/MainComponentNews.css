@@ -1,6 +1,14 @@
 .main-component-news {
-  width: 100%; }
-  .main-component-news .v-input--selection-controls__ripple {
-    z-index: 10; }
+  width: 100%;
+}
+.main-component-news .v-input--selection-controls__ripple {
+  z-index: 10;
+}
+
+.viewer img {
+  max-width: 100%;
+  width: 100%;
+  height: 100%;
+}
 
 /*# sourceMappingURL=MainComponentNews.css.map */
