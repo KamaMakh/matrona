@@ -29,7 +29,7 @@
 </template>
 
 <script>
-import "../assets/MainComponentTopNav.css";
+import "../assets/css/MainComponentTopnav.css";
 export default {
   name: "MainComponentTopNav",
   data() {

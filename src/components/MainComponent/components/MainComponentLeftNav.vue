@@ -22,11 +22,17 @@
         outlined
       ></v-select>
     </div>
-    <v-list dense>
-      <v-list-item link class="elevation-3">
+    <v-list v-if="$route.name === 'MainComponentNews'" dense>
+      <v-list-item
+        v-for="(article, key) in this.articles"
+        :key="key"
+        link
+        class="elevation-3 mb-1"
+        @click="setArticle(article)"
+      >
         <v-list-item-content>
           <v-list-item-title>
-            Статья 1
+            {{ article.articletitleShort }}
           </v-list-item-title>
         </v-list-item-content>
       </v-list-item>
@@ -35,13 +41,24 @@
 </template>
 
 <script>
-import "../assets/MainComponentLeftNav.css";
+import { mapState } from "vuex";
+import "../assets/css/MainComponentLeftnav.css";
 export default {
   name: "MainComponentLeftNav",
   data() {
     return {
       items: ["item 1", "item 2"]
     };
+  },
+  methods: {
+    setArticle(article) {
+      this.$store.commit("news/setArticle", article);
+    }
+  },
+  computed: {
+    ...mapState({
+      articles: state => state.news.news
+    })
   }
 };
 </script>

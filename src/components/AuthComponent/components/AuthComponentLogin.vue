@@ -62,7 +62,7 @@ export default {
       this.$store
         .dispatch("user/login", formData)
         .then(() => {
-          this.$router.push({ name: "MainComponent" });
+          this.$router.push({ name: "MainComponentNews" });
         })
         /* eslint-disable */
         .catch((error) => {

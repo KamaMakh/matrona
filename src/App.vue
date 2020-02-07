@@ -1,18 +1,9 @@
 <template>
   <v-app id="app">
     <router-view></router-view>
-    <v-snackbar
-      v-model="snackBar.value"
-      :color="snackBar.color"
-      top
-      right
-    >
+    <v-snackbar v-model="snackBar.value" :color="snackBar.color" top right>
       {{ snackBar.text }}
-      <v-btn
-        color="#fff"
-        text
-        @click="snackBar.value = false"
-      >
+      <v-btn color="#fff" text @click="snackBar.value = false">
         {{ snackBar.button_text }}
       </v-btn>
     </v-snackbar>

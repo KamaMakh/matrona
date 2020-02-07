@@ -73,9 +73,14 @@
             </v-row>
           </v-radio-group>
           <v-divider color="#333"></v-divider>
-          <v-radio-group class="mt-6" v-model="article.articleType" row :rules="rules">
-            <v-radio :value="'1'" label="Новость"></v-radio>
-            <v-radio :value="'2'" label="Статья"></v-radio>
+          <v-radio-group
+            class="mt-6"
+            v-model="article.articleType"
+            row
+            :rules="rules"
+          >
+            <v-radio :value="1" label="Новость"></v-radio>
+            <v-radio :value="2" label="Статья"></v-radio>
           </v-radio-group>
           <v-divider color="#333"></v-divider>
           <v-checkbox
@@ -122,7 +127,6 @@ export default {
   name: "MainComponentNews",
   data() {
     return {
-      article: {},
       valid: true,
       rules: [v => !!v || "Required"],
       loading: false
@@ -134,20 +138,23 @@ export default {
         this.loading = false;
         return;
       }
-      /* eslint-disable */
-      console.log(this.article);
       let formData = new FormData();
-      for(let key in this.article) {
-        if(this.article.hasOwnProperty(key)) {
-          if(key === "articleStatus") {
-            if(this.article[key]) {
+      if (!this.article.hasOwnProperty("articleStatus")) {
+        this.article["articleStatus"] = false;
+      }
+      if (!this.article.hasOwnProperty("createNotification")) {
+        this.article["createNotification"] = false;
+      }
+      for (let key in this.article) {
+        if (this.article.hasOwnProperty(key)) {
+          if (key === "articleStatus") {
+            if (this.article[key]) {
               formData.append(`article[${key}]`, "1");
             } else {
               formData.append(`article[${key}]`, "0");
             }
-          }
-          else if (key === "createNotification") {
-            if(this.article[key]) {
+          } else if (key === "createNotification") {
+            if (this.article[key]) {
               formData.append(`article[${key}]`, "1");
             } else {
               formData.append(`article[${key}]`, "0");
@@ -158,11 +165,12 @@ export default {
         }
       }
 
+      /* eslint-disable */
       if (this.article.id) {
-
-      }
-      else {
-        this.$store.dispatch("news/createNews", formData)
+        //ignore
+      } else {
+        this.$store
+          .dispatch("news/createNews", formData)
           .then(response => {
             console.log(response);
           })
@@ -177,14 +185,17 @@ export default {
     create() {
       this.$refs.form.resetValidation();
       this.$refs.form.reset();
-      this.article = {};
+      this.$store.commit("news/clearArticle");
     }
   },
   computed: {
     ...mapState({
       news: state => state.news.news,
-      oneNews: state => state.news.oneNews
+      article: state => state.news.oneNews
     })
+  },
+  mounted() {
+    this.$store.dispatch("news/getAllNews");
   }
 };
 </script>

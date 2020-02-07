@@ -1,5 +1,5 @@
 import api from "@/plugins/api";
-import { createNewsUrl } from "@/store/urls";
+import { createNewsUrl, getArticlesUrl } from "@/store/urls";
 
 /* eslint-disable */
 function createNews({ commit }, data) {
@@ -10,6 +10,7 @@ function createNews({ commit }, data) {
           reject(response);
         }
         else {
+          commit("addArticle", response.data.result);
           resolve(response);
         }
       })
@@ -19,4 +20,27 @@ function createNews({ commit }, data) {
   });
 }
 
-export { createNews };
+function getAllNews({ commit }) {
+  return new Promise((resolve, reject) => {
+    api
+      .get(getArticlesUrl)
+      .then(response => {
+        if (response.status === 200) {
+          commit("setArticles", response.data);
+          resolve(response);
+        } else {
+          reject(response.data.message);
+        }
+      })
+      .catch(error => {
+        if (error.response && error.response.status === 200) {
+          commit("setSubscribes", error.response.data);
+          resolve();
+        } else {
+          reject();
+        }
+      });
+  });
+}
+
+export { createNews, getAllNews };
