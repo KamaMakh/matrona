@@ -28,14 +28,26 @@
             v-model="article.articlecontent"
             :rules="rules"
           ></v-textarea>
-          <v-file-input
-            v-model="article.previewCoverFile"
-            label="Обложка для карточки"
-            filled
-            prepend-icon="mdi-camera"
-            show-size
-            accept=".png, .jpg, .jpeg, .gif"
-          ></v-file-input>
+          <v-row class="align-center mb-5">
+            <v-col v-if="article.articleid && this.article.cover" cols="2">
+              <viewer
+                class="viewer"
+                :images="[serverUrl + this.article.coverUrl]"
+              >
+                <img :src="serverUrl + this.article.coverUrl" alt="" />
+              </viewer>
+            </v-col>
+            <v-col>
+              <v-file-input
+                v-model="article.previewCoverFile"
+                label="Обложка для карточки"
+                filled
+                prepend-icon="mdi-camera"
+                show-size
+                accept=".png, .jpg, .jpeg, .gif"
+              ></v-file-input>
+            </v-col>
+          </v-row>
           <v-divider color="#333"></v-divider>
           <v-radio-group
             class="mt-10 mb-8"
@@ -45,6 +57,14 @@
             <v-row class="align-center mb-12">
               <v-col cols="2">
                 <v-radio :value="'image'"></v-radio>
+              </v-col>
+              <v-col v-if="article.articleid && this.article.cover" cols="2">
+                <viewer
+                  class="viewer"
+                  :images="[serverUrl + this.article.coverUrl]"
+                >
+                  <img :src="serverUrl + this.article.coverUrl" alt="" />
+                </viewer>
               </v-col>
               <v-col>
                 <v-file-input
@@ -122,6 +142,7 @@
 
 <script>
 import { mapState } from "vuex";
+import { serverUrl } from "@/store/urls";
 import "../assets/css/MainComponentNews.css";
 export default {
   name: "MainComponentNews",
@@ -129,7 +150,8 @@ export default {
     return {
       valid: true,
       rules: [v => !!v || "Required"],
-      loading: false
+      loading: false,
+      serverUrl: serverUrl
     };
   },
   methods: {
@@ -199,3 +221,11 @@ export default {
   }
 };
 </script>
+
+<style scoped>
+.viewer img {
+  max-width: 100%;
+  width: 100%;
+  height: 100%;
+}
+</style>

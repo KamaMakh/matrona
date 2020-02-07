@@ -7,10 +7,14 @@ import VueCookies from "vue-cookies";
 // import api from "./plugins/api";
 import VueWindowSize from "vue-window-size";
 
+import "viewerjs/dist/viewer.css";
+import Viewer from "v-viewer";
+
 Vue.config.productionTip = false;
 
 Vue.use(VueCookies);
 Vue.use(VueWindowSize);
+Vue.use(Viewer);
 
 new Vue({
   router,
