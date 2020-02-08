@@ -4,19 +4,25 @@
       <v-row>
         <v-col cols="12" sm="6" md="5">
           <v-text-field
-            v-model="shop.name"
+            v-model="shop.storeName"
             label="Название торогового объекта"
             placeholder="Введите название торогового объекта"
             :rules="rules"
           ></v-text-field>
           <v-text-field
-            v-model="shop.address"
+            v-model="shop.storeCity"
+            label="Город"
+            placeholder="Введите горд"
+            :rules="rules"
+          ></v-text-field>
+          <v-text-field
+            v-model="shop.storeAddress"
             label="Адрес магазина"
             placeholder="Введите адрес магазина"
             :rules="rules"
           ></v-text-field>
           <v-text-field
-            v-model="shop.phone"
+            v-model="shop.storePhone"
             label="Телефон магазина"
             placeholder="Введите телефон магазина"
             :rules="rules"
@@ -44,6 +50,14 @@
           ></v-checkbox>
         </v-col>
       </v-row>
+
+      <GmapMap
+        :center="{ lat: 10, lng: 10 }"
+        :zoom="7"
+        map-type-id="terrain"
+        style="width: 500px; height: 300px"
+      >
+      </GmapMap>
 
       <v-row>
         <v-col cols="6" sm="12">
