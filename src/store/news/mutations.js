@@ -15,6 +15,16 @@ function updateArticle(state, data) {
   if (state.news.indexOf(data.article) > -1) {
     state.news[state.news.indexOf(data.article)] = data.response;
   }
+  /* eslint-disable */
+  // if (state.news.length) {
+  //   state.news.forEach((item, key) => {
+  //     if (item.articleid === data.article.articleid) {
+  //       state.news[key] = data.response;
+  //       console.log(data.response);
+  //       console.log(state.news);
+  //     }
+  //   });
+  // }
 }
 
 function deleteArticle(state, data) {
