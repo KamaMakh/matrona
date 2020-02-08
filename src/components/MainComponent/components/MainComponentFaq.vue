@@ -1,16 +1,21 @@
 <template>
   <div class="main-component-faq">
-    <v-form ref="form" v-model="valid" lazy-validation>
+    <v-form
+      ref="form"
+      v-show="this.faq.faqid && !isNew"
+      v-model="valid"
+      lazy-validation
+    >
       <v-row>
         <v-col cols="12" sm="6" md="5">
           <v-textarea
-            v-model="faq.text_question"
+            v-model="faq.question"
             label="Вопрос"
             placeholder="Текст вопроса"
             :rules="rules"
           ></v-textarea>
           <v-textarea
-            v-model="faq.text_answer"
+            v-model="faq.answer"
             label="Ответ"
             placeholder="Текст ответа"
             :rules="rules"
@@ -22,7 +27,7 @@
             :rules="rules"
           ></v-text-field>
           <v-checkbox
-            v-model="faq.publish"
+            v-model="faq.faqStatus"
             class="mx-2"
             label="Опубликовать"
           ></v-checkbox>
@@ -45,6 +50,49 @@
         </v-col>
       </v-row>
     </v-form>
+    <v-form ref="form" v-if="isNew" v-model="valid" lazy-validation>
+      <v-row>
+        <v-col cols="12" sm="6" md="5">
+          <v-textarea
+            v-model="faqNew.question"
+            label="Вопрос"
+            placeholder="Текст вопроса"
+            :rules="rules"
+          ></v-textarea>
+          <v-textarea
+            v-model="faqNew.answer"
+            label="Ответ"
+            placeholder="Текст ответа"
+            :rules="rules"
+          ></v-textarea>
+          <v-text-field
+            v-model="faqNew.position"
+            label="Позиция"
+            placeholder="Позиция"
+            :rules="rules"
+          ></v-text-field>
+          <v-checkbox
+            v-model="faqNew.faqStatus"
+            class="mx-2"
+            label="Опубликовать"
+          ></v-checkbox>
+        </v-col>
+      </v-row>
+
+      <v-row>
+        <v-col cols="6" sm="12">
+          <v-btn
+            small
+            color="primary"
+            class="mr-md-4 mr-lg-4 mr-sm-0 mb-4"
+            @click="save"
+            :disabled="!valid"
+            :loading="loading"
+            >Добавить</v-btn
+          >
+        </v-col>
+      </v-row>
+    </v-form>
     <v-btn color="pink" dark fixed bottom right fab @click="create">
       <v-icon>mdi-plus</v-icon>
     </v-btn>
@@ -52,14 +100,19 @@
 </template>
 
 <script>
+import { mapState } from "vuex";
+import { serverUrl } from "@/store/urls";
+import "../assets/css/MainComponentFaq.css";
 export default {
   name: "MainComponentFaq",
   data() {
     return {
-      faq: {},
       valid: true,
       rules: [v => !!v || "Required"],
-      loading: false
+      loading: false,
+      serverUrl: serverUrl,
+      isNew: false,
+      faqNew: {}
     };
   },
   methods: {
@@ -68,21 +121,157 @@ export default {
         this.loading = false;
         return;
       }
+      this.loading = true;
+      let formData = new FormData(),
+        faqObj = !this.isNew ? this.faq : this.faqNew;
+      if (!faqObj.hasOwnProperty("faqStatus")) {
+        faqObj["faqStatus"] = false;
+      }
+      if (!faqObj.hasOwnProperty("createNotification")) {
+        faqObj["createNotification"] = false;
+      }
+      for (let key in faqObj) {
+        if (faqObj.hasOwnProperty(key)) {
+          if (
+            [
+              "publishedDt",
+              "previewCoverUrl",
+              "coverUrl",
+              "createdDt",
+              "updatedDt",
+              "faqid",
+              "cover",
+              "previewCover",
+              "video_link"
+            ].indexOf(key) < 0
+          ) {
+            if (key === "faqStatus") {
+              if (faqObj[key]) {
+                formData.append(`faq[${key}]`, "1");
+              } else {
+                formData.append(`faq[${key}]`, "0");
+              }
+            } else if (key === "createNotification") {
+              if (faqObj[key]) {
+                formData.append(`faq[${key}]`, "1");
+              } else {
+                formData.append(`faq[${key}]`, "0");
+              }
+            } else {
+              formData.append(`faq[${key}]`, faqObj[key]);
+            }
+          }
+        }
+      }
+      if (faqObj.faqid !== undefined) {
+        this.$store
+          .dispatch("faqs/updateFaqs", {
+            data: formData,
+            faq: faqObj
+          })
+          .then(() => {
+            this.snackBar.value = true;
+            this.snackBar.text = "Вопрос и ответ обновлены";
+            this.snackBar.color = "success";
+          })
+          .catch(error => {
+            if (
+              error.response &&
+              error.response.error &&
+              error.response.error.message
+            ) {
+              this.snackBar.value = true;
+              this.snackBar.text = error.response.error.message;
+              this.snackBar.color = "error";
+            } else {
+              this.snackBar.value = true;
+              this.snackBar.text = "Ошибка!";
+              this.snackBar.color = "error";
+            }
+          })
+          .finally(() => {
+            this.loading = false;
+          });
+      } else {
+        this.$store
+          .dispatch("faqs/createFaqs", formData)
+          .then(() => {
+            this.snackBar.value = true;
+            this.snackBar.text = "Создано успешно";
+            this.snackBar.color = "success";
+          })
+          .catch(error => {
+            if (
+              error.response &&
+              error.response.error &&
+              error.response.error.message
+            ) {
+              this.snackBar.value = true;
+              this.snackBar.text = error.response.error.message;
+              this.snackBar.color = "error";
+            } else {
+              this.snackBar.value = true;
+              this.snackBar.text = "Ошибка!";
+              this.snackBar.color = "error";
+            }
+          })
+          .finally(() => {
+            this.loading = false;
+          });
+      }
     },
     remove() {
-      alert("Тут будет удаление");
-    },
-    create() {
       this.$refs.form.resetValidation();
       this.$refs.form.reset();
-      this.faq = {};
+      this.loading = true;
+      this.$store
+        .dispatch("faqs/deleteFaqs", this.faq)
+        .then(() => {
+          this.snackBar.value = true;
+          this.snackBar.text = "Вопрос и ответ удалены";
+          this.snackBar.color = "success";
+        })
+        .catch(error => {
+          if (
+            error.response &&
+            error.response.error &&
+            error.response.error.message
+          ) {
+            this.snackBar.value = true;
+            this.snackBar.text = error.response.error.message;
+            this.snackBar.color = "error";
+          } else {
+            this.snackBar.value = true;
+            this.snackBar.text = "Ошибка!";
+            this.snackBar.color = "error";
+          }
+        })
+        .finally(() => {
+          this.loading = false;
+        });
+    },
+    create() {
+      this.isNew = true;
+      if (this.$refs.form) {
+        this.$refs.form.resetValidation();
+      }
+    }
+  },
+  computed: {
+    ...mapState({
+      faqs: state => state.faqs.faqs,
+      faq: state => state.faqs.oneFaqs,
+      snackBar: state => state.snackBar
+    })
+  },
+  mounted() {
+    this.$store.dispatch("faqs/getAllFaqs");
+  },
+  watch: {
+    faq() {
+      this.isNew = false;
+      this.faqNew = {};
     }
   }
 };
 </script>
-
-<style scoped lang="scss">
-.main-component-faq {
-  width: 100%;
-}
-</style>

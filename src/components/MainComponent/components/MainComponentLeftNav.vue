@@ -37,6 +37,21 @@
         </v-list-item-content>
       </v-list-item>
     </v-list>
+    <v-list v-if="$route.name === 'MainComponentFaq'" dense>
+      <v-list-item
+        v-for="(faq, key) in this.faqs"
+        :key="key"
+        link
+        class="elevation-3 mb-1"
+        @click="setFaq(faq)"
+      >
+        <v-list-item-content>
+          <v-list-item-title>
+            {{ faq.question }}
+          </v-list-item-title>
+        </v-list-item-content>
+      </v-list-item>
+    </v-list>
   </div>
 </template>
 
@@ -53,11 +68,15 @@ export default {
   methods: {
     setArticle(article) {
       this.$store.commit("news/setArticle", article);
+    },
+    setFaq(faq) {
+      this.$store.commit("faqs/setFaq", faq);
     }
   },
   computed: {
     ...mapState({
-      articles: state => state.news.news
+      articles: state => state.news.news,
+      faqs: state => state.faqs.faqs
     })
   }
 };

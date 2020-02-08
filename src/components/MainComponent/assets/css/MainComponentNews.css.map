@@ -1,7 +1,9 @@
 {
-"version": 3,
-"mappings": "AAAA,oBAAqB;EACnB,KAAK,EAAE,IAAI;EACX,yDAAqC;IACnC,OAAO,EAAE,EAAE;EAEb,gCAAc;IACZ,SAAS,EAAE,IAAI;IACf,KAAK,EAAE,IAAI;IACX,MAAM,EAAE,IAAI",
-"sources": ["MainComponentNews.scss"],
-"names": [],
-"file": "MainComponentNews.css"
+    "version": 3,
+    "mappings": "AAAA,AAAA,oBAAoB,CAAC;EACnB,KAAK,EAAE,IAAI;CASZ;;AAVD,AAEE,oBAFkB,CAElB,oCAAoC,CAAC;EACnC,OAAO,EAAE,EAAE;CACZ;;AACA,AAAD,4BAAS,CAAC,GAAG,CAAC;EACZ,SAAS,EAAE,IAAI;EACf,KAAK,EAAE,IAAI;EACX,MAAM,EAAE,IAAI;CACb",
+    "sources": [
+        "MainComponentNews.scss"
+    ],
+    "names": [],
+    "file": "MainComponentNews.css"
 }

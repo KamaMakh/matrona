@@ -7,6 +7,10 @@ const createNewsUrl = `${serverUrl}/article/new`;
 const getArticlesUrl = `${serverUrl}/article/full-list`;
 const editArticlesUrl = `${serverUrl}/article/`;
 const deleteArticlesUrl = `${serverUrl}/article/`;
+const createFaqsUrl = `${serverUrl}/faq/new`;
+const getFaqsUrl = `${serverUrl}/faq/full-list`;
+const editFaqsUrl = `${serverUrl}/faq/`;
+const deleteFaqsUrl = `${serverUrl}/faq/`;
 
 export {
   serverUrl,
@@ -14,5 +18,9 @@ export {
   createNewsUrl,
   getArticlesUrl,
   editArticlesUrl,
-  deleteArticlesUrl
+  deleteArticlesUrl,
+  createFaqsUrl,
+  getFaqsUrl,
+  editFaqsUrl,
+  deleteFaqsUrl
 };
