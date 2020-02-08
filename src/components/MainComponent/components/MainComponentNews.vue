@@ -256,7 +256,10 @@ export default {
       }
     },
     remove() {
-      alert("Тут будет удаление");
+      this.$refs.form.resetValidation();
+      this.$refs.form.reset();
+      this.$store
+        .dispatch("news/deleteNews", this.article)
     },
     create() {
       this.$refs.form.resetValidation();

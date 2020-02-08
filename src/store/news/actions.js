@@ -1,5 +1,10 @@
 import api from "@/plugins/api";
-import { createNewsUrl, getArticlesUrl, editArticlesUrl } from "@/store/urls";
+import {
+  createNewsUrl,
+  getArticlesUrl,
+  editArticlesUrl,
+  deleteArticlesUrl
+} from "@/store/urls";
 
 /* eslint-disable */
 function createNews({ commit }, data) {
@@ -54,14 +59,31 @@ function getAllNews({ commit }) {
         }
       })
       .catch(error => {
-        if (error.response && error.response.status === 200) {
-          commit("setSubscribes", error.response.data);
-          resolve();
-        } else {
-          reject();
-        }
+        reject(error);
       });
   });
 }
 
-export { createNews, getAllNews, updateNews };
+function deleteNews({ commit }, data) {
+  return new Promise((resolve, reject) => {
+    api
+      .delete(`${deleteArticlesUrl}${data.articleid}`)
+      .then(response => {
+        if (response.data.error && response.data.error.code) {
+          reject(response);
+        }
+        else {
+          commit("deleteArticle", {
+            response: response.data.result,
+            article: data
+          });
+          resolve(response);
+        }
+      })
+      .catch(error => {
+        reject(error);
+      });
+  });
+}
+
+export { createNews, getAllNews, updateNews, deleteNews };

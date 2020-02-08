@@ -17,6 +17,13 @@ function updateArticle(state, data) {
   }
 }
 
+function deleteArticle(state, data) {
+  if (state.news.indexOf(data.article) !== -1) {
+    state.news.splice(state.news.indexOf(data.article), 1);
+    state.oneNews = {};
+  }
+}
+
 function setArticle(state, article) {
   if (!article) {
     article = {};
@@ -34,5 +41,6 @@ export {
   clearArticle,
   setArticle,
   addArticle,
-  updateArticle
+  updateArticle,
+  deleteArticle
 };
