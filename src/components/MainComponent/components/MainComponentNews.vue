@@ -137,7 +137,7 @@
             small
             color="error"
             class="mb-4"
-            @click="remove"
+            @click="deleteDialog = true"
             :loading="loading"
             >Удалить</v-btn
           >
@@ -284,6 +284,26 @@
     <v-btn color="pink" dark fixed bottom right fab @click="create">
       <v-icon>mdi-plus</v-icon>
     </v-btn>
+
+    <!--modals-->
+    <v-dialog v-model="deleteDialog" max-width="290">
+      <v-card>
+        <v-card-title class="headline"
+          >Удалить статью {{ article.articletitleShort }}?</v-card-title
+        >
+        <v-card-actions>
+          <v-spacer></v-spacer>
+
+          <v-btn color="green darken-1" text @click="deleteDialog = false">
+            Отмена
+          </v-btn>
+
+          <v-btn color="green darken-1" text @click="remove()">
+            Да
+          </v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
   </div>
 </template>
 
@@ -300,7 +320,8 @@ export default {
       loading: false,
       serverUrl: serverUrl,
       isNew: false,
-      articleNew: {}
+      articleNew: {},
+      deleteDialog: false
     };
   },
   methods: {
@@ -415,6 +436,7 @@ export default {
       this.$store
         .dispatch("news/deleteNews", this.article)
         .then(() => {
+          this.deleteDialog = false;
           this.snackBar.value = true;
           this.snackBar.text = "Новость удалена";
           this.snackBar.color = "success";

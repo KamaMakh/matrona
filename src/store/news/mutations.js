@@ -1,7 +1,3 @@
-function setUser(state, user) {
-  state.user = user;
-}
-
 function setArticles(state, articles) {
   state.news = articles.result;
 }
@@ -15,16 +11,6 @@ function updateArticle(state, data) {
   if (state.news.indexOf(data.article) > -1) {
     state.news[state.news.indexOf(data.article)] = data.response;
   }
-  /* eslint-disable */
-  // if (state.news.length) {
-  //   state.news.forEach((item, key) => {
-  //     if (item.articleid === data.article.articleid) {
-  //       state.news[key] = data.response;
-  //       console.log(data.response);
-  //       console.log(state.news);
-  //     }
-  //   });
-  // }
 }
 
 function deleteArticle(state, data) {
@@ -41,16 +27,4 @@ function setArticle(state, article) {
   state.oneNews = article;
 }
 
-function clearArticle(state) {
-  state.oneNews = {};
-}
-
-export {
-  setUser,
-  setArticles,
-  clearArticle,
-  setArticle,
-  addArticle,
-  updateArticle,
-  deleteArticle
-};
+export { setArticles, setArticle, addArticle, updateArticle, deleteArticle };
