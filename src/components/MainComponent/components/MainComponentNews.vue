@@ -1,6 +1,11 @@
 <template>
   <div class="main-component-news">
-    <v-form ref="form" v-model="valid" lazy-validation>
+    <v-form
+      ref="form"
+      v-show="this.article.articleid && !isNew"
+      v-model="valid"
+      lazy-validation
+    >
       <v-row>
         <v-col cols="12" sm="12" md="5" xs="12">
           <v-text-field
@@ -128,8 +133,150 @@
             :loading="loading"
             >Сохранить</v-btn
           >
-          <v-btn small color="error" class="mb-4" @click="remove"
+          <v-btn
+            small
+            color="error"
+            class="mb-4"
+            @click="deleteDialog = true"
+            :loading="loading"
             >Удалить</v-btn
+          >
+        </v-col>
+      </v-row>
+    </v-form>
+    <v-form ref="form" v-if="isNew" v-model="valid" lazy-validation>
+      <v-row>
+        <v-col cols="12" sm="8" md="5">
+          <v-text-field
+            v-model="articleNew.articletitleShort"
+            label="Кароткий заголовок для картинки"
+            placeholder="Введите кароткий заголовок"
+            :rules="rules"
+          ></v-text-field>
+          <v-text-field
+            v-model="articleNew.articletitle"
+            label="Заголовок"
+            placeholder="Введите заголовок"
+            :rules="rules"
+          ></v-text-field>
+          <v-text-field
+            v-model="articleNew.position"
+            label="Позиция"
+            placeholder="Позиция"
+            type="number"
+            :rules="rules"
+          ></v-text-field>
+          <v-textarea
+            label="Содержимое"
+            placeholder="Введите текст"
+            v-model="articleNew.articlecontent"
+            :rules="rules"
+          ></v-textarea>
+          <v-row class="align-center mb-5">
+            <v-col
+              v-if="articleNew.articleid && this.articleNew.cover"
+              cols="2"
+            >
+              <viewer
+                class="main-component-news__viewer"
+                :images="[serverUrl + this.articleNew.coverUrl]"
+              >
+                <img :src="serverUrl + this.articleNew.coverUrl" alt="" />
+              </viewer>
+            </v-col>
+            <v-col>
+              <v-file-input
+                v-model="articleNew.previewCoverFile"
+                label="Обложка для карточки"
+                filled
+                prepend-icon="mdi-camera"
+                show-size
+                accept=".png, .jpg, .jpeg, .gif"
+              ></v-file-input>
+            </v-col>
+          </v-row>
+          <v-divider color="#333"></v-divider>
+          <v-radio-group
+            class="mt-10 mb-8"
+            v-model="articleNew.articlecoverType"
+            :rules="rules"
+          >
+            <v-row class="align-center mb-12">
+              <v-col cols="2">
+                <v-radio :value="'image'"></v-radio>
+              </v-col>
+              <v-col
+                v-if="articleNew.articleid && this.articleNew.cover"
+                cols="2"
+              >
+                <viewer
+                  class="viewer"
+                  :images="[serverUrl + this.articleNew.coverUrl]"
+                >
+                  <img :src="serverUrl + this.articleNew.coverUrl" alt="" />
+                </viewer>
+              </v-col>
+              <v-col>
+                <v-file-input
+                  v-model="articleNew.coverFile"
+                  label="Обложка для экрана просмотра"
+                  filled
+                  prepend-icon="mdi-camera"
+                  show-size
+                  hide-details
+                  accept=".png, .jpg, .jpeg, .gif"
+                ></v-file-input>
+              </v-col>
+            </v-row>
+            <v-row class="align-center">
+              <v-col cols="2">
+                <v-radio :value="'video'"></v-radio>
+              </v-col>
+              <v-col>
+                <v-text-field
+                  v-model="articleNew.video_link"
+                  label="Адрес видео-обложки"
+                  placeholder="Введите ссылку"
+                  hide-details
+                ></v-text-field>
+              </v-col>
+            </v-row>
+          </v-radio-group>
+          <v-divider color="#333"></v-divider>
+          <v-radio-group
+            class="mt-6"
+            v-model="articleNew.articleType"
+            row
+            :rules="rules"
+          >
+            <v-radio :value="1" label="Новость"></v-radio>
+            <v-radio :value="2" label="Статья"></v-radio>
+          </v-radio-group>
+          <v-divider color="#333"></v-divider>
+          <v-checkbox
+            v-model="articleNew.createNotification"
+            class="mx-2"
+            label="Мобильное уведомление"
+          ></v-checkbox>
+          <v-divider color="#333"></v-divider>
+          <v-checkbox
+            v-model="articleNew.articleStatus"
+            class="mx-2"
+            label="Публикация"
+          ></v-checkbox>
+        </v-col>
+      </v-row>
+
+      <v-row>
+        <v-col cols="6" sm="12">
+          <v-btn
+            small
+            color="primary"
+            class="mr-md-4 mr-lg-4 mr-sm-0 mb-4"
+            @click="save"
+            :disabled="!valid"
+            :loading="loading"
+            >Добавить</v-btn
           >
         </v-col>
       </v-row>
@@ -137,6 +284,26 @@
     <v-btn color="pink" dark fixed bottom right fab @click="create">
       <v-icon>mdi-plus</v-icon>
     </v-btn>
+
+    <!--modals-->
+    <v-dialog v-model="deleteDialog" max-width="290">
+      <v-card>
+        <v-card-title class="headline"
+          >Удалить статью {{ article.articletitleShort }}?</v-card-title
+        >
+        <v-card-actions>
+          <v-spacer></v-spacer>
+
+          <v-btn color="green darken-1" text @click="deleteDialog = false">
+            Отмена
+          </v-btn>
+
+          <v-btn color="green darken-1" text @click="remove()">
+            Да
+          </v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
   </div>
 </template>
 
@@ -151,7 +318,10 @@ export default {
       valid: true,
       rules: [v => !!v || "Required"],
       loading: false,
-      serverUrl: serverUrl
+      serverUrl: serverUrl,
+      isNew: false,
+      articleNew: {},
+      deleteDialog: false
     };
   },
   methods: {
@@ -161,15 +331,16 @@ export default {
         return;
       }
       this.loading = true;
-      let formData = new FormData();
-      if (!this.article.hasOwnProperty("articleStatus")) {
-        this.article["articleStatus"] = false;
+      let formData = new FormData(),
+        articleObj = !this.isNew ? this.article : this.articleNew;
+      if (!articleObj.hasOwnProperty("articleStatus")) {
+        articleObj["articleStatus"] = false;
       }
-      if (!this.article.hasOwnProperty("createNotification")) {
-        this.article["createNotification"] = false;
+      if (!articleObj.hasOwnProperty("createNotification")) {
+        articleObj["createNotification"] = false;
       }
-      for (let key in this.article) {
-        if (this.article.hasOwnProperty(key)) {
+      for (let key in articleObj) {
+        if (articleObj.hasOwnProperty(key)) {
           if (
             [
               "publishedDt",
@@ -179,37 +350,38 @@ export default {
               "updatedDt",
               "articleid",
               "cover",
-              "previewCover"
+              "previewCover",
+              "video_link"
             ].indexOf(key) < 0
           ) {
             if (key === "articleStatus") {
-              if (this.article[key]) {
+              if (articleObj[key]) {
                 formData.append(`article[${key}]`, "1");
               } else {
                 formData.append(`article[${key}]`, "0");
               }
             } else if (key === "createNotification") {
-              if (this.article[key]) {
+              if (articleObj[key]) {
                 formData.append(`article[${key}]`, "1");
               } else {
                 formData.append(`article[${key}]`, "0");
               }
             } else {
-              formData.append(`article[${key}]`, this.article[key]);
+              formData.append(`article[${key}]`, articleObj[key]);
             }
           }
         }
       }
-
-      /* eslint-disable */
-      if (this.article.articleid !== undefined) {
+      if (articleObj.articleid !== undefined) {
         this.$store
           .dispatch("news/updateNews", {
             data: formData,
-            article: this.article
+            article: articleObj
           })
-          .then(response => {
-            console.log(response);
+          .then(() => {
+            this.snackBar.value = true;
+            this.snackBar.text = "Новость обновлена";
+            this.snackBar.color = "success";
           })
           .catch(error => {
             if (
@@ -232,8 +404,10 @@ export default {
       } else {
         this.$store
           .dispatch("news/createNews", formData)
-          .then(response => {
-            console.log(response);
+          .then(() => {
+            this.snackBar.value = true;
+            this.snackBar.text = "Создано успешно";
+            this.snackBar.color = "success";
           })
           .catch(error => {
             if (
@@ -258,22 +432,56 @@ export default {
     remove() {
       this.$refs.form.resetValidation();
       this.$refs.form.reset();
-      this.$store.dispatch("news/deleteNews", this.article);
+      this.loading = true;
+      this.$store
+        .dispatch("news/deleteNews", this.article)
+        .then(() => {
+          this.deleteDialog = false;
+          this.snackBar.value = true;
+          this.snackBar.text = "Новость удалена";
+          this.snackBar.color = "success";
+        })
+        .catch(error => {
+          if (
+            error.response &&
+            error.response.error &&
+            error.response.error.message
+          ) {
+            this.snackBar.value = true;
+            this.snackBar.text = error.response.error.message;
+            this.snackBar.color = "error";
+          } else {
+            this.snackBar.value = true;
+            this.snackBar.text = "Ошибка!";
+            this.snackBar.color = "error";
+          }
+        })
+        .finally(() => {
+          this.loading = false;
+        });
     },
     create() {
-      this.$refs.form.resetValidation();
-      this.$refs.form.reset();
-      this.$store.commit("news/clearArticle");
+      this.isNew = true;
+      if (this.$refs.form) {
+        this.$refs.form.resetValidation();
+      }
     }
   },
   computed: {
     ...mapState({
       news: state => state.news.news,
-      article: state => state.news.oneNews
+      article: state => state.news.oneNews,
+      snackBar: state => state.snackBar
     })
   },
   mounted() {
     this.$store.dispatch("news/getAllNews");
+  },
+  watch: {
+    article() {
+      this.isNew = false;
+      this.articleNew = {};
+    }
   }
 };
 </script>
