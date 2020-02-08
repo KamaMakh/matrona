@@ -1,7 +1,0 @@
-{
-"version": 3,
-"mappings": "AAAA,oBAAqB;EACnB,KAAK,EAAE,IAAI;EACX,yDAAqC;IACnC,OAAO,EAAE,EAAE;EAEb,4BAAU;IACR,KAAK,EAAE,IAAI;IACX,SAAS,EAAE,IAAI;IACf,gCAAI;MACF,SAAS,EAAE,IAAI;MACf,KAAK,EAAE,IAAI;MACX,MAAM,EAAE,IAAI;MACZ,MAAM,EAAE,OAAO",
-"sources": ["MainComponentNews.scss"],
-"names": [],
-"file": "MainComponentNews.css"
-}
