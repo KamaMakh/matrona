@@ -45,7 +45,12 @@
             :loading="loading"
             >Сохранить</v-btn
           >
-          <v-btn small color="error" class="mb-4" @click="remove"
+          <v-btn
+            small
+            color="error"
+            class="mb-4"
+            @click="deleteDialog = true"
+            :loading="loading"
             >Удалить</v-btn
           >
         </v-col>
@@ -98,6 +103,26 @@
     <v-btn color="pink" dark fixed bottom right fab @click="create">
       <v-icon>mdi-plus</v-icon>
     </v-btn>
+
+    <!--modals-->
+    <v-dialog v-model="deleteDialog" max-width="290">
+      <v-card>
+        <v-card-title class="headline"
+          >Удалить вопрос {{ faq.question }}?</v-card-title
+        >
+        <v-card-actions>
+          <v-spacer></v-spacer>
+
+          <v-btn color="green darken-1" text @click="deleteDialog = false">
+            Отмена
+          </v-btn>
+
+          <v-btn color="green darken-1" text @click="remove()">
+            Да
+          </v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
   </div>
 </template>
 
@@ -114,7 +139,8 @@ export default {
       loading: false,
       serverUrl: serverUrl,
       isNew: false,
-      faqNew: {}
+      faqNew: {},
+      deleteDialog: false
     };
   },
   methods: {
@@ -204,8 +230,6 @@ export default {
       }
     },
     remove() {
-      this.$refs.form.resetValidation();
-      this.$refs.form.reset();
       this.loading = true;
       this.$store
         .dispatch("faqs/deleteFaqs", this.faq)
@@ -213,6 +237,7 @@ export default {
           this.snackBar.value = true;
           this.snackBar.text = "Вопрос и ответ удалены";
           this.snackBar.color = "success";
+          this.deleteDialog = false;
         })
         .catch(error => {
           if (
@@ -231,6 +256,7 @@ export default {
         })
         .finally(() => {
           this.loading = false;
+          this.deleteDialog = false;
         });
     },
     create() {
