@@ -37,6 +37,21 @@
         </v-list-item-content>
       </v-list-item>
     </v-list>
+    <v-list v-else-if="$route.name === 'MainComponentShop'">
+      <v-list-item
+        v-for="(store, key) in this.stores"
+        :key="key"
+        link
+        class="elevation-3 mb-1"
+        @click="setStore(store)"
+      >
+        <v-list-item-content>
+          <v-list-item-title>
+            {{ store.storeName }}
+          </v-list-item-title>
+        </v-list-item-content>
+      </v-list-item>
+    </v-list>
   </div>
 </template>
 
@@ -53,11 +68,15 @@ export default {
   methods: {
     setArticle(article) {
       this.$store.commit("news/setArticle", article);
+    },
+    setStore(store) {
+      this.$store.commit("shop/setStore", store);
     }
   },
   computed: {
     ...mapState({
-      articles: state => state.news.news
+      articles: state => state.news.news,
+      stores: state => state.shop.stores
     })
   }
 };
