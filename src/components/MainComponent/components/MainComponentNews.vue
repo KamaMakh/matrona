@@ -2,7 +2,7 @@
   <div class="main-component-news">
     <v-form ref="form" v-model="valid" lazy-validation>
       <v-row>
-        <v-col cols="12" sm="8" md="5">
+        <v-col cols="12" sm="12" md="5" xs="12">
           <v-text-field
             v-model="article.articletitleShort"
             label="Кароткий заголовок для картинки"
@@ -55,12 +55,12 @@
             :rules="rules"
           >
             <v-row class="align-center mb-12">
-              <v-col cols="2">
+              <v-col cols="2" sm="1">
                 <v-radio :value="'image'"></v-radio>
               </v-col>
               <v-col v-if="article.articleid && this.article.cover" cols="2">
                 <viewer
-                  class="viewer"
+                  class="main-component-news__viewer"
                   :images="[serverUrl + this.article.coverUrl]"
                 >
                   <img :src="serverUrl + this.article.coverUrl" alt="" />
@@ -258,8 +258,7 @@ export default {
     remove() {
       this.$refs.form.resetValidation();
       this.$refs.form.reset();
-      this.$store
-        .dispatch("news/deleteNews", this.article)
+      this.$store.dispatch("news/deleteNews", this.article);
     },
     create() {
       this.$refs.form.resetValidation();

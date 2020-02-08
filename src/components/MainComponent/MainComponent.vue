@@ -47,8 +47,3 @@ export default {
   }
 };
 </script>
-
-<style scoped lang="scss">
-.main-component {
-}
-</style>
