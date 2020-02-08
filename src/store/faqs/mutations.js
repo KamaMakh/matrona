@@ -8,23 +8,13 @@ function setFaqs(state, faqs) {
 
 function addFaq(state, faq) {
   state.faqs.unshift(faq);
-  setFaq(state, faq);
+  setFaq(state);
 }
 
 function updateFaq(state, data) {
   if (state.faqs.indexOf(data.faq) > -1) {
     state.faqs[state.faqs.indexOf(data.faq)] = data.response;
   }
-  /* eslint-disable */
-  // if (state.news.length) {
-  //   state.news.forEach((item, key) => {
-  //     if (item.articleid === data.article.articleid) {
-  //       state.news[key] = data.response;
-  //       console.log(data.response);
-  //       console.log(state.news);
-  //     }
-  //   });
-  // }
 }
 
 function deleteFaq(state, data) {

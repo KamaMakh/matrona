@@ -4,7 +4,7 @@ function setArticles(state, articles) {
 
 function addArticle(state, article) {
   state.news.unshift(article);
-  setArticle(state, article);
+  setArticle(state);
 }
 
 function updateArticle(state, data) {

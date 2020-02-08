@@ -22,12 +22,13 @@
           ></v-textarea>
           <v-text-field
             v-model="faq.position"
+            type="number"
             label="Позиция"
             placeholder="Позиция"
             :rules="rules"
           ></v-text-field>
           <v-checkbox
-            v-model="faq.faqStatus"
+            v-model="faq.isActive"
             class="mx-2"
             label="Опубликовать"
           ></v-checkbox>
@@ -67,12 +68,13 @@
           ></v-textarea>
           <v-text-field
             v-model="faqNew.position"
+            type="number"
             label="Позиция"
             placeholder="Позиция"
             :rules="rules"
           ></v-text-field>
           <v-checkbox
-            v-model="faqNew.faqStatus"
+            v-model="faqNew.isActive"
             class="mx-2"
             label="Опубликовать"
           ></v-checkbox>
@@ -124,34 +126,15 @@ export default {
       this.loading = true;
       let formData = new FormData(),
         faqObj = !this.isNew ? this.faq : this.faqNew;
-      if (!faqObj.hasOwnProperty("faqStatus")) {
-        faqObj["faqStatus"] = false;
-      }
-      if (!faqObj.hasOwnProperty("createNotification")) {
-        faqObj["createNotification"] = false;
+      if (!faqObj.hasOwnProperty("isActive")) {
+        faqObj["isActive"] = false;
       }
       for (let key in faqObj) {
         if (faqObj.hasOwnProperty(key)) {
           if (
-            [
-              "publishedDt",
-              "previewCoverUrl",
-              "coverUrl",
-              "createdDt",
-              "updatedDt",
-              "faqid",
-              "cover",
-              "previewCover",
-              "video_link"
-            ].indexOf(key) < 0
+            ["publishedDt", "createdDt", "updatedDt", "faqid"].indexOf(key) < 0
           ) {
-            if (key === "faqStatus") {
-              if (faqObj[key]) {
-                formData.append(`faq[${key}]`, "1");
-              } else {
-                formData.append(`faq[${key}]`, "0");
-              }
-            } else if (key === "createNotification") {
+            if (key === "isActive") {
               if (faqObj[key]) {
                 formData.append(`faq[${key}]`, "1");
               } else {
