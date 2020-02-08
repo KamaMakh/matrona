@@ -1,9 +1,9 @@
 .DS_Store
 node_modules
 /dist
-/src/components/MainComponent/assets/css/*.css
-/src/components/MainComponent/assets/css/*.css.map
-/src/components/MainComponent/assets/css/.sass-cache
+src/components/MainComponent/assets/css/*.css
+src/components/MainComponent/assets/css/*.css.map
+src/components/MainComponent/assets/css/.sass-cache
 # local env files
 .env.local
 .env.*.local
