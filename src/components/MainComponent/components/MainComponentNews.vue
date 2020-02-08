@@ -430,8 +430,6 @@ export default {
       }
     },
     remove() {
-      this.$refs.form.resetValidation();
-      this.$refs.form.reset();
       this.loading = true;
       this.$store
         .dispatch("news/deleteNews", this.article)

@@ -331,8 +331,6 @@ export default {
       }
     },
     remove() {
-      this.$refs.form.resetValidation();
-      this.$refs.form.reset();
       this.loading = true;
       this.$store
         .dispatch("shop/deleteStore", this.shop)
