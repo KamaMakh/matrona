@@ -15,6 +15,10 @@ const createStoreUrl = `${serverUrl}/store/new`;
 const getStoresUrl = `${serverUrl}/store/full-list`;
 const editStoreUrl = `${serverUrl}/store/`;
 const deleteStoreUrl = `${serverUrl}/store/`;
+const createRubricUrl = `${serverUrl}/rubric/new`;
+const getRubricsUrl = `${serverUrl}/rubric/full-list`;
+const editRubricUrl = `${serverUrl}/rubric/`;
+const deleteRubricUrl = `${serverUrl}/rubric/`;
 
 export {
   serverUrl,
@@ -30,5 +34,9 @@ export {
   createStoreUrl,
   getStoresUrl,
   editStoreUrl,
-  deleteStoreUrl
+  deleteStoreUrl,
+  createRubricUrl,
+  getRubricsUrl,
+  editRubricUrl,
+  deleteRubricUrl
 };

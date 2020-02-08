@@ -4,6 +4,7 @@ import user from "./user";
 import news from "./news";
 import faqs from "./faqs";
 import shop from "./shop";
+import heading from "./heading";
 
 Vue.use(Vuex);
 
@@ -22,6 +23,7 @@ export default new Vuex.Store({
     user,
     news,
     faqs,
-    shop
+    shop,
+    heading
   }
 });

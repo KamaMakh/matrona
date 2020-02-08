@@ -54,7 +54,7 @@
       </v-list-item>
     </v-list>
 
-    <v-list v-else-if="$route.name === 'MainComponentShop'">
+    <v-list v-else-if="$route.name === 'MainComponentShop'" dense>
       <v-list-item
         v-for="(store, key) in this.stores"
         :key="key"
