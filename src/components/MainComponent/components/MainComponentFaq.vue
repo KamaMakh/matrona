@@ -234,10 +234,10 @@ export default {
       this.$store
         .dispatch("faqs/deleteFaqs", this.faq)
         .then(() => {
+          this.deleteDialog = false;
           this.snackBar.value = true;
           this.snackBar.text = "Вопрос и ответ удалены";
           this.snackBar.color = "success";
-          this.deleteDialog = false;
         })
         .catch(error => {
           if (
@@ -256,7 +256,6 @@ export default {
         })
         .finally(() => {
           this.loading = false;
-          this.deleteDialog = false;
         });
     },
     create() {

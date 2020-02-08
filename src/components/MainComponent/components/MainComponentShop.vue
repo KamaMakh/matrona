@@ -335,10 +335,10 @@ export default {
       this.$store
         .dispatch("shop/deleteStore", this.shop)
         .then(() => {
+          this.deleteDialog = false;
           this.snackBar.value = true;
           this.snackBar.text = "Магазин удален";
           this.snackBar.color = "success";
-          this.deleteDialog = false;
         })
         .catch(error => {
           if (
