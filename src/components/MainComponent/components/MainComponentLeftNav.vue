@@ -69,6 +69,22 @@
         </v-list-item-content>
       </v-list-item>
     </v-list>
+
+    <v-list v-else-if="$route.name === 'MainComponentHeading'" dense>
+      <v-list-item
+        v-for="(rubric, key) in this.rubrics"
+        :key="key"
+        link
+        class="elevation-3 mb-1"
+        @click="setRubric(rubric)"
+      >
+        <v-list-item-content>
+          <v-list-item-title>
+            {{ rubric.title }}
+          </v-list-item-title>
+        </v-list-item-content>
+      </v-list-item>
+    </v-list>
   </div>
 </template>
 
@@ -91,13 +107,17 @@ export default {
     },
     setStore(store) {
       this.$store.commit("shop/setStore", store);
+    },
+    setRubric(rubric) {
+      this.$store.commit("heading/setRubric", rubric);
     }
   },
   computed: {
     ...mapState({
       articles: state => state.news.news,
       faqs: state => state.faqs.faqs,
-      stores: state => state.shop.stores
+      stores: state => state.shop.stores,
+      rubrics: state => state.heading.rubrics
     })
   }
 };

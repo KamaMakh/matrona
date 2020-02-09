@@ -11,7 +11,7 @@ function createRubric({ commit }, data) {
   return new Promise((resolve, reject) => {
     api.post(createRubricUrl, data)
       .then((response) => {
-        if (response.data.error && response.data.error.code) {
+        if (response.status === 422 || (response.data.error && response.data.error.code)) {
           reject(response);
         }
         else {
@@ -29,7 +29,7 @@ function updateRubric({ commit }, data) {
   return new Promise((resolve, reject) => {
     api.post(editRubricUrl + data.rubric.rubricid + "/edit", data.data)
       .then((response) => {
-        if (response.data.error && response.data.error.code) {
+        if (response.status === 422 || (response.data.error && response.data.error.code)) {
           reject(response);
         }
         else {
@@ -69,7 +69,7 @@ function deleteRubric({ commit }, data) {
     api
       .delete(`${deleteRubricUrl}${data.rubricid}`)
       .then(response => {
-        if (response.data.error && response.data.error.code) {
+        if (response.status === 422 || (response.data.error && response.data.error.code)) {
           reject(response);
         }
         else {

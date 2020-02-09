@@ -122,6 +122,36 @@
     <v-btn color="pink" dark fixed bottom right fab @click="create">
       <v-icon>mdi-plus</v-icon>
     </v-btn>
+
+    <!--modals-->
+    <v-dialog v-model="deleteDialog" max-width="290">
+      <v-card>
+        <v-card-title class="headline"
+          >Удалить рубрику {{ rubric.title }}?</v-card-title
+        >
+        <v-card-actions>
+          <v-spacer></v-spacer>
+
+          <v-btn
+            :loading="loading"
+            color="green darken-1"
+            text
+            @click="deleteDialog = false"
+          >
+            Отмена
+          </v-btn>
+
+          <v-btn
+            :loading="loading"
+            color="green darken-1"
+            text
+            @click="remove()"
+          >
+            Да
+          </v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
   </div>
 </template>
 
@@ -155,8 +185,16 @@ export default {
       for (let key in articleObj) {
         if (articleObj.hasOwnProperty(key)) {
           if (
-            ["publishedDt", "createdDt", "updatedDt", "rubricid"].indexOf(key) <
-            0
+            [
+              "publishedDt",
+              "createdDt",
+              "updatedDt",
+              "rubricid",
+              "coverDefaultUrl",
+              "coverTematicUrl",
+              "coverDefault",
+              "coverTematic"
+            ].indexOf(key) < 0
           ) {
             if (key === "isActive") {
               if (articleObj[key]) {
