@@ -11,7 +11,7 @@ function createStore({ commit }, data) {
   return new Promise((resolve, reject) => {
     api.post(createStoreUrl, data)
       .then((response) => {
-        if (response.data.error && response.data.error.code) {
+        if (response.status === 422 || (response.data.error && response.data.error.code)) {
           reject(response);
         }
         else {
@@ -29,7 +29,7 @@ function updateStore({ commit }, data) {
   return new Promise((resolve, reject) => {
     api.post(editStoreUrl + data.store.storeid + "/edit", data.data)
       .then((response) => {
-        if (response.data.error && response.data.error.code) {
+        if (response.status === 422 || (response.data.error && response.data.error.code)) {
           reject(response);
         }
         else {
@@ -69,7 +69,7 @@ function deleteStore({ commit }, data) {
     api
       .delete(`${deleteStoreUrl}${data.storeid}`)
       .then(response => {
-        if (response.data.error && response.data.error.code) {
+        if (response.status === 422 || (response.data.error && response.data.error.code)) {
           reject(response);
         }
         else {

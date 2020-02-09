@@ -11,7 +11,7 @@ function createNews({ commit }, data) {
   return new Promise((resolve, reject) => {
     api.post(createNewsUrl, data)
       .then((response) => {
-        if (response.data.error && response.data.error.code) {
+        if (response.status === 422 || (response.data.error && response.data.error.code)) {
           reject(response);
         }
         else {
@@ -29,7 +29,7 @@ function updateNews({ commit }, data) {
   return new Promise((resolve, reject) => {
     api.post(editArticlesUrl + data.article.articleid + "/edit", data.data)
       .then((response) => {
-        if (response.data.error && response.data.error.code) {
+        if (response.status === 422 || (response.data.error && response.data.error.code)) {
           reject(response);
         }
         else {
@@ -69,7 +69,7 @@ function deleteNews({ commit }, data) {
     api
       .delete(`${deleteArticlesUrl}${data.articleid}`)
       .then(response => {
-        if (response.data.error && response.data.error.code) {
+        if (response.status === 422 || (response.data.error && response.data.error.code)) {
           reject(response);
         }
         else {

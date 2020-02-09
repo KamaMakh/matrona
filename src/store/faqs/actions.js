@@ -12,7 +12,7 @@ function createFaqs({ commit }, data) {
     api
       .post(createFaqsUrl, data)
       .then(response => {
-        if (response.data.error && response.data.error.code) {
+        if (response.status === 422 || (response.data.error && response.data.error.code)) {
           reject(response);
         } else {
           commit("addFaq", response.data.result);
@@ -30,7 +30,7 @@ function updateFaqs({ commit }, data) {
     api
       .post(editFaqsUrl + data.faq.faqid + "/edit", data.data)
       .then(response => {
-        if (response.data.error && response.data.error.code) {
+        if (response.status === 422 || (response.data.error && response.data.error.code)) {
           reject(response);
         } else {
           commit("updateFaq", {
@@ -69,7 +69,7 @@ function deleteFaqs({ commit }, data) {
     api
       .delete(`${deleteFaqsUrl}${data.faqid}`)
       .then(response => {
-        if (response.data.error && response.data.error.code) {
+        if (response.status === 422 || (response.data.error && response.data.error.code)) {
           reject(response);
         } else {
           commit("deleteFaq", {
