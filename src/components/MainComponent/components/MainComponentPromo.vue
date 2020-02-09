@@ -1,6 +1,11 @@
 <template>
   <div class="main-component-promo">
-    <v-form ref="form" v-model="valid" lazy-validation>
+    <v-form
+      ref="form"
+      v-show="this.promo.stockSchemaid && !isNew"
+      v-model="valid"
+      lazy-validation
+    >
       <v-row>
         <v-col cols="12" sm="6" md="5">
           <v-row>
@@ -9,13 +14,14 @@
                 ref="menu"
                 v-model="menu"
                 :close-on-content-click="false"
+                :return-value.sync="promo.startDt"
                 transition="scale-transition"
                 offset-y
                 min-width="290px"
               >
                 <template v-slot:activator="{ on }">
                   <v-text-field
-                    v-model="promo.date_from"
+                    v-model="date_from"
                     label="Начало"
                     prepend-icon="event"
                     readonly
@@ -23,8 +29,8 @@
                   ></v-text-field>
                 </template>
                 <v-date-picker
-                  v-model="promo.date_from"
-                  :max="promo.date_to"
+                  v-model="date_from"
+                  :max="date_to"
                   no-title
                   scrollable
                 >
@@ -35,7 +41,7 @@
                   <v-btn
                     text
                     color="primary"
-                    @click="$refs.menu.save(promo.date_from)"
+                    @click="$refs.menu.save(date_from)"
                     >OK</v-btn
                   >
                 </v-date-picker>
@@ -46,13 +52,14 @@
                 ref="menu2"
                 v-model="menu2"
                 :close-on-content-click="false"
+                :return-value.sync="promo.endDt"
                 transition="scale-transition"
                 offset-y
                 min-width="290px"
               >
                 <template v-slot:activator="{ on }">
                   <v-text-field
-                    v-model="promo.date_to"
+                    v-model="date_to"
                     label="Окончание"
                     prepend-icon="event"
                     readonly
@@ -60,8 +67,8 @@
                   ></v-text-field>
                 </template>
                 <v-date-picker
-                  v-model="promo.date_to"
-                  :min="promo.date_from"
+                  v-model="date_to"
+                  :min="date_from"
                   no-title
                   scrollable
                 >
@@ -69,10 +76,7 @@
                   <v-btn text color="primary" @click="menu2 = false"
                     >Cancel</v-btn
                   >
-                  <v-btn
-                    text
-                    color="primary"
-                    @click="$refs.menu2.save(promo.date_to)"
+                  <v-btn text color="primary" @click="$refs.menu2.save(date_to)"
                     >OK</v-btn
                   >
                 </v-date-picker>
@@ -80,13 +84,13 @@
             </v-col>
           </v-row>
           <v-text-field
-            v-model="promo.desc"
+            v-model="promo.description"
             label="Описание"
             placeholder="Описание"
             :rules="rules"
           ></v-text-field>
           <v-text-field
-            v-model="promo.limits"
+            v-model="promo.limitation"
             label="Ограничения"
             placeholder="Ограничения"
             :rules="rules"
@@ -98,22 +102,42 @@
             type="number"
             :rules="rules"
           ></v-text-field>
-          <v-file-input
-            v-model="promo.cover"
+          <v-row class="align-center mb-5">
+            <v-col v-if="promo.stockSchemaid && this.promo.cover" cols="2">
+              <viewer
+                class="main-component-promo__viewer"
+                :images="[serverUrl + this.promo.coverUrl]"
+              >
+                <img :src="serverUrl + this.promo.coverUrl" alt="" />
+              </viewer>
+            </v-col>
+            <v-col>
+              <v-file-input
+                v-model="promo.coverFile"
+                label="Обложка для карточки"
+                filled
+                prepend-icon="mdi-camera"
+                show-size
+                accept=".png, .jpg, .jpeg, .gif"
+              ></v-file-input>
+            </v-col>
+          </v-row>
+          <!-- <v-file-input
+            v-model="promo.coverFile"
             label="Обложка"
             filled
             prepend-icon="mdi-camera"
             show-size
-          ></v-file-input>
+          ></v-file-input> -->
           <v-divider color="#333"></v-divider>
           <v-checkbox
-            v-model="promo.mobile_notify"
+            v-model="promo.createNotification"
             class="mx-2"
             label="Мобильное уведомление"
           ></v-checkbox>
           <v-divider color="#333"></v-divider>
           <v-checkbox
-            v-model="promo.publish"
+            v-model="promo.isActive"
             class="mx-2"
             label="Опубликовать"
           ></v-checkbox>
@@ -136,27 +160,231 @@
         </v-col>
       </v-row>
     </v-form>
-    <v-btn color="pink" dark fixed bottom right fab @click="create">
+
+    <v-form ref="form" v-if="isNew" v-model="valid" lazy-validation>
+      <v-row>
+        <v-col cols="12" sm="6" md="5">
+          <v-row>
+            <v-col>
+              <v-menu
+                ref="menu3"
+                v-model="menu3"
+                :close-on-content-click="false"
+                :return-value.sync="promoNew.startDt"
+                transition="scale-transition"
+                offset-y
+                min-width="290px"
+              >
+                <template v-slot:activator="{ on }">
+                  <v-text-field
+                    v-model="date_from"
+                    label="Начало"
+                    prepend-icon="event"
+                    readonly
+                    v-on="on"
+                  ></v-text-field>
+                </template>
+                <v-date-picker
+                  v-model="date_from"
+                  :max="date_to"
+                  no-title
+                  scrollable
+                >
+                  <v-spacer></v-spacer>
+                  <v-btn text color="primary" @click="menu3 = false"
+                    >Cancel</v-btn
+                  >
+                  <v-btn
+                    text
+                    color="primary"
+                    @click="$refs.menu3.save(date_from)"
+                    >OK</v-btn
+                  >
+                </v-date-picker>
+              </v-menu>
+            </v-col>
+            <v-col>
+              <v-menu
+                ref="menu4"
+                v-model="menu4"
+                :close-on-content-click="false"
+                :return-value.sync="promo.endDt"
+                transition="scale-transition"
+                offset-y
+                min-width="290px"
+              >
+                <template v-slot:activator="{ on }">
+                  <v-text-field
+                    v-model="date_to"
+                    label="Окончание"
+                    prepend-icon="event"
+                    readonly
+                    v-on="on"
+                  ></v-text-field>
+                </template>
+                <v-date-picker
+                  v-model="date_to"
+                  :min="date_from"
+                  no-title
+                  scrollable
+                >
+                  <v-spacer></v-spacer>
+                  <v-btn text color="primary" @click="menu4 = false"
+                    >Cancel</v-btn
+                  >
+                  <v-btn text color="primary" @click="$refs.menu4.save(date_to)"
+                    >OK</v-btn
+                  >
+                </v-date-picker>
+              </v-menu>
+            </v-col>
+          </v-row>
+          <v-text-field
+            v-model="promoNew.description"
+            label="Описание"
+            placeholder="Описание"
+            :rules="rules"
+          ></v-text-field>
+          <v-text-field
+            v-model="promoNew.limitation"
+            label="Ограничения"
+            placeholder="Ограничения"
+            :rules="rules"
+          ></v-text-field>
+          <v-text-field
+            v-model="promoNew.position"
+            label="Позиция"
+            placeholder="Позиция"
+            type="number"
+            :rules="rules"
+          ></v-text-field>
+          <v-row class="align-center mb-5">
+            <v-col
+              v-if="promoNew.stockSchemaid && this.promoNew.cover"
+              cols="2"
+            >
+              <viewer
+                class="main-component-promo__viewer"
+                :images="[serverUrl + this.promoNew.coverUrl]"
+              >
+                <img :src="serverUrl + this.promoNew.coverUrl" alt="" />
+              </viewer>
+            </v-col>
+            <v-col>
+              <v-file-input
+                v-model="promoNew.coverFile"
+                label="Обложка для карточки"
+                filled
+                prepend-icon="mdi-camera"
+                show-size
+                accept=".png, .jpg, .jpeg, .gif"
+              ></v-file-input>
+            </v-col>
+          </v-row>
+          <v-divider color="#333"></v-divider>
+          <v-checkbox
+            v-model="promoNew.createNotification"
+            class="mx-2"
+            label="Мобильное уведомление"
+          ></v-checkbox>
+          <v-divider color="#333"></v-divider>
+          <v-checkbox
+            v-model="promoNew.isActive"
+            class="mx-2"
+            label="Опубликовать"
+          ></v-checkbox>
+        </v-col>
+      </v-row>
+
+      <v-row>
+        <v-col cols="6" sm="12">
+          <v-btn
+            small
+            color="primary"
+            class="mr-md-4 mr-lg-4 mr-sm-0 mb-4"
+            @click="save"
+            :disabled="!valid"
+            :loading="loading"
+            >Добавить</v-btn
+          >
+        </v-col>
+      </v-row>
+    </v-form>
+
+    <v-btn
+      v-if="rubric && rubric.rubricid"
+      color="pink"
+      dark
+      fixed
+      bottom
+      right
+      fab
+      @click="create"
+    >
       <v-icon>mdi-plus</v-icon>
     </v-btn>
+
+    <!--modals-->
+    <v-dialog v-model="deleteDialog" max-width="290">
+      <v-card>
+        <v-card-title class="headline"
+          >Удалить вопрос {{ promo.description | truncate }}?</v-card-title
+        >
+        <v-card-actions>
+          <v-spacer></v-spacer>
+
+          <v-btn
+            :loading="loading"
+            color="green darken-1"
+            text
+            @click="deleteDialog = false"
+          >
+            Отмена
+          </v-btn>
+
+          <v-btn
+            :loading="loading"
+            color="green darken-1"
+            text
+            @click="remove()"
+          >
+            Да
+          </v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
   </div>
 </template>
 
 <script>
+import { mapState } from "vuex";
+import { serverUrl } from "@/store/urls";
+import "../assets/css/MainComponentPromo.css";
 export default {
   name: "MainComponentPromo",
   data() {
     return {
-      promo: {
-        date_from: new Date().toISOString().substr(0, 10),
-        date_to: new Date().toISOString().substr(0, 10)
-      },
+      date_from: new Date().toISOString().substr(0, 10),
+      date_to: new Date().toISOString().substr(0, 10),
       valid: true,
       rules: [v => !!v || "Required"],
       loading: false,
       menu: false,
-      menu2: false
+      menu2: false,
+      menu3: false,
+      menu4: false,
+      serverUrl: serverUrl,
+      isNew: false,
+      promoNew: {},
+      deleteDialog: false
     };
+  },
+  filters: {
+    truncate: function(value) {
+      if (!value) return "";
+      value = value.substring(0, 30) + "...";
+      return value;
+    }
   },
   methods: {
     save() {
@@ -164,21 +392,171 @@ export default {
         this.loading = false;
         return;
       }
+      this.loading = true;
+      let formData = new FormData(),
+        promoObj = !this.isNew ? this.promo : this.promoNew;
+      if (!promoObj.hasOwnProperty("isActive")) {
+        promoObj["isActive"] = false;
+      }
+      promoObj["rubricid"] = this.rubric.rubricid;
+      promoObj["startDt"] = this.date_from + "T00:00:00+03:00";
+      promoObj["endDt"] = this.date_to + "T00:00:00+03:00";
+      for (let key in promoObj) {
+        if (promoObj.hasOwnProperty(key)) {
+          if (
+            [
+              "stockSchemaid",
+              "publishedDt",
+              "previewCoverUrl",
+              "coverUrl",
+              "createdDt",
+              "updatedDt",
+              "cover",
+              "previewCover"
+            ].indexOf(key) < 0
+          ) {
+            if (key === "isActive") {
+              if (promoObj[key]) {
+                formData.append(`promo[${key}]`, "1");
+              } else {
+                formData.append(`promo[${key}]`, "0");
+              }
+            } else if (key === "createNotification") {
+              if (promoObj[key]) {
+                formData.append(`promo[${key}]`, "1");
+              } else {
+                formData.append(`promo[${key}]`, "0");
+              }
+            } else {
+              formData.append(`promo[${key}]`, promoObj[key]);
+            }
+            // if (key === "isActive") {
+            //   if (promoObj[key]) {
+            //     formData.append(`promo[${key}]`, "1");
+            //   } else {
+            //     formData.append(`promo[${key}]`, "0");
+            //   }
+            // } else {
+            //   formData.append(`promo[${key}]`, promoObj[key]);
+            // }
+          }
+        }
+      }
+      if (promoObj.stockSchemaid !== undefined) {
+        this.$store
+          .dispatch("promos/updatePromos", {
+            data: formData,
+            promo: promoObj
+          })
+          .then(() => {
+            this.snackBar.value = true;
+            this.snackBar.text = "Вопрос и ответ обновлены";
+            this.snackBar.color = "success";
+          })
+          .catch(error => {
+            if (
+              error.response &&
+              error.response.error &&
+              error.response.error.message
+            ) {
+              this.snackBar.value = true;
+              this.snackBar.text = error.response.error.message;
+              this.snackBar.color = "error";
+            } else {
+              this.snackBar.value = true;
+              this.snackBar.text = "Ошибка!";
+              this.snackBar.color = "error";
+            }
+          })
+          .finally(() => {
+            this.loading = false;
+          });
+      } else {
+        this.$store
+          .dispatch("promos/createPromos", formData)
+          .then(() => {
+            this.snackBar.value = true;
+            this.snackBar.text = "Создано успешно";
+            this.snackBar.color = "success";
+          })
+          .catch(error => {
+            if (
+              error.response &&
+              error.response.error &&
+              error.response.error.message
+            ) {
+              this.snackBar.value = true;
+              this.snackBar.text = error.response.error.message;
+              this.snackBar.color = "error";
+            } else {
+              this.snackBar.value = true;
+              this.snackBar.text = "Ошибка!";
+              this.snackBar.color = "error";
+            }
+          })
+          .finally(() => {
+            this.loading = false;
+          });
+      }
     },
     remove() {
-      alert("Тут будет удаление");
+      this.loading = true;
+      this.$store
+        .dispatch("promos/deletePromos", this.promo)
+        .then(() => {
+          this.deleteDialog = false;
+          this.snackBar.value = true;
+          this.snackBar.text = "Акция удалена";
+          this.snackBar.color = "success";
+        })
+        .catch(error => {
+          if (
+            error.response &&
+            error.response.error &&
+            error.response.error.message
+          ) {
+            this.snackBar.value = true;
+            this.snackBar.text = error.response.error.message;
+            this.snackBar.color = "error";
+          } else {
+            this.snackBar.value = true;
+            this.snackBar.text = "Ошибка!";
+            this.snackBar.color = "error";
+          }
+        })
+        .finally(() => {
+          this.loading = false;
+        });
     },
     create() {
-      this.$refs.form.resetValidation();
-      this.$refs.form.reset();
-      this.article = {};
+      this.isNew = true;
+      if (this.$refs.form) {
+        this.$refs.form.resetValidation();
+      }
+    }
+  },
+  computed: {
+    ...mapState({
+      // promos: state => state.promos.promos,
+      promo: state => state.promos.onePromos,
+      rubric: state => state.heading.oneRubric,
+      snackBar: state => state.snackBar
+    })
+  },
+  mounted() {
+    this.$store.dispatch("promos/getAllPromos");
+  },
+  watch: {
+    promo(value) {
+      this.isNew = false;
+      this.promoNew = {};
+      if (value && value.startDt) {
+        this.date_from = new Date(value.startDt).toISOString().substr(0, 10);
+      }
+      if (value && value.endDt) {
+        this.date_to = new Date(value.endDt).toISOString().substr(0, 10);
+      }
     }
   }
 };
 </script>
-
-<style scoped lang="scss">
-.main-component-promo {
-  width: 100%;
-}
-</style>

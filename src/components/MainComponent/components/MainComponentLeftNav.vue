@@ -10,7 +10,12 @@
     >
       <v-select
         v-if="$route.name === 'MainComponentPromo'"
-        :items="items"
+        :items="promos"
+        item-text="title"
+        item-value="stockSchemaid"
+        v-model="localPromo"
+        :loading="selectLoading"
+        :disabled="selectLoading"
         label="Механика"
         outlined
       ></v-select>
@@ -106,6 +111,22 @@
         </v-list-item-content>
       </v-list-item>
     </v-list>
+
+    <v-list v-else-if="$route.name === 'MainComponentPromo'" dense>
+      <v-list-item
+        v-for="(promo, key) in this.promos"
+        :key="key"
+        link
+        class="elevation-3 mb-1"
+        @click="setPromo(promo)"
+      >
+        <v-list-item-content>
+          <v-list-item-title>
+            {{ promo.description | truncate }}
+          </v-list-item-title>
+        </v-list-item-content>
+      </v-list-item>
+    </v-list>
   </div>
 </template>
 
@@ -118,6 +139,7 @@ export default {
     return {
       items: ["item 1", "item 2"],
       localRubric: null,
+      localPromo: null,
       selectLoading: false
     };
   },
@@ -136,6 +158,9 @@ export default {
     },
     setPrice(price) {
       this.$store.commit("heading/setPrice", price);
+    },
+    setPromo(promo) {
+      this.$store.commit("promos/setPromo", promo);
     }
   },
   filters: {
@@ -154,6 +179,7 @@ export default {
       stores: state => state.shop.stores,
       rubrics: state => state.heading.rubrics,
       prices: state => state.heading.specPrices,
+      promos: state => state.promos.promos,
       snackBar: state => state.snackBar
     })
   },
@@ -162,6 +188,32 @@ export default {
       this.selectLoading = true;
       this.$store
         .dispatch("heading/getAllPrices", { id: value })
+        .then(() => {
+          //ignore
+        })
+        .catch(error => {
+          if (
+            error.response &&
+            error.response.error &&
+            error.response.error.message
+          ) {
+            this.snackBar.value = true;
+            this.snackBar.text = error.response.error.message;
+            this.snackBar.color = "error";
+          } else {
+            this.snackBar.value = true;
+            this.snackBar.text = "Ошибка!";
+            this.snackBar.color = "error";
+          }
+        })
+        .finally(() => {
+          this.selectLoading = false;
+        });
+    },
+    localPromo(value) {
+      this.selectLoading = true;
+      this.$store
+        .dispatch("promos/getAllPromos", { id: value })
         .then(() => {
           //ignore
         })

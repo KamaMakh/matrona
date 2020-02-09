@@ -24,6 +24,11 @@ const getPricesUrl = `${serverUrl}/rubric/`;
 const editPriceUrl = `${serverUrl}/spec-price/`;
 const deletePriceUrl = `${serverUrl}/spec-price/`;
 
+const createPromosUrl = `${serverUrl}/stock/new`;
+const getPromosUrl = `${serverUrl}/stock-schema/stocks-full`;
+const editPromosUrl = `${serverUrl}/stock/`;
+const deletePromosUrl = `${serverUrl}/stock/`;
+
 export {
   serverUrl,
   loginUrl,
@@ -46,5 +51,9 @@ export {
   createPriceUrl,
   getPricesUrl,
   editPriceUrl,
-  deletePriceUrl
+  deletePriceUrl,
+  createPromosUrl,
+  getPromosUrl,
+  editPromosUrl,
+  deletePromosUrl
 };
