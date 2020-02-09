@@ -3,20 +3,41 @@ import {
   createRubricUrl,
   getRubricsUrl,
   editRubricUrl,
-  deleteRubricUrl
+  deleteRubricUrl,
+  createPriceUrl,
+  getPricesUrl,
+  editPriceUrl,
+  deletePriceUrl
 } from "@/store/urls";
 
-/* eslint-disable */
 function createRubric({ commit }, data) {
   return new Promise((resolve, reject) => {
-    api.post(createRubricUrl, data)
-      .then((response) => {
-        if (response.status === 422 || (response.data.error && response.data.error.code)) {
-          reject(response);
-        }
-        else {
+    api
+      .post(createRubricUrl, data)
+      .then(response => {
+        if (response.status === 200) {
           commit("addRubric", response.data.result);
           resolve(response);
+        } else {
+          reject(response);
+        }
+      })
+      .catch(error => {
+        reject(error);
+      });
+  });
+}
+
+function createPrice({ commit }, data) {
+  return new Promise((resolve, reject) => {
+    api
+      .post(createPriceUrl, data)
+      .then(response => {
+        if (response.status === 200) {
+          commit("addPrice", response.data.result);
+          resolve(response);
+        } else {
+          reject(response);
         }
       })
       .catch(error => {
@@ -27,17 +48,38 @@ function createRubric({ commit }, data) {
 
 function updateRubric({ commit }, data) {
   return new Promise((resolve, reject) => {
-    api.post(editRubricUrl + data.rubric.rubricid + "/edit", data.data)
-      .then((response) => {
-        if (response.status === 422 || (response.data.error && response.data.error.code)) {
-          reject(response);
-        }
-        else {
+    api
+      .post(editRubricUrl + data.rubric.rubricid + "/edit", data.data)
+      .then(response => {
+        if (response.status === 200) {
           commit("updateRubric", {
             response: response.data.result,
             rubric: data.rubric
           });
           resolve(response);
+        } else {
+          reject(response);
+        }
+      })
+      .catch(error => {
+        reject(error);
+      });
+  });
+}
+
+function updatePrice({ commit }, data) {
+  return new Promise((resolve, reject) => {
+    api
+      .post(editPriceUrl + data.price.specPriceid + "/edit", data.data)
+      .then(response => {
+        if (response.status === 200) {
+          commit("updatePrice", {
+            response: response.data.result,
+            price: data.price
+          });
+          resolve(response);
+        } else {
+          reject(response);
         }
       })
       .catch(error => {
@@ -64,20 +106,19 @@ function getAllRubrics({ commit }) {
   });
 }
 
-function deleteRubric({ commit }, data) {
+function getAllPrices({ commit }, data) {
   return new Promise((resolve, reject) => {
     api
-      .delete(`${deleteRubricUrl}${data.rubricid}`)
+      .get(getPricesUrl + data.id + "/prices-full")
       .then(response => {
-        if (response.status === 422 || (response.data.error && response.data.error.code)) {
-          reject(response);
-        }
-        else {
-          commit("deleteRubric", {
-            response: response.data.result,
-            rubric: data
+        if (response.status === 200) {
+          commit("setPrices", {
+            result: response.data.result,
+            rubricid: data.id
           });
           resolve(response);
+        } else {
+          reject(response.data.message);
         }
       })
       .catch(error => {
@@ -86,4 +127,55 @@ function deleteRubric({ commit }, data) {
   });
 }
 
-export { createRubric, getAllRubrics, updateRubric, deleteRubric };
+function deleteRubric({ commit }, data) {
+  return new Promise((resolve, reject) => {
+    api
+      .delete(`${deleteRubricUrl}${data.rubricid}`)
+      .then(response => {
+        if (response.status === 200) {
+          commit("deleteRubric", {
+            response: response.data.result,
+            rubric: data
+          });
+          resolve(response);
+        } else {
+          reject(response);
+        }
+      })
+      .catch(error => {
+        reject(error);
+      });
+  });
+}
+
+function deletePrice({ commit }, data) {
+  return new Promise((resolve, reject) => {
+    api
+      .delete(`${deletePriceUrl}${data.specPriceid}`)
+      .then(response => {
+        if (response.status === 200) {
+          commit("deletePrice", {
+            response: response.data.result,
+            price: data
+          });
+          resolve(response);
+        } else {
+          reject(response);
+        }
+      })
+      .catch(error => {
+        reject(error);
+      });
+  });
+}
+
+export {
+  createRubric,
+  getAllRubrics,
+  updateRubric,
+  deleteRubric,
+  createPrice,
+  getAllPrices,
+  updatePrice,
+  deletePrice
+};

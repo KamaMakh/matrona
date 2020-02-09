@@ -17,7 +17,12 @@
 
       <v-select
         v-else-if="$route.name === 'MainComponentPosition'"
-        :items="items"
+        :items="rubrics"
+        item-text="title"
+        item-value="rubricid"
+        v-model="localRubric"
+        :loading="selectLoading"
+        :disabled="selectLoading"
         label="Рубрика"
         outlined
       ></v-select>
@@ -85,6 +90,22 @@
         </v-list-item-content>
       </v-list-item>
     </v-list>
+
+    <v-list v-else-if="$route.name === 'MainComponentPosition'" dense>
+      <v-list-item
+        v-for="(price, key) in this.prices"
+        :key="key"
+        link
+        class="elevation-3 mb-1"
+        @click="setPrice(price)"
+      >
+        <v-list-item-content>
+          <v-list-item-title>
+            {{ price.description | truncate }}
+          </v-list-item-title>
+        </v-list-item-content>
+      </v-list-item>
+    </v-list>
   </div>
 </template>
 
@@ -95,7 +116,9 @@ export default {
   name: "MainComponentLeftNav",
   data() {
     return {
-      items: ["item 1", "item 2"]
+      items: ["item 1", "item 2"],
+      localRubric: null,
+      selectLoading: false
     };
   },
   methods: {
@@ -110,6 +133,18 @@ export default {
     },
     setRubric(rubric) {
       this.$store.commit("heading/setRubric", rubric);
+    },
+    setPrice(price) {
+      this.$store.commit("heading/setPrice", price);
+    }
+  },
+  filters: {
+    truncate: function(value) {
+      if (!value) return "";
+      if (value.length > 30) {
+        value = value.substring(0, 30) + "...";
+      }
+      return value;
     }
   },
   computed: {
@@ -117,8 +152,38 @@ export default {
       articles: state => state.news.news,
       faqs: state => state.faqs.faqs,
       stores: state => state.shop.stores,
-      rubrics: state => state.heading.rubrics
+      rubrics: state => state.heading.rubrics,
+      prices: state => state.heading.specPrices,
+      snackBar: state => state.snackBar
     })
+  },
+  watch: {
+    localRubric(value) {
+      this.selectLoading = true;
+      this.$store
+        .dispatch("heading/getAllPrices", { id: value })
+        .then(() => {
+          //ignore
+        })
+        .catch(error => {
+          if (
+            error.response &&
+            error.response.error &&
+            error.response.error.message
+          ) {
+            this.snackBar.value = true;
+            this.snackBar.text = error.response.error.message;
+            this.snackBar.color = "error";
+          } else {
+            this.snackBar.value = true;
+            this.snackBar.text = "Ошибка!";
+            this.snackBar.color = "error";
+          }
+        })
+        .finally(() => {
+          this.selectLoading = false;
+        });
+    }
   }
 };
 </script>

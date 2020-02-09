@@ -19,6 +19,10 @@ const createRubricUrl = `${serverUrl}/rubric/new`;
 const getRubricsUrl = `${serverUrl}/rubric/full-list`;
 const editRubricUrl = `${serverUrl}/rubric/`;
 const deleteRubricUrl = `${serverUrl}/rubric/`;
+const createPriceUrl = `${serverUrl}/spec-price/new`;
+const getPricesUrl = `${serverUrl}/rubric/`;
+const editPriceUrl = `${serverUrl}/spec-price/`;
+const deletePriceUrl = `${serverUrl}/spec-price/`;
 
 export {
   serverUrl,
@@ -38,5 +42,9 @@ export {
   createRubricUrl,
   getRubricsUrl,
   editRubricUrl,
-  deleteRubricUrl
+  deleteRubricUrl,
+  createPriceUrl,
+  getPricesUrl,
+  editPriceUrl,
+  deletePriceUrl
 };

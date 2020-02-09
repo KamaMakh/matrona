@@ -173,17 +173,6 @@
             :rules="rules"
           ></v-textarea>
           <v-row class="align-center mb-5">
-            <v-col
-              v-if="articleNew.articleid && this.articleNew.cover"
-              cols="2"
-            >
-              <viewer
-                class="main-component-news__viewer"
-                :images="[serverUrl + this.articleNew.coverUrl]"
-              >
-                <img :src="serverUrl + this.articleNew.coverUrl" alt="" />
-              </viewer>
-            </v-col>
             <v-col>
               <v-file-input
                 v-model="articleNew.previewCoverFile"
@@ -204,17 +193,6 @@
             <v-row class="align-center mb-12">
               <v-col cols="2">
                 <v-radio :value="'image'"></v-radio>
-              </v-col>
-              <v-col
-                v-if="articleNew.articleid && this.articleNew.cover"
-                cols="2"
-              >
-                <viewer
-                  class="viewer"
-                  :images="[serverUrl + this.articleNew.coverUrl]"
-                >
-                  <img :src="serverUrl + this.articleNew.coverUrl" alt="" />
-                </viewer>
               </v-col>
               <v-col>
                 <v-file-input
