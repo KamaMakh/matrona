@@ -6,17 +6,16 @@ import {
   deleteFaqsUrl
 } from "@/store/urls";
 
-/* eslint-disable */
 function createFaqs({ commit }, data) {
   return new Promise((resolve, reject) => {
     api
       .post(createFaqsUrl, data)
       .then(response => {
-        if (response.status === 422 || (response.data.error && response.data.error.code)) {
-          reject(response);
-        } else {
+        if (response.status === 200) {
           commit("addFaq", response.data.result);
           resolve(response);
+        } else {
+          reject(response);
         }
       })
       .catch(error => {
@@ -30,14 +29,14 @@ function updateFaqs({ commit }, data) {
     api
       .post(editFaqsUrl + data.faq.faqid + "/edit", data.data)
       .then(response => {
-        if (response.status === 422 || (response.data.error && response.data.error.code)) {
-          reject(response);
-        } else {
+        if (response.status === 200) {
           commit("updateFaq", {
             response: response.data.result,
             faq: data.faq
           });
           resolve(response);
+        } else {
+          reject(response);
         }
       })
       .catch(error => {
@@ -69,14 +68,14 @@ function deleteFaqs({ commit }, data) {
     api
       .delete(`${deleteFaqsUrl}${data.faqid}`)
       .then(response => {
-        if (response.status === 422 || (response.data.error && response.data.error.code)) {
-          reject(response);
-        } else {
+        if (response.status === 200) {
           commit("deleteFaq", {
             response: response.data.result,
             faq: data
           });
           resolve(response);
+        } else {
+          reject(response);
         }
       })
       .catch(error => {

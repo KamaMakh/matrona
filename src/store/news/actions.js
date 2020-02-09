@@ -6,17 +6,16 @@ import {
   deleteArticlesUrl
 } from "@/store/urls";
 
-/* eslint-disable */
 function createNews({ commit }, data) {
   return new Promise((resolve, reject) => {
-    api.post(createNewsUrl, data)
-      .then((response) => {
-        if (response.status === 422 || (response.data.error && response.data.error.code)) {
-          reject(response);
-        }
-        else {
+    api
+      .post(createNewsUrl, data)
+      .then(response => {
+        if (response.status === 200) {
           commit("addArticle", response.data.result);
           resolve(response);
+        } else {
+          reject(response);
         }
       })
       .catch(error => {
@@ -27,17 +26,17 @@ function createNews({ commit }, data) {
 
 function updateNews({ commit }, data) {
   return new Promise((resolve, reject) => {
-    api.post(editArticlesUrl + data.article.articleid + "/edit", data.data)
-      .then((response) => {
-        if (response.status === 422 || (response.data.error && response.data.error.code)) {
-          reject(response);
-        }
-        else {
+    api
+      .post(editArticlesUrl + data.article.articleid + "/edit", data.data)
+      .then(response => {
+        if (response.status === 200) {
           commit("updateArticle", {
             response: response.data.result,
             article: data.article
           });
           resolve(response);
+        } else {
+          reject(response);
         }
       })
       .catch(error => {
@@ -69,15 +68,14 @@ function deleteNews({ commit }, data) {
     api
       .delete(`${deleteArticlesUrl}${data.articleid}`)
       .then(response => {
-        if (response.status === 422 || (response.data.error && response.data.error.code)) {
-          reject(response);
-        }
-        else {
+        if (response.status === 200) {
           commit("deleteArticle", {
             response: response.data.result,
             article: data
           });
           resolve(response);
+        } else {
+          reject(response);
         }
       })
       .catch(error => {

@@ -6,17 +6,16 @@ import {
   deleteStoreUrl
 } from "@/store/urls";
 
-/* eslint-disable */
 function createStore({ commit }, data) {
   return new Promise((resolve, reject) => {
-    api.post(createStoreUrl, data)
-      .then((response) => {
-        if (response.status === 422 || (response.data.error && response.data.error.code)) {
-          reject(response);
-        }
-        else {
+    api
+      .post(createStoreUrl, data)
+      .then(response => {
+        if (response.status === 200) {
           commit("addStore", response.data.result);
           resolve(response);
+        } else {
+          reject(response);
         }
       })
       .catch(error => {
@@ -27,17 +26,17 @@ function createStore({ commit }, data) {
 
 function updateStore({ commit }, data) {
   return new Promise((resolve, reject) => {
-    api.post(editStoreUrl + data.store.storeid + "/edit", data.data)
-      .then((response) => {
-        if (response.status === 422 || (response.data.error && response.data.error.code)) {
-          reject(response);
-        }
-        else {
+    api
+      .post(editStoreUrl + data.store.storeid + "/edit", data.data)
+      .then(response => {
+        if (response.status === 200) {
           commit("updateStore", {
             response: response.data.result,
             store: data.store
           });
           resolve(response);
+        } else {
+          reject(response);
         }
       })
       .catch(error => {
@@ -69,15 +68,14 @@ function deleteStore({ commit }, data) {
     api
       .delete(`${deleteStoreUrl}${data.storeid}`)
       .then(response => {
-        if (response.status === 422 || (response.data.error && response.data.error.code)) {
-          reject(response);
-        }
-        else {
+        if (response.status === 200) {
           commit("deleteStore", {
             response: response.data.result,
             store: data
           });
           resolve(response);
+        } else {
+          reject(response);
         }
       })
       .catch(error => {
