@@ -19,8 +19,8 @@ function addSchema(state, schema) {
 }
 
 function addPromo(state, promo) {
-  state.promos.unshift(promo);
-  setPrice(state, promo);
+  state.stocks.unshift(promo);
+  setPromo(state, promo);
 }
 
 function updateSchema(state, data) {
@@ -28,7 +28,7 @@ function updateSchema(state, data) {
 }
 
 function updatePromo(state, data) {
-  setPrice(state, data.response);
+  setPromo(state, data.response);
 }
 
 function deleteSchema(state, data) {
@@ -52,11 +52,11 @@ function setSchema(state, schema) {
   state.oneSchema = schema;
 }
 
-function setPrice(state, price) {
-  if (!price) {
-    price = {};
+function setPromo(state, promo) {
+  if (!promo) {
+    promo = {};
   }
-  state.oneSpecPrice = price;
+  state.oneStock = promo;
 }
 
 export {
@@ -67,7 +67,7 @@ export {
   deleteSchema,
   addPromo,
   setPromos,
-  setPrice,
+  setPromo,
   deletePromo,
   updatePromo
 };

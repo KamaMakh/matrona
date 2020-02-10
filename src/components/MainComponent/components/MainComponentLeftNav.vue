@@ -10,7 +10,7 @@
     >
       <v-select
         v-if="$route.name === 'MainComponentPromo'"
-        :items="promos"
+        :items="schemas"
         item-text="title"
         item-value="stockSchemaid"
         v-model="localPromo"
@@ -176,7 +176,7 @@ export default {
       this.$store.commit("heading/setPrice", price);
     },
     setPromo(promo) {
-      this.$store.commit("promos/setPromo", promo);
+      this.$store.commit("mechanics/setPromo", promo);
     },
     setSchema(schema) {
       this.$store.commit("mechanics/setSchema", schema);
@@ -199,7 +199,7 @@ export default {
       stores: state => state.shop.stores,
       rubrics: state => state.heading.rubrics,
       prices: state => state.heading.specPrices,
-      promos: state => state.promos.promos,
+      promos: state => state.mechanics.stocks,
       snackBar: state => state.snackBar
     })
   },
@@ -209,7 +209,7 @@ export default {
       this.$store
         .dispatch("heading/getAllPrices", { id: value })
         .then(() => {
-          //ignore
+          this.setPrice();
         })
         .catch(error => {
           if (
@@ -233,9 +233,9 @@ export default {
     localPromo(value) {
       this.selectLoading = true;
       this.$store
-        .dispatch("promos/getAllPromos", { id: value })
+        .dispatch("mechanics/getAllPromos", { id: value })
         .then(() => {
-          //ignore
+          this.setPromo();
         })
         .catch(error => {
           if (

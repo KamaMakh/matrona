@@ -30,7 +30,7 @@ const editMechanicUrl = `${serverUrl}/stock-schema/`;
 const deleteMechanicUrl = `${serverUrl}/stock-schema/`;
 
 const createPromosUrl = `${serverUrl}/stock/new`;
-const getPromosUrl = `${serverUrl}/stock-schema/stocks-full`;
+const getPromosUrl = `${serverUrl}/stock-schema/`;
 const editPromosUrl = `${serverUrl}/stock/`;
 const deletePromosUrl = `${serverUrl}/stock/`;
 

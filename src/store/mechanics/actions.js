@@ -71,7 +71,7 @@ function updateSchema({ commit }, data) {
 function updatePromo({ commit }, data) {
   return new Promise((resolve, reject) => {
     api
-      .post(editPromosUrl + data.promo.stockSchemaid + "/edit", data.data)
+      .post(editPromosUrl + data.promo.stockid + "/edit", data.data)
       .then(response => {
         if (response.status === 200) {
           commit("updatePromo", {
@@ -110,7 +110,7 @@ function getAllSchemas({ commit }) {
 function getAllPromos({ commit }, data) {
   return new Promise((resolve, reject) => {
     api
-      .get(getPromosUrl + data.id + "/prices-full")
+      .get(getPromosUrl + data.id + "/stocks-full")
       .then(response => {
         if (response.status === 200) {
           commit("setPromos", {
@@ -152,7 +152,7 @@ function deleteSchema({ commit }, data) {
 function deletePromo({ commit }, data) {
   return new Promise((resolve, reject) => {
     api
-      .delete(`${deletePromosUrl}${data.specPriceid}`)
+      .delete(`${deletePromosUrl}${data.stockid}`)
       .then(response => {
         if (response.status === 200) {
           commit("deletePromo", {

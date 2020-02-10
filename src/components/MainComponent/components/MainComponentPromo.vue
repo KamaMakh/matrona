@@ -2,7 +2,7 @@
   <div class="main-component-promo">
     <v-form
       ref="form"
-      v-show="this.promo.stockSchemaid && !isNew"
+      v-show="this.promo.stockid && !isNew"
       v-model="valid"
       lazy-validation
     >
@@ -131,12 +131,6 @@
           ></v-file-input> -->
           <v-divider color="#333"></v-divider>
           <v-checkbox
-            v-model="promo.createNotification"
-            class="mx-2"
-            label="Мобильное уведомление"
-          ></v-checkbox>
-          <v-divider color="#333"></v-divider>
-          <v-checkbox
             v-model="promo.isActive"
             class="mx-2"
             label="Опубликовать"
@@ -154,14 +148,19 @@
             :loading="loading"
             >Сохранить</v-btn
           >
-          <v-btn small color="error" class="mb-4" @click="remove"
+          <v-btn
+            @click="deleteDialog = true"
+            :loading="loading"
+            small
+            color="error"
+            class="mb-4"
             >Удалить</v-btn
           >
         </v-col>
       </v-row>
     </v-form>
 
-    <v-form ref="form" v-if="isNew" v-model="valid" lazy-validation>
+    <v-form ref="form2" v-if="isNew" v-model="valid" lazy-validation>
       <v-row>
         <v-col cols="12" sm="6" md="5">
           <v-row>
@@ -258,35 +257,14 @@
             type="number"
             :rules="rules"
           ></v-text-field>
-          <v-row class="align-center mb-5">
-            <v-col
-              v-if="promoNew.stockSchemaid && this.promoNew.cover"
-              cols="2"
-            >
-              <viewer
-                class="main-component-promo__viewer"
-                :images="[serverUrl + this.promoNew.coverUrl]"
-              >
-                <img :src="serverUrl + this.promoNew.coverUrl" alt="" />
-              </viewer>
-            </v-col>
-            <v-col>
-              <v-file-input
-                v-model="promoNew.coverFile"
-                label="Обложка для карточки"
-                filled
-                prepend-icon="mdi-camera"
-                show-size
-                accept=".png, .jpg, .jpeg, .gif"
-              ></v-file-input>
-            </v-col>
-          </v-row>
-          <v-divider color="#333"></v-divider>
-          <v-checkbox
-            v-model="promoNew.createNotification"
-            class="mx-2"
-            label="Мобильное уведомление"
-          ></v-checkbox>
+          <v-file-input
+            v-model="promoNew.coverFile"
+            label="Обложка для карточки"
+            filled
+            prepend-icon="mdi-camera"
+            show-size
+            accept=".png, .jpg, .jpeg, .gif"
+          ></v-file-input>
           <v-divider color="#333"></v-divider>
           <v-checkbox
             v-model="promoNew.isActive"
@@ -312,7 +290,7 @@
     </v-form>
 
     <v-btn
-      v-if="rubric && rubric.rubricid"
+      v-if="schema && schema.stockSchemaid"
       color="pink"
       dark
       fixed
@@ -388,7 +366,10 @@ export default {
   },
   methods: {
     save() {
-      if (!this.$refs.form.validate()) {
+      if (
+        (!this.isNew && !this.$refs.form.validate()) ||
+        (this.isNew && !this.$refs.form.validate())
+      ) {
         this.loading = false;
         return;
       }
@@ -398,14 +379,14 @@ export default {
       if (!promoObj.hasOwnProperty("isActive")) {
         promoObj["isActive"] = false;
       }
-      promoObj["rubricid"] = this.rubric.rubricid;
+      promoObj["stockSchemaid"] = this.schema.stockSchemaid;
       promoObj["startDt"] = this.date_from + "T00:00:00+03:00";
       promoObj["endDt"] = this.date_to + "T00:00:00+03:00";
       for (let key in promoObj) {
         if (promoObj.hasOwnProperty(key)) {
           if (
             [
-              "stockSchemaid",
+              "stockid",
               "publishedDt",
               "previewCoverUrl",
               "coverUrl",
@@ -417,34 +398,19 @@ export default {
           ) {
             if (key === "isActive") {
               if (promoObj[key]) {
-                formData.append(`promo[${key}]`, "1");
+                formData.append(`stock[${key}]`, "1");
               } else {
-                formData.append(`promo[${key}]`, "0");
-              }
-            } else if (key === "createNotification") {
-              if (promoObj[key]) {
-                formData.append(`promo[${key}]`, "1");
-              } else {
-                formData.append(`promo[${key}]`, "0");
+                formData.append(`stock[${key}]`, "0");
               }
             } else {
-              formData.append(`promo[${key}]`, promoObj[key]);
+              formData.append(`stock[${key}]`, promoObj[key]);
             }
-            // if (key === "isActive") {
-            //   if (promoObj[key]) {
-            //     formData.append(`promo[${key}]`, "1");
-            //   } else {
-            //     formData.append(`promo[${key}]`, "0");
-            //   }
-            // } else {
-            //   formData.append(`promo[${key}]`, promoObj[key]);
-            // }
           }
         }
       }
-      if (promoObj.stockSchemaid !== undefined) {
+      if (promoObj.stockid !== undefined) {
         this.$store
-          .dispatch("promos/updatePromos", {
+          .dispatch("mechanics/updatePromo", {
             data: formData,
             promo: promoObj
           })
@@ -473,7 +439,7 @@ export default {
           });
       } else {
         this.$store
-          .dispatch("promos/createPromos", formData)
+          .dispatch("mechanics/createPromo", formData)
           .then(() => {
             this.snackBar.value = true;
             this.snackBar.text = "Создано успешно";
@@ -502,7 +468,7 @@ export default {
     remove() {
       this.loading = true;
       this.$store
-        .dispatch("promos/deletePromos", this.promo)
+        .dispatch("mechanics/deletePromo", this.promo)
         .then(() => {
           this.deleteDialog = false;
           this.snackBar.value = true;
@@ -531,20 +497,19 @@ export default {
     create() {
       this.isNew = true;
       if (this.$refs.form) {
-        this.$refs.form.resetValidation();
+        // this.$refs.form.resetValidation();
       }
     }
   },
   computed: {
     ...mapState({
-      // promos: state => state.promos.promos,
-      promo: state => state.promos.onePromos,
-      rubric: state => state.heading.oneRubric,
+      promo: state => state.mechanics.oneStock,
+      schema: state => state.mechanics.oneSchema,
       snackBar: state => state.snackBar
     })
   },
   mounted() {
-    this.$store.dispatch("promos/getAllPromos");
+    this.$store.dispatch("mechanics/getAllSchemas");
   },
   watch: {
     promo(value) {
