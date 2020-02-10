@@ -97,7 +97,7 @@
       </v-row>
     </v-form>
 
-    <v-form ref="form" v-model="valid" lazy-validation v-if="isNew">
+    <v-form ref="form2" v-model="valid" lazy-validation v-if="isNew">
       <v-row>
         <v-col cols="12" sm="6" md="5">
           <v-text-field
@@ -202,7 +202,10 @@ export default {
   },
   methods: {
     save() {
-      if (!this.$refs.form.validate()) {
+      if (
+        (!this.isNew && !this.$refs.form.validate()) ||
+        (this.isNew && !this.$refs.form2.validate())
+      ) {
         this.loading = false;
         return;
       }
