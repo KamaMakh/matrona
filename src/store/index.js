@@ -6,6 +6,7 @@ import faqs from "./faqs";
 import shop from "./shop";
 import heading from "./heading";
 import promos from "./promos";
+import mechanics from "./mechanics";
 
 Vue.use(Vuex);
 
@@ -26,6 +27,7 @@ export default new Vuex.Store({
     faqs,
     shop,
     heading,
-    promos
+    promos,
+    mechanics
   }
 });

@@ -127,6 +127,22 @@
         </v-list-item-content>
       </v-list-item>
     </v-list>
+
+    <v-list v-else-if="$route.name === 'MainComponentShareMechs'" dense>
+      <v-list-item
+        v-for="(schema, key) in this.schemas"
+        :key="key"
+        link
+        class="elevation-3 mb-1"
+        @click="setSchema(schema)"
+      >
+        <v-list-item-content>
+          <v-list-item-title>
+            {{ schema.title }}
+          </v-list-item-title>
+        </v-list-item-content>
+      </v-list-item>
+    </v-list>
   </div>
 </template>
 
@@ -161,6 +177,9 @@ export default {
     },
     setPromo(promo) {
       this.$store.commit("promos/setPromo", promo);
+    },
+    setSchema(schema) {
+      this.$store.commit("mechanics/setSchema", schema);
     }
   },
   filters: {
@@ -175,6 +194,7 @@ export default {
   computed: {
     ...mapState({
       articles: state => state.news.news,
+      schemas: state => state.mechanics.schemas,
       faqs: state => state.faqs.faqs,
       stores: state => state.shop.stores,
       rubrics: state => state.heading.rubrics,
