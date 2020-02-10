@@ -1,31 +1,24 @@
 <template>
-  <div class="main-component-user-settings">
+  <div class="main-component-user-settings pl-10">
     <v-form ref="form" v-model="valid" lazy-validation>
       <v-row>
         <v-col cols="12" sm="6" md="5">
           <v-text-field
-            v-model="user_settings.user_name"
+            v-model="user.fullName"
             label="Имя пользователя"
             placeholder="Имя пользователя"
             :rules="rules"
           ></v-text-field>
           <v-text-field
-            v-model="user_settings.login"
+            v-model="user.email"
             label="Логин"
             placeholder="Логин"
             :rules="rules"
           ></v-text-field>
           <v-text-field
-            v-model="user_settings.password"
-            label="Текущий пароль"
-            placeholder="Текущий пароль"
-            :rules="rules"
-          ></v-text-field>
-          <v-text-field
-            v-model="user_settings.password_new"
+            v-model="user.password"
             label="Новый пароль"
             placeholder="Новый пароль"
-            :rules="rules"
           ></v-text-field>
         </v-col>
       </v-row>
@@ -47,11 +40,11 @@
 </template>
 
 <script>
+import { mapState } from "vuex";
 export default {
   name: "MainComponentUserSettings",
   data() {
     return {
-      user_settings: {},
       valid: true,
       rules: [v => !!v || "Required"],
       loading: false
@@ -63,12 +56,61 @@ export default {
         this.loading = false;
         return;
       }
-    },
-    create() {
-      this.$refs.form.resetValidation();
-      this.$refs.form.reset();
-      this.user_settings = {};
+      if (!this.$refs.form.validate()) {
+        this.loading = false;
+        return;
+      }
+      this.loading = true;
+      let formData = new FormData();
+
+      for (let key in this.user) {
+        if (this.user.hasOwnProperty(key)) {
+          if (
+            ["publishedDt", "createdDt", "updatedDt", "userid"].indexOf(key) < 0
+          ) {
+            formData.append(`user[${key}]`, this.user[key]);
+          }
+        }
+      }
+
+      this.$store
+        .dispatch("user/updateUser", {
+          data: formData,
+          user: this.user
+        })
+        .then(() => {
+          this.snackBar.value = true;
+          this.snackBar.text = "Настройки сохранены";
+          this.snackBar.color = "success";
+        })
+        .catch(error => {
+          if (
+            error.response &&
+            error.response.error &&
+            error.response.error.message
+          ) {
+            this.snackBar.value = true;
+            this.snackBar.text = error.response.error.message;
+            this.snackBar.color = "error";
+          } else {
+            this.snackBar.value = true;
+            this.snackBar.text = "Ошибка!";
+            this.snackBar.color = "error";
+          }
+        })
+        .finally(() => {
+          this.loading = false;
+        });
     }
+  },
+  computed: {
+    ...mapState({
+      user: state => state.user.user,
+      snackBar: state => state.snackBar
+    })
+  },
+  mounted() {
+    this.$store.dispatch("user/getUser");
   }
 };
 </script>

@@ -1,5 +1,5 @@
 <template>
-  <div class="main-component-settings">
+  <div class="main-component-settings pl-10">
     <v-form ref="form" v-model="valid" lazy-validation>
       <v-row>
         <v-col cols="12" sm="6" md="5">

@@ -1,5 +1,11 @@
 import api from "@/plugins/api";
-import { loginUrl, getSettingsUrl, editSettingsUrl } from "@/store/urls";
+import {
+  loginUrl,
+  getSettingsUrl,
+  editSettingsUrl,
+  getUserUrl,
+  editUserUrl
+} from "@/store/urls";
 // import router from "@/router";
 import VueCookies from "vue-cookies";
 
@@ -60,4 +66,38 @@ function updateSettings({ commit }, data) {
   });
 }
 
-export { login, getSettings, updateSettings };
+function getUser({ commit }) {
+  return new Promise((resolve, reject) => {
+    api
+      .get(getUserUrl)
+      .then(response => {
+        if (response.status === 200) {
+          commit("setUser", response.data.result);
+          resolve(response);
+        } else {
+          reject(response.data.message);
+        }
+      })
+      .catch(error => {
+        reject(error);
+      });
+  });
+}
+
+function updateUser({ commit }, data) {
+  return new Promise((resolve, reject) => {
+    api
+      .post(editUserUrl + data.user.userid + "/edit", data.data)
+      .then(response => {
+        if (response.status === 200) {
+          resolve(response);
+        } else {
+          reject(response);
+        }
+      })
+      .catch(error => {
+        reject(error);
+      });
+  });
+}
+export { login, getSettings, updateSettings, getUser, updateUser };

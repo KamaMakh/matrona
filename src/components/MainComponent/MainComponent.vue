@@ -15,7 +15,14 @@
     <v-content>
       <v-container class="fill-height" fluid>
         <v-row>
-          <v-col v-if="windowWidth > 960">
+          <v-col
+            v-if="
+              windowWidth > 960 &&
+                ['MainComponentSettings', 'MainComponentUserSettings'].indexOf(
+                  $route.name
+                ) === -1
+            "
+          >
             <MainComponentLeftNav />
           </v-col>
           <v-col xl="9" md="9" sm="12" xs="12">
