@@ -17,6 +17,7 @@
           ></v-text-field>
           <v-text-field
             v-model="user.password"
+            :rules="rules"
             label="Новый пароль"
             placeholder="Новый пароль"
           ></v-text-field>
