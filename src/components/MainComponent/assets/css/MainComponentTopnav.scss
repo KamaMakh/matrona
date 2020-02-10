@@ -5,6 +5,17 @@
     font-size: 13px;
     padding: 0 10px;
   }
+
+  .exit {
+    i {
+      line-height: normal;
+    }
+  }
+  .exit.v-list-item {
+    width: 100%;
+    justify-content: flex-start;
+    border-radius: 0;
+  }
 }
 
 @media (max-width: 960px) {

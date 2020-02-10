@@ -13,6 +13,9 @@
       >
         {{ item.title }}
       </v-btn>
+      <v-btn class="exit" text @click="exit">
+        <v-icon>mdi-exit-to-app</v-icon>
+      </v-btn>
     </v-slide-group>
     <v-list v-else dense>
       <v-list-item
@@ -28,11 +31,17 @@
           </v-list-item-title>
         </v-list-item-content>
       </v-list-item>
+      <v-btn class="exit v-list-item" text @click="exit">
+        <v-icon>mdi-exit-to-app</v-icon>
+      </v-btn>
     </v-list>
   </div>
 </template>
 
 <script>
+import Vue from "vue";
+import VueCookies from "vue-cookies";
+Vue.use(VueCookies);
 import "../assets/css/MainComponentTopnav.css";
 export default {
   name: "MainComponentTopNav",
@@ -77,6 +86,12 @@ export default {
         }
       ]
     };
+  },
+  methods: {
+    exit() {
+      VueCookies.remove("token");
+      this.$router.push("/auth");
+    }
   }
 };
 </script>
