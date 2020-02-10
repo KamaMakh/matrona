@@ -34,6 +34,12 @@ const getPromosUrl = `${serverUrl}/stock-schema/`;
 const editPromosUrl = `${serverUrl}/stock/`;
 const deletePromosUrl = `${serverUrl}/stock/`;
 
+const getSettingsUrl = `${serverUrl}/settings`;
+const editSettingsUrl = `${serverUrl}/settings/edit`;
+
+const getUserUrl = `${serverUrl}/user/current`;
+const editUserUrl = `${serverUrl}/user/`;
+
 export {
   serverUrl,
   loginUrl,
@@ -64,5 +70,9 @@ export {
   createPromosUrl,
   getPromosUrl,
   editPromosUrl,
-  deletePromosUrl
+  deletePromosUrl,
+  getSettingsUrl,
+  editSettingsUrl,
+  getUserUrl,
+  editUserUrl
 };

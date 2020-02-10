@@ -1,5 +1,5 @@
-function setCreatedNews() {
-  //ignore
+function setSettings(state, data) {
+  state.settings = data;
 }
 
-export { setCreatedNews };
+export { setSettings };

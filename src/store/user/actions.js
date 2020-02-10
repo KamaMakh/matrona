@@ -1,5 +1,5 @@
 import api from "@/plugins/api";
-import { loginUrl } from "@/store/urls";
+import { loginUrl, getSettingsUrl, editSettingsUrl } from "@/store/urls";
 // import router from "@/router";
 import VueCookies from "vue-cookies";
 
@@ -25,4 +25,39 @@ function login({ commit }, data) {
   });
 }
 
-export { login };
+function getSettings({ commit }) {
+  return new Promise((resolve, reject) => {
+    api
+      .get(getSettingsUrl)
+      .then(response => {
+        if (response.status === 200) {
+          commit("setSettings", response.data.result);
+          resolve(response);
+        } else {
+          reject(response.data.message);
+        }
+      })
+      .catch(error => {
+        reject(error);
+      });
+  });
+}
+
+function updateSettings({ commit }, data) {
+  return new Promise((resolve, reject) => {
+    api
+      .post(editSettingsUrl, data.data)
+      .then(response => {
+        if (response.status === 200) {
+          resolve(response);
+        } else {
+          reject(response);
+        }
+      })
+      .catch(error => {
+        reject(error);
+      });
+  });
+}
+
+export { login, getSettings, updateSettings };
