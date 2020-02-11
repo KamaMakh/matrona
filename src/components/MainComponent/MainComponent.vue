@@ -4,7 +4,7 @@
       <MainComponentTopNav />
     </v-navigation-drawer>
 
-    <v-app-bar app color="indigo" dark max-width="100%">
+    <v-app-bar app color="#80deea" dark max-width="100%">
       <v-app-bar-nav-icon
         v-if="windowWidth < 961"
         @click.stop="drawer = !drawer"
@@ -32,7 +32,7 @@
         </v-row>
       </v-container>
     </v-content>
-    <v-footer color="indigo" app>
+    <v-footer color="#80deea" app>
       <span class="white--text">&copy; 2020</span>
     </v-footer>
   </div>

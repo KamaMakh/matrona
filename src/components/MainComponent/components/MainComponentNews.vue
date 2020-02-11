@@ -7,7 +7,7 @@
       lazy-validation
     >
       <v-row>
-        <v-col cols="12" sm="12" md="5" xs="12">
+        <v-col cols="12" sm="12" md="8" xs="12">
           <v-text-field
             v-model="article.articletitleShort"
             label="Кароткий заголовок для картинки"

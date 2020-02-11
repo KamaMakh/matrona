@@ -1,6 +1,6 @@
 <template>
   <div class="auth-component-login">
-    <v-card :elevation="6" class="mx-auto" max-width="344" outlined>
+    <v-card :elevation="6" class="mx-auto" max-width="500" outlined>
       <v-card-text>
         <v-form ref="form" v-model="valid" lazy-validation>
           <v-text-field
@@ -65,8 +65,12 @@ export default {
           this.$router.push({ name: "MainComponentNews" });
         })
         /* eslint-disable */
-        .catch((error) => {
-          if(error.response && error.response.error && error.response.error.message) {
+        .catch(error => {
+          if (
+            error.response &&
+            error.response.error &&
+            error.response.error.message
+          ) {
             this.snackBar.value = true;
             this.snackBar.text = error.response.error.message;
             this.snackBar.color = "error";

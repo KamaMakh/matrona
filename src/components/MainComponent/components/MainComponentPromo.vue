@@ -7,7 +7,7 @@
       lazy-validation
     >
       <v-row>
-        <v-col cols="12" sm="6" md="5">
+        <v-col cols="12" sm="12" md="8">
           <v-row>
             <v-col>
               <v-menu

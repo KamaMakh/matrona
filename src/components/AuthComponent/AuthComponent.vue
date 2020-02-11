@@ -10,4 +10,13 @@ export default {
 };
 </script>
 
-<style scoped lang="scss"></style>
+<style scoped lang="scss">
+.auth-component {
+  min-width: 50%;
+}
+@media (max-width: 500px) {
+  .auth-component {
+    min-width: 80% !important;
+  }
+}
+</style>
