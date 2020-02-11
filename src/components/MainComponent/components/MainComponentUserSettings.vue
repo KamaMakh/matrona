@@ -18,8 +18,16 @@
           <v-text-field
             v-model="user.password"
             :rules="rules"
+            type="password"
             label="Новый пароль"
             placeholder="Новый пароль"
+          ></v-text-field>
+          <v-text-field
+            v-model="user.c_password"
+            :rules="c_passwordRules"
+            type="password"
+            label="Подтвердите пароль"
+            placeholder="Подтвердите пароль"
           ></v-text-field>
         </v-col>
       </v-row>
@@ -47,7 +55,11 @@ export default {
   data() {
     return {
       valid: true,
-      rules: [v => !!v || "Required"],
+      rules: [v => !!v || "Оябязательно для заполнения"],
+      c_passwordRules: [
+        v => !!v || "Поле обязательное",
+        v => (v && v === this.user.password) || "Пароли не совпадают"
+      ],
       loading: false
     };
   },
@@ -67,7 +79,13 @@ export default {
       for (let key in this.user) {
         if (this.user.hasOwnProperty(key)) {
           if (
-            ["publishedDt", "createdDt", "updatedDt", "userid"].indexOf(key) < 0
+            [
+              "publishedDt",
+              "createdDt",
+              "updatedDt",
+              "userid",
+              "c_password"
+            ].indexOf(key) < 0
           ) {
             formData.append(`user[${key}]`, this.user[key]);
           }

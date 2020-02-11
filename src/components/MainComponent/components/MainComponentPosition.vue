@@ -33,6 +33,7 @@
                   :max="date_to"
                   no-title
                   scrollable
+                  locale="ru"
                 >
                   <v-spacer></v-spacer>
                   <v-btn text color="primary" @click="menu = false"
@@ -71,6 +72,7 @@
                   :min="date_from"
                   no-title
                   scrollable
+                  locale="ru"
                 >
                   <v-spacer></v-spacer>
                   <v-btn text color="primary" @click="menu2 = false"
@@ -209,6 +211,7 @@
                 <v-date-picker
                   v-model="date_from"
                   :max="date_to"
+                  locale="ru"
                   no-title
                   scrollable
                 >
@@ -247,6 +250,7 @@
                 <v-date-picker
                   v-model="date_to"
                   :min="date_from"
+                  locale="ru"
                   no-title
                   scrollable
                 >
@@ -398,7 +402,7 @@ export default {
       date_from: new Date().toISOString().substr(0, 10),
       date_to: new Date().toISOString().substr(0, 10),
       valid: true,
-      rules: [v => !!v || "Required"],
+      rules: [v => !!v || "Обязательно для заполнения"],
       loading: false,
       menu: false,
       menu2: false,
