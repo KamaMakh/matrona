@@ -13,7 +13,7 @@
             v-model="user.email"
             label="Логин"
             placeholder="Логин"
-            :rules="rules"
+            :rules="emailRules"
           ></v-text-field>
           <v-text-field
             v-model="user.password"
@@ -59,6 +59,10 @@ export default {
       c_passwordRules: [
         v => !!v || "Поле обязательное",
         v => (v && v === this.user.password) || "Пароли не совпадают"
+      ],
+      emailRules: [
+        v => !!v || "Оябязательно для заполнения",
+        v => /.+@.+\..+/.test(v) || "E-mail не валидный"
       ],
       loading: false
     };

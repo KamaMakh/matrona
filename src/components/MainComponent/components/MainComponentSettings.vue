@@ -12,12 +12,14 @@
           <v-text-field
             v-model="settings.settingsPhone1"
             label="Телефон 1"
+            v-mask="mask"
             placeholder="Телефон 1"
             :rules="rules"
           ></v-text-field>
           <v-text-field
             v-model="settings.settingsPhone2"
             label="Телефон 2"
+            v-mask="mask"
             placeholder="Телефон 2"
             :rules="rules"
           ></v-text-field>
@@ -37,7 +39,7 @@
             v-model="settings.settingsEmail"
             label="Email поддержки"
             placeholder="Email поддержки"
-            :rules="rules"
+            :rules="emailRules"
           ></v-text-field>
         </v-col>
       </v-row>
@@ -60,13 +62,22 @@
 
 <script>
 import { mapState } from "vuex";
+import { mask } from "vue-the-mask";
 export default {
   name: "MainComponentSettings",
+  directives: {
+    mask
+  },
   data() {
     return {
       valid: true,
       rules: [v => !!v || "Required"],
-      loading: false
+      emailRules: [
+        v => !!v || "Оябязательно для заполнения",
+        v => /.+@.+\..+/.test(v) || "E-mail не валидный"
+      ],
+      loading: false,
+      mask: "+7-###-###-##-##"
     };
   },
   methods: {

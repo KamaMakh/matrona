@@ -37,13 +37,13 @@
                 >
                   <v-spacer></v-spacer>
                   <v-btn text color="primary" @click="menu = false"
-                    >Cancel</v-btn
+                    >Отмена</v-btn
                   >
                   <v-btn
                     text
                     color="primary"
                     @click="$refs.menu.save(date_from)"
-                    >OK</v-btn
+                    >ОК</v-btn
                   >
                 </v-date-picker>
               </v-menu>
@@ -76,10 +76,10 @@
                 >
                   <v-spacer></v-spacer>
                   <v-btn text color="primary" @click="menu2 = false"
-                    >Cancel</v-btn
+                    >Отмена</v-btn
                   >
                   <v-btn text color="primary" @click="$refs.menu2.save(date_to)"
-                    >OK</v-btn
+                    >ОК</v-btn
                   >
                 </v-date-picker>
               </v-menu>
@@ -217,13 +217,13 @@
                 >
                   <v-spacer></v-spacer>
                   <v-btn text color="primary" @click="menu3 = false"
-                    >Cancel</v-btn
+                    >Отмена</v-btn
                   >
                   <v-btn
                     text
                     color="primary"
                     @click="$refs.menu3.save(date_from)"
-                    >OK</v-btn
+                    >ОК</v-btn
                   >
                 </v-date-picker>
               </v-menu>
@@ -256,10 +256,10 @@
                 >
                   <v-spacer></v-spacer>
                   <v-btn text color="primary" @click="menu4 = false"
-                    >Cancel</v-btn
+                    >Отмена</v-btn
                   >
                   <v-btn text color="primary" @click="$refs.menu4.save(date_to)"
-                    >OK</v-btn
+                    >ОК</v-btn
                   >
                 </v-date-picker>
               </v-menu>

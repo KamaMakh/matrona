@@ -33,16 +33,17 @@
                   :max="date_to"
                   no-title
                   scrollable
+                  locale="ru"
                 >
                   <v-spacer></v-spacer>
                   <v-btn text color="primary" @click="menu = false"
-                    >Cancel</v-btn
+                    >Отмена</v-btn
                   >
                   <v-btn
                     text
                     color="primary"
                     @click="$refs.menu.save(date_from)"
-                    >OK</v-btn
+                    >ОК</v-btn
                   >
                 </v-date-picker>
               </v-menu>
@@ -71,30 +72,31 @@
                   :min="date_from"
                   no-title
                   scrollable
+                  locale="ru"
                 >
                   <v-spacer></v-spacer>
                   <v-btn text color="primary" @click="menu2 = false"
-                    >Cancel</v-btn
+                    >Отмена</v-btn
                   >
                   <v-btn text color="primary" @click="$refs.menu2.save(date_to)"
-                    >OK</v-btn
+                    >ОК</v-btn
                   >
                 </v-date-picker>
               </v-menu>
             </v-col>
           </v-row>
-          <v-text-field
+          <v-textarea
             v-model="promo.description"
             label="Описание"
             placeholder="Описание"
             :rules="rules"
-          ></v-text-field>
-          <v-text-field
+          ></v-textarea>
+          <v-textarea
             v-model="promo.limitation"
             label="Ограничения"
             placeholder="Ограничения"
             :rules="rules"
-          ></v-text-field>
+          ></v-textarea>
           <v-text-field
             v-model="promo.position"
             label="Позиция"
@@ -122,13 +124,6 @@
               ></v-file-input>
             </v-col>
           </v-row>
-          <!-- <v-file-input
-            v-model="promo.coverFile"
-            label="Обложка"
-            filled
-            prepend-icon="mdi-camera"
-            show-size
-          ></v-file-input> -->
           <v-divider color="#333"></v-divider>
           <v-checkbox
             v-model="promo.isActive"
@@ -188,16 +183,17 @@
                   :max="date_to"
                   no-title
                   scrollable
+                  locale="ru"
                 >
                   <v-spacer></v-spacer>
                   <v-btn text color="primary" @click="menu3 = false"
-                    >Cancel</v-btn
+                    >Отмена</v-btn
                   >
                   <v-btn
                     text
                     color="primary"
                     @click="$refs.menu3.save(date_from)"
-                    >OK</v-btn
+                    >ОК</v-btn
                   >
                 </v-date-picker>
               </v-menu>
@@ -226,13 +222,14 @@
                   :min="date_from"
                   no-title
                   scrollable
+                  locale="ru"
                 >
                   <v-spacer></v-spacer>
                   <v-btn text color="primary" @click="menu4 = false"
-                    >Cancel</v-btn
+                    >Отмена</v-btn
                   >
                   <v-btn text color="primary" @click="$refs.menu4.save(date_to)"
-                    >OK</v-btn
+                    >ОК</v-btn
                   >
                 </v-date-picker>
               </v-menu>
