@@ -89,7 +89,7 @@
               </v-col>
               <v-col>
                 <v-text-field
-                  v-model="article.video_link"
+                  v-model="article.videoLink"
                   label="Адрес видео-обложки"
                   placeholder="Введите ссылку"
                   hide-details
@@ -125,7 +125,6 @@
       <v-row>
         <v-col cols="6" sm="12">
           <v-btn
-            small
             color="primary"
             class="mr-md-4 mr-lg-4 mr-sm-0 mb-4"
             @click="save"
@@ -134,7 +133,6 @@
             >Сохранить</v-btn
           >
           <v-btn
-            small
             color="error"
             class="mb-4"
             @click="deleteDialog = true"
@@ -212,7 +210,7 @@
               </v-col>
               <v-col>
                 <v-text-field
-                  v-model="articleNew.video_link"
+                  v-model="articleNew.videoLink"
                   label="Адрес видео-обложки"
                   placeholder="Введите ссылку"
                   hide-details
@@ -248,7 +246,6 @@
       <v-row>
         <v-col cols="6" sm="12">
           <v-btn
-            small
             color="primary"
             class="mr-md-4 mr-lg-4 mr-sm-0 mb-4"
             @click="save"
@@ -331,8 +328,7 @@ export default {
               "updatedDt",
               "articleid",
               "cover",
-              "previewCover",
-              "video_link"
+              "previewCover"
             ].indexOf(key) < 0
           ) {
             if (key === "articleStatus") {

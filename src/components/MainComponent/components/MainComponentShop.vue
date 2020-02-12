@@ -79,7 +79,6 @@
       <v-row>
         <v-col cols="6" sm="12">
           <v-btn
-            small
             color="primary"
             class="mr-md-4 mr-lg-4 mr-sm-0 mb-4"
             @click="save"
@@ -88,7 +87,6 @@
             >Сохранить</v-btn
           >
           <v-btn
-            small
             color="error"
             class="mb-4"
             @click="deleteDialog = true"
@@ -173,16 +171,12 @@
       <v-row>
         <v-col cols="6" sm="12">
           <v-btn
-            small
             color="primary"
             class="mr-md-4 mr-lg-4 mr-sm-0 mb-4"
             @click="save"
             :disabled="!valid"
             :loading="loading"
             >Сохранить</v-btn
-          >
-          <v-btn small color="error" class="mb-4" @click="remove"
-            >Удалить</v-btn
           >
         </v-col>
       </v-row>

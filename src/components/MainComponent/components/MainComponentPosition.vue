@@ -34,6 +34,7 @@
                   no-title
                   scrollable
                   locale="ru"
+                  first-day-of-week="1"
                 >
                   <v-spacer></v-spacer>
                   <v-btn text color="primary" @click="menu = false"
@@ -73,6 +74,7 @@
                   no-title
                   scrollable
                   locale="ru"
+                  first-day-of-week="1"
                 >
                   <v-spacer></v-spacer>
                   <v-btn text color="primary" @click="menu2 = false"
@@ -165,7 +167,6 @@
       <v-row>
         <v-col cols="6" sm="12">
           <v-btn
-            small
             color="primary"
             class="mr-md-4 mr-lg-4 mr-sm-0 mb-4"
             @click="save"
@@ -176,7 +177,6 @@
           <v-btn
             @click="deleteDialog = true"
             :loading="loading"
-            small
             color="error"
             class="mb-4"
             >Удалить</v-btn
@@ -214,6 +214,7 @@
                   locale="ru"
                   no-title
                   scrollable
+                  first-day-of-week="1"
                 >
                   <v-spacer></v-spacer>
                   <v-btn text color="primary" @click="menu3 = false"
@@ -253,6 +254,7 @@
                   locale="ru"
                   no-title
                   scrollable
+                  first-day-of-week="1"
                 >
                   <v-spacer></v-spacer>
                   <v-btn text color="primary" @click="menu4 = false"
@@ -334,7 +336,6 @@
       <v-row>
         <v-col cols="6" sm="12">
           <v-btn
-            small
             color="primary"
             class="mr-md-4 mr-lg-4 mr-sm-0 mb-4"
             @click="save"
