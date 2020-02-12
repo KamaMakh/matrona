@@ -106,7 +106,7 @@
             type="number"
             :rules="rules"
           ></v-text-field>
-          <v-row class="align-center mb-5">
+          <v-row class="align-center">
             <v-col v-if="promo.stockSchemaid && this.promo.cover" cols="2">
               <viewer
                 class="main-component-promo__viewer"
@@ -157,7 +157,7 @@
 
     <v-form ref="form2" v-if="isNew" v-model="valid" lazy-validation>
       <v-row>
-        <v-col cols="12" sm="6" md="5">
+        <v-col cols="12" sm="12" md="8">
           <v-row>
             <v-col>
               <v-menu

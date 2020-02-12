@@ -10,7 +10,7 @@
         <v-col cols="12" sm="12" md="8" xs="12">
           <v-text-field
             v-model="article.articletitleShort"
-            label="Кароткий заголовок для картинки"
+            label="Короткий заголовок для картинки"
             placeholder="Введите кароткий заголовок"
             :rules="rules"
           ></v-text-field>
@@ -33,8 +33,12 @@
             v-model="article.articlecontent"
             :rules="rules"
           ></v-textarea>
-          <v-row class="align-center mb-5">
-            <v-col v-if="article.articleid && this.article.cover" cols="2">
+          <v-row class="align-center">
+            <v-col
+              v-if="article.articleid && this.article.cover"
+              cols="2"
+              sm="1"
+            >
               <viewer
                 class="main-component-news__viewer"
                 :images="[serverUrl + this.article.coverUrl]"
@@ -54,16 +58,16 @@
             </v-col>
           </v-row>
           <v-divider color="#333"></v-divider>
-          <v-radio-group
-            class="mt-10 mb-8"
-            v-model="article.articlecoverType"
-            :rules="rules"
-          >
-            <v-row class="align-center mb-12">
+          <v-radio-group v-model="article.articlecoverType" :rules="rules">
+            <v-row class="align-center">
               <v-col cols="2" sm="1">
                 <v-radio :value="'image'"></v-radio>
               </v-col>
-              <v-col v-if="article.articleid && this.article.cover" cols="2">
+              <v-col
+                v-if="article.articleid && this.article.cover"
+                cols="2"
+                sm="1"
+              >
                 <viewer
                   class="main-component-news__viewer"
                   :images="[serverUrl + this.article.coverUrl]"
@@ -84,7 +88,7 @@
               </v-col>
             </v-row>
             <v-row class="align-center">
-              <v-col cols="2">
+              <v-col cols="2" sm="1">
                 <v-radio :value="'video'"></v-radio>
               </v-col>
               <v-col>
@@ -98,12 +102,7 @@
             </v-row>
           </v-radio-group>
           <v-divider color="#333"></v-divider>
-          <v-radio-group
-            class="mt-6"
-            v-model="article.articleType"
-            row
-            :rules="rules"
-          >
+          <v-radio-group v-model="article.articleType" row :rules="rules">
             <v-radio :value="1" label="Новость"></v-radio>
             <v-radio :value="2" label="Статья"></v-radio>
           </v-radio-group>
@@ -144,10 +143,10 @@
     </v-form>
     <v-form ref="form2" v-if="isNew" v-model="valid" lazy-validation>
       <v-row>
-        <v-col cols="12" sm="8" md="5">
+        <v-col cols="12" sm="12" md="8">
           <v-text-field
             v-model="articleNew.articletitleShort"
-            label="Кароткий заголовок для картинки"
+            label="Короткий заголовок для картинки"
             placeholder="Введите кароткий заголовок"
             :rules="rules"
           ></v-text-field>
@@ -170,7 +169,7 @@
             v-model="articleNew.articlecontent"
             :rules="rules"
           ></v-textarea>
-          <v-row class="align-center mb-5">
+          <v-row class="align-center">
             <v-col>
               <v-file-input
                 v-model="articleNew.previewCoverFile"
@@ -183,12 +182,8 @@
             </v-col>
           </v-row>
           <v-divider color="#333"></v-divider>
-          <v-radio-group
-            class="mt-10 mb-8"
-            v-model="articleNew.articlecoverType"
-            :rules="rules"
-          >
-            <v-row class="align-center mb-12">
+          <v-radio-group v-model="articleNew.articlecoverType" :rules="rules">
+            <v-row class="align-center">
               <v-col cols="2">
                 <v-radio :value="'image'"></v-radio>
               </v-col>
