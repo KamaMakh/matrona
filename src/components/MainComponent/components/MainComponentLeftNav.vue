@@ -34,10 +34,13 @@
     </div>
     <v-list v-if="$route.name === 'MainComponentNews'" dense>
       <v-list-item
-        v-for="(article, key) in this.articles"
+        v-for="(article, key) in articles"
         :key="key"
         link
         class="elevation-3 mb-1"
+        :class="{
+          active: $store.state.news.oneNews.articleid === article.articleid
+        }"
         @click="setArticle(article)"
       >
         <v-list-item-content>
@@ -50,10 +53,11 @@
 
     <v-list v-else-if="$route.name === 'MainComponentFaq'" dense>
       <v-list-item
-        v-for="(faq, key) in this.faqs"
+        v-for="(faq, key) in faqs"
         :key="key"
         link
         class="elevation-3 mb-1"
+        :class="{ active: $store.state.faqs.oneFaqs.faqid === faq.faqid }"
         @click="setFaq(faq)"
       >
         <v-list-item-content>
@@ -66,10 +70,13 @@
 
     <v-list v-else-if="$route.name === 'MainComponentShop'" dense>
       <v-list-item
-        v-for="(store, key) in this.stores"
+        v-for="(store, key) in stores"
         :key="key"
         link
         class="elevation-3 mb-1"
+        :class="{
+          active: $store.state.shop.oneStore.storeid === store.storeid
+        }"
         @click="setStore(store)"
       >
         <v-list-item-content>
@@ -82,10 +89,13 @@
 
     <v-list v-else-if="$route.name === 'MainComponentHeading'" dense>
       <v-list-item
-        v-for="(rubric, key) in this.rubrics"
+        v-for="(rubric, key) in rubrics"
         :key="key"
         link
         class="elevation-3 mb-1"
+        :class="{
+          active: $store.state.heading.oneRubric.rubricid === rubric.rubricid
+        }"
         @click="setRubric(rubric)"
       >
         <v-list-item-content>
@@ -98,10 +108,14 @@
 
     <v-list v-else-if="$route.name === 'MainComponentPosition'" dense>
       <v-list-item
-        v-for="(price, key) in this.prices"
+        v-for="(price, key) in prices"
         :key="key"
         link
         class="elevation-3 mb-1"
+        :class="{
+          active:
+            $store.state.heading.oneSpecPrice.specPriceid === price.specPriceid
+        }"
         @click="setPrice(price)"
       >
         <v-list-item-content>
@@ -110,14 +124,23 @@
           </v-list-item-title>
         </v-list-item-content>
       </v-list-item>
+      <div
+        v-if="prices && !prices.length"
+        class="empty-text text-center align-center"
+      >
+        В этой рубрике еще нет ни одной спец цены
+      </div>
     </v-list>
 
     <v-list v-else-if="$route.name === 'MainComponentPromo'" dense>
       <v-list-item
-        v-for="(promo, key) in this.promos"
+        v-for="(promo, key) in promos"
         :key="key"
         link
         class="elevation-3 mb-1"
+        :class="{
+          active: $store.state.mechanics.oneStock.stockid === promo.stockid
+        }"
         @click="setPromo(promo)"
       >
         <v-list-item-content>
@@ -126,14 +149,25 @@
           </v-list-item-title>
         </v-list-item-content>
       </v-list-item>
+      <div
+        v-if="promos && !promos.length"
+        class="empty-text text-center align-center"
+      >
+        В этой механике еще нет ни одной акции
+      </div>
     </v-list>
 
     <v-list v-else-if="$route.name === 'MainComponentShareMechs'" dense>
       <v-list-item
-        v-for="(schema, key) in this.schemas"
+        v-for="(schema, key) in schemas"
         :key="key"
         link
         class="elevation-3 mb-1"
+        :class="{
+          active:
+            $store.state.mechanics.oneSchema.stockSchemaid ===
+            schema.stockSchemaid
+        }"
         @click="setSchema(schema)"
       >
         <v-list-item-content>

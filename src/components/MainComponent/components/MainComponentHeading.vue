@@ -160,7 +160,7 @@ export default {
     return {
       heading: {},
       valid: true,
-      rules: [v => !!v || "Required"],
+      rules: [v => !!v || "Оябязательно для заполнения"],
       loading: false,
       isNew: false,
       rubricNew: {},

@@ -1,5 +1,5 @@
 <template>
-  <div class="main-component">
+  <div class="main-component" :class="{ opacity: opacity }">
     <v-navigation-drawer v-if="windowWidth < 961" v-model="drawer" app>
       <MainComponentTopNav />
     </v-navigation-drawer>
@@ -49,8 +49,19 @@ export default {
   },
   data() {
     return {
-      drawer: null
+      drawer: null,
+      opacity: true
     };
+  },
+  mounted() {
+    this.$store.dispatch("news/getAllNews").then(() => {
+      this.opacity = false;
+    });
   }
 };
 </script>
+<style lang="scss">
+.opacity {
+  opacity: 0 !important;
+}
+</style>

@@ -2,12 +2,18 @@
   <div class="auth-component-login">
     <v-card :elevation="6" class="mx-auto" max-width="500" outlined>
       <v-card-text>
-        <v-form ref="form" v-model="valid" lazy-validation>
+        <v-form
+          @submit.prevent="login"
+          ref="form"
+          v-model="valid"
+          lazy-validation
+        >
           <v-text-field
             v-model="form.login"
             :rules="rules"
             label="Логин"
             required
+            @keyup.enter="login"
           ></v-text-field>
 
           <v-text-field
@@ -17,6 +23,7 @@
             label="Пароль"
             class="password"
             required
+            @keyup.enter="login"
           ></v-text-field>
 
           <div class="text-center">
@@ -45,7 +52,7 @@ export default {
     return {
       valid: true,
       form: {},
-      rules: [v => !!v || "Required"],
+      rules: [v => !!v || "Обязательно для заполнения"],
       loading: false
     };
   },

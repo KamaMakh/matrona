@@ -70,7 +70,7 @@ export default {
   data() {
     return {
       valid: true,
-      rules: [v => !!v || "Required"],
+      rules: [v => !!v || "Оябязательно для заполнения"],
       emailRules: [
         v => !!v || "Оябязательно для заполнения",
         v => /.+@.+\..+/.test(v) || "E-mail не валидный"
@@ -136,7 +136,9 @@ export default {
     })
   },
   mounted() {
-    this.$store.dispatch("user/getSettings");
+    if (this.settings.settingsid === undefined) {
+      this.$store.dispatch("user/getSettings");
+    }
   }
 };
 </script>

@@ -343,7 +343,7 @@ export default {
       date_from: new Date().toISOString().substr(0, 10),
       date_to: new Date().toISOString().substr(0, 10),
       valid: true,
-      rules: [v => !!v || "Required"],
+      rules: [v => !!v || "Оябязательно для заполнения"],
       loading: false,
       menu: false,
       menu2: false,

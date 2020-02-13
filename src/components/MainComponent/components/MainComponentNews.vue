@@ -286,7 +286,7 @@ export default {
   data() {
     return {
       valid: true,
-      rules: [v => !!v || "Required"],
+      rules: [v => !!v || "Оябязательно для заполнения"],
       loading: false,
       serverUrl: serverUrl,
       isNew: false,

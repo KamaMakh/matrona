@@ -219,7 +219,7 @@ export default {
     return {
       mask: "+7-###-###-##-##",
       valid: true,
-      rules: [v => !!v || "Required"],
+      rules: [v => !!v || "Оябязательно для заполнения"],
       loading: false,
       isNew: false,
       storeNew: {},
