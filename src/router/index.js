@@ -21,9 +21,10 @@ const routes = [
   {
     path: "/",
     component: Main,
+    redirect: { name: "MainComponentNews" },
     children: [
       {
-        path: "/",
+        path: "/news",
         name: "MainComponentNews",
         component: MainComponentNews
       },
