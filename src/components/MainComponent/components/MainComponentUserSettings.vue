@@ -54,13 +54,13 @@ export default {
   data() {
     return {
       valid: true,
-      rules: [v => !!v || "Оябязательно для заполнения"],
+      rules: [v => !!v || "Обязательно для заполнения"],
       c_passwordRules: [
         v => !!v || "Поле обязательное",
         v => (v && v === this.user.password) || "Пароли не совпадают"
       ],
       emailRules: [
-        v => !!v || "Оябязательно для заполнения",
+        v => !!v || "Обязательно для заполнения",
         v => /.+@.+\..+/.test(v) || "E-mail не валидный"
       ],
       loading: false

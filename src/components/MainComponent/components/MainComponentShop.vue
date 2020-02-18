@@ -54,11 +54,11 @@
           ></v-text-field>
 
           <v-divider color="#333"></v-divider>
-          <v-checkbox
-            v-model="shop.createNotification"
-            class="mx-2"
-            label="Мобильное уведомление"
-          ></v-checkbox>
+          <!--<v-checkbox-->
+          <!--v-model="shop.createNotification"-->
+          <!--class="mx-2"-->
+          <!--label="Мобильное уведомление"-->
+          <!--&gt;</v-checkbox>-->
           <v-divider color="#333"></v-divider>
           <v-checkbox
             v-model="shop.isActive"
@@ -219,7 +219,7 @@ export default {
     return {
       mask: "+7-###-###-##-##",
       valid: true,
-      rules: [v => !!v || "Оябязательно для заполнения"],
+      rules: [v => !!v || "Обязательно для заполнения"],
       loading: false,
       isNew: false,
       storeNew: {},
@@ -306,6 +306,7 @@ export default {
             this.snackBar.value = true;
             this.snackBar.text = "Создано успешно";
             this.snackBar.color = "success";
+            this.create();
           })
           .catch(error => {
             if (
@@ -371,7 +372,11 @@ export default {
     })
   },
   mounted() {
-    this.$store.dispatch("shop/getAllStores");
+    this.$store.dispatch("shop/getAllStores").then(response => {
+      if (response.data.result && !response.data.result.length) {
+        this.create();
+      }
+    });
   },
   watch: {
     shop() {

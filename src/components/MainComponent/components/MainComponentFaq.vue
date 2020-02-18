@@ -132,7 +132,7 @@ export default {
   data() {
     return {
       valid: true,
-      rules: [v => !!v || "Оябязательно для заполнения"],
+      rules: [v => !!v || "Обязательно для заполнения"],
       loading: false,
       serverUrl: serverUrl,
       isNew: false,
@@ -208,6 +208,7 @@ export default {
             this.snackBar.value = true;
             this.snackBar.text = "Создано успешно";
             this.snackBar.color = "success";
+            this.create();
           })
           .catch(error => {
             if (
@@ -273,7 +274,11 @@ export default {
     })
   },
   mounted() {
-    this.$store.dispatch("faqs/getAllFaqs");
+    this.$store.dispatch("faqs/getAllFaqs").then(response => {
+      if (response.data.result && !response.data.result.length) {
+        this.create();
+      }
+    });
   },
   watch: {
     faq() {

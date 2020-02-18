@@ -37,7 +37,7 @@
             <v-col
               v-if="article.articleid && this.article.cover"
               cols="2"
-              sm="1"
+              sm="5"
             >
               <viewer
                 class="main-component-news__viewer"
@@ -66,7 +66,7 @@
               <v-col
                 v-if="article.articleid && this.article.cover"
                 cols="2"
-                sm="1"
+                sm="5"
               >
                 <viewer
                   class="main-component-news__viewer"
@@ -97,6 +97,7 @@
                   label="Адрес видео-обложки"
                   placeholder="Введите ссылку"
                   hide-details
+                  :rules="urlRules"
                 ></v-text-field>
               </v-col>
             </v-row>
@@ -107,11 +108,11 @@
             <v-radio :value="2" label="Статья"></v-radio>
           </v-radio-group>
           <v-divider color="#333"></v-divider>
-          <v-checkbox
-            v-model="article.createNotification"
-            class="mx-2"
-            label="Мобильное уведомление"
-          ></v-checkbox>
+          <!--<v-checkbox-->
+          <!--v-model="article.createNotification"-->
+          <!--class="mx-2"-->
+          <!--label="Мобильное уведомление"-->
+          <!--&gt;</v-checkbox>-->
           <v-divider color="#333"></v-divider>
           <v-checkbox
             v-model="article.articleStatus"
@@ -207,6 +208,7 @@
                 <v-text-field
                   v-model="articleNew.videoLink"
                   label="Адрес видео-обложки"
+                  :rules="urlRules"
                   placeholder="Введите ссылку"
                   hide-details
                 ></v-text-field>
@@ -286,7 +288,25 @@ export default {
   data() {
     return {
       valid: true,
-      rules: [v => !!v || "Оябязательно для заполнения"],
+      rules: [v => !!v || "Обязательно для заполнения"],
+      urlRules: [
+        str => {
+          let pattern = new RegExp(
+            "^(https?:\\/\\/)?" + // protocol
+            "((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|" + // domain name
+            "((\\d{1,3}\\.){3}\\d{1,3}))" + // OR ip (v4) address
+            "(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*" + // port and path
+            "(\\?[;&a-z\\d%_.~+=-]*)?" + // query string
+              "(\\#[-a-z\\d_]*)?$",
+            "i"
+          ); // fragment locator
+          if (str) {
+            return !!pattern.test(str) || "URL не валидный";
+          } else {
+            return true;
+          }
+        }
+      ],
       loading: false,
       serverUrl: serverUrl,
       isNew: false,
@@ -380,6 +400,7 @@ export default {
             this.snackBar.value = true;
             this.snackBar.text = "Создано успешно";
             this.snackBar.color = "success";
+            this.create();
           })
           .catch(error => {
             if (
@@ -445,7 +466,11 @@ export default {
     })
   },
   mounted() {
-    this.$store.dispatch("news/getAllNews");
+    this.$store.dispatch("news/getAllNews").then(response => {
+      if (response.data.result && !response.data.result.length) {
+        this.create();
+      }
+    });
   },
   watch: {
     article() {

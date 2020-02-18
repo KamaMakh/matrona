@@ -328,6 +328,12 @@
           </v-row>
           <v-divider color="#333"></v-divider>
           <v-checkbox
+            v-model="specPriceNew.createNotification"
+            class="mx-2"
+            label="Мобильное уведомление"
+          ></v-checkbox>
+          <v-divider color="#333"></v-divider>
+          <v-checkbox
             v-model="specPriceNew.isActive"
             class="mx-2"
             label="Опубликовать"
@@ -503,6 +509,7 @@ export default {
             this.snackBar.value = true;
             this.snackBar.text = "Создано успешно";
             this.snackBar.color = "success";
+            this.create();
           })
           .catch(error => {
             if (
@@ -568,7 +575,11 @@ export default {
     })
   },
   mounted() {
-    this.$store.dispatch("heading/getAllRubrics");
+    this.$store.dispatch("heading/getAllRubrics").then(response => {
+      if (response.data.result && !response.data.result.length) {
+        this.create();
+      }
+    });
   },
   watch: {
     specPrice(value) {

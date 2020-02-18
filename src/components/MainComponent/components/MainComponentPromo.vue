@@ -266,6 +266,12 @@
           ></v-file-input>
           <v-divider color="#333"></v-divider>
           <v-checkbox
+            v-model="promoNew.createNotification"
+            class="mx-2"
+            label="Мобильное уведомление"
+          ></v-checkbox>
+          <v-divider color="#333"></v-divider>
+          <v-checkbox
             v-model="promoNew.isActive"
             class="mx-2"
             label="Опубликовать"
@@ -343,7 +349,7 @@ export default {
       date_from: new Date().toISOString().substr(0, 10),
       date_to: new Date().toISOString().substr(0, 10),
       valid: true,
-      rules: [v => !!v || "Оябязательно для заполнения"],
+      rules: [v => !!v || "Обязательно для заполнения"],
       loading: false,
       menu: false,
       menu2: false,
@@ -442,6 +448,7 @@ export default {
             this.snackBar.value = true;
             this.snackBar.text = "Создано успешно";
             this.snackBar.color = "success";
+            this.create();
           })
           .catch(error => {
             if (
@@ -507,7 +514,11 @@ export default {
     })
   },
   mounted() {
-    this.$store.dispatch("mechanics/getAllSchemas");
+    this.$store.dispatch("mechanics/getAllSchemas").then(response => {
+      if (response.data.result && !response.data.result.length) {
+        this.create();
+      }
+    });
   },
   watch: {
     promo(value) {

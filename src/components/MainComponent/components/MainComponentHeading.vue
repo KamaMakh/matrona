@@ -96,6 +96,12 @@
           ></v-file-input>
           <v-divider color="#333"></v-divider>
           <v-checkbox
+            v-model="rubricNew.createNotification"
+            class="mx-2"
+            label="Мобильное уведомление"
+          ></v-checkbox>
+          <v-divider color="#333"></v-divider>
+          <v-checkbox
             v-model="rubricNew.isActive"
             class="mx-2"
             label="Опубликовать"
@@ -160,7 +166,7 @@ export default {
     return {
       heading: {},
       valid: true,
-      rules: [v => !!v || "Оябязательно для заполнения"],
+      rules: [v => !!v || "Обязательно для заполнения"],
       loading: false,
       isNew: false,
       rubricNew: {},
@@ -244,6 +250,7 @@ export default {
             this.snackBar.value = true;
             this.snackBar.text = "Создано успешно";
             this.snackBar.color = "success";
+            this.create();
           })
           .catch(error => {
             if (
@@ -309,7 +316,11 @@ export default {
     })
   },
   mounted() {
-    this.$store.dispatch("heading/getAllRubrics");
+    this.$store.dispatch("heading/getAllRubrics").then(response => {
+      if (response.data.result && !response.data.result.length) {
+        this.create();
+      }
+    });
   },
   watch: {
     rubric() {
