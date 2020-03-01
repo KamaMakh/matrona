@@ -32,9 +32,15 @@ function updatePromo(state, data) {
 }
 
 function deleteSchema(state, data) {
-  if (state.schemas.indexOf(data.schema) !== -1) {
-    state.schemas.splice(state.schemas.indexOf(data.schema), 1);
-    state.oneSchema = {};
+  if (state.schemas.length) {
+    state.schemas.forEach((item, key) => {
+      if (
+        parseInt(item.stockSchemaid) === parseInt(data.schema.stockSchemaid)
+      ) {
+        state.schemas.splice(key, 1);
+        state.oneSchema = {};
+      }
+    });
   }
 }
 

@@ -8,9 +8,17 @@ function addArticle(state, article) {
 }
 
 function updateArticle(state, data) {
-  if (state.news.indexOf(data.article) > -1) {
-    state.news[state.news.indexOf(data.article)] = data.response;
+  if (state.news.length) {
+    state.news.forEach((item, key) => {
+      if (parseInt(item.articleid) === parseInt(data.article.articleid)) {
+        state.news[key] = data.response;
+        setArticle(state, data.response);
+      }
+    });
   }
+  // if (state.news.indexOf(data.article) > -1) {
+  //   state.news[state.news.indexOf(data.article)] = data.response;
+  // }
 }
 
 function deleteArticle(state, data) {

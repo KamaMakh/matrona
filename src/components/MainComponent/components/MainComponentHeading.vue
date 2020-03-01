@@ -21,20 +21,54 @@
             type="number"
             :rules="rules"
           ></v-text-field>
-          <v-file-input
-            v-model="rubric.coverDefaultFile"
-            label="Дефолтная обложка"
-            filled
-            prepend-icon="mdi-camera"
-            show-size
-          ></v-file-input>
-          <v-file-input
-            v-model="rubric.coverTematicFile"
-            label="Тематическая обложка"
-            filled
-            prepend-icon="mdi-camera"
-            show-size
-          ></v-file-input>
+          <v-row class="align-center">
+            <v-col
+              v-if="rubric.rubricid && rubric.coverDefaultUrl"
+              cols="2"
+              sm="5"
+            >
+              <viewer
+                class="main-component-news__viewer"
+                :images="[serverUrl + this.rubric.coverDefaultUrl]"
+              >
+                <img :src="serverUrl + this.rubric.coverDefaultUrl" alt="" />
+              </viewer>
+            </v-col>
+            <v-col>
+              <v-file-input
+                v-model="rubric.coverDefaultFile"
+                label="Дефолтная обложка"
+                filled
+                prepend-icon="mdi-camera"
+                show-size
+                accept=".png, .jpg, .jpeg, .gif"
+              ></v-file-input>
+            </v-col>
+          </v-row>
+          <v-row class="align-center">
+            <v-col
+              v-if="rubric.rubricid && rubric.coverTematicUrl"
+              cols="2"
+              sm="5"
+            >
+              <viewer
+                class="main-component-news__viewer"
+                :images="[serverUrl + this.rubric.coverTematicUrl]"
+              >
+                <img :src="serverUrl + this.rubric.coverTematicUrl" alt="" />
+              </viewer>
+            </v-col>
+            <v-col>
+              <v-file-input
+                v-model="rubric.coverTematicFile"
+                label="Тематическая обложка"
+                filled
+                prepend-icon="mdi-camera"
+                show-size
+                accept=".png, .jpg, .jpeg, .gif"
+              ></v-file-input>
+            </v-col>
+          </v-row>
           <v-divider color="#333"></v-divider>
           <v-checkbox
             v-model="rubric.isActive"
@@ -86,6 +120,7 @@
             filled
             prepend-icon="mdi-camera"
             show-size
+            accept=".png, .jpg, .jpeg, .gif"
           ></v-file-input>
           <v-file-input
             v-model="rubricNew.coverTematicFile"
@@ -93,6 +128,7 @@
             filled
             prepend-icon="mdi-camera"
             show-size
+            accept=".png, .jpg, .jpeg, .gif"
           ></v-file-input>
           <v-divider color="#333"></v-divider>
           <v-checkbox
@@ -160,6 +196,7 @@
 
 <script>
 import { mapState } from "vuex";
+import { serverUrl } from "@/store/urls";
 export default {
   name: "MainComponentHeading",
   data() {
@@ -170,7 +207,8 @@ export default {
       loading: false,
       isNew: false,
       rubricNew: {},
-      deleteDialog: false
+      deleteDialog: false,
+      serverUrl: serverUrl
     };
   },
   methods: {

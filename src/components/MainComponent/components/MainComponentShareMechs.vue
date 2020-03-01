@@ -23,7 +23,7 @@
           <v-row>
             <v-col
               v-if="schema.stockSchemaid && this.schema.coverDefaultUrl"
-              cols="2"
+              cols="5"
               class="d-flex align-center"
             >
               <viewer
@@ -37,16 +37,16 @@
               <v-file-input
                 v-model="schema.coverDefaultFile"
                 label="Дефолтная обложка"
-                filled
                 prepend-icon="mdi-camera"
                 show-size
+                accept=".png, .jpg, .jpeg, .gif"
               ></v-file-input>
             </v-col>
           </v-row>
           <v-row>
             <v-col
               v-if="schema.stockSchemaid && this.schema.coverTematicUrl"
-              cols="2"
+              cols="5"
               class="d-flex align-center"
             >
               <viewer
@@ -60,9 +60,9 @@
               <v-file-input
                 v-model="schema.coverTematicFile"
                 label="Тематическая обложка"
-                filled
                 prepend-icon="mdi-camera"
                 show-size
+                accept=".png, .jpg, .jpeg, .gif"
               ></v-file-input>
             </v-col>
           </v-row>
@@ -113,16 +113,16 @@
           <v-file-input
             v-model="schemaNew.coverDefaultFile"
             label="Дефолтная обложка"
-            filled
             prepend-icon="mdi-camera"
             show-size
+            accept=".png, .jpg, .jpeg, .gif"
           ></v-file-input>
           <v-file-input
             v-model="schemaNew.coverTematicFile"
             label="Тематическая обложка"
-            filled
             prepend-icon="mdi-camera"
             show-size
+            accept=".png, .jpg, .jpeg, .gif"
           ></v-file-input>
           <v-divider color="#333"></v-divider>
           <v-checkbox

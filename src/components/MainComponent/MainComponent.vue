@@ -61,6 +61,7 @@ export default {
 };
 </script>
 <style lang="scss">
+@import "./assets/css/MainComponent";
 .opacity {
   opacity: 0 !important;
 }

@@ -136,8 +136,7 @@
           <v-row class="align-center">
             <v-col
               v-if="specPrice.specPriceid && this.specPrice.cover"
-              cols="2"
-              sm="1"
+              cols="5"
             >
               <viewer
                 class="main-component-news__viewer"

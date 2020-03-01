@@ -34,11 +34,7 @@
             :rules="rules"
           ></v-textarea>
           <v-row class="align-center">
-            <v-col
-              v-if="article.articleid && this.article.cover"
-              cols="2"
-              sm="5"
-            >
+            <v-col v-if="article.articleid && article.cover" cols="2" sm="5">
               <viewer
                 class="main-component-news__viewer"
                 :images="[serverUrl + this.article.coverUrl]"
@@ -48,7 +44,7 @@
             </v-col>
             <v-col>
               <v-file-input
-                v-model="article.previewCoverFile"
+                v-model="article.coverFile"
                 label="Обложка для карточки"
                 filled
                 prepend-icon="mdi-camera"
@@ -70,14 +66,14 @@
               >
                 <viewer
                   class="main-component-news__viewer"
-                  :images="[serverUrl + this.article.coverUrl]"
+                  :images="[serverUrl + this.article.previewCoverUrl]"
                 >
-                  <img :src="serverUrl + this.article.coverUrl" alt="" />
+                  <img :src="serverUrl + this.article.previewCoverUrl" alt="" />
                 </viewer>
               </v-col>
               <v-col>
                 <v-file-input
-                  v-model="article.coverFile"
+                  v-model="article.previewCoverFile"
                   label="Обложка для экрана просмотра"
                   filled
                   prepend-icon="mdi-camera"

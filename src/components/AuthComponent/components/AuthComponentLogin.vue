@@ -74,12 +74,12 @@ export default {
         /* eslint-disable */
         .catch(error => {
           if (
-            error.response &&
-            error.response.error &&
-            error.response.error.message
+            error.data &&
+            error.data.error &&
+            error.data.error.message
           ) {
             this.snackBar.value = true;
-            this.snackBar.text = error.response.error.message;
+            this.snackBar.text = error.data.error.message;
             this.snackBar.color = "error";
           } else {
             this.snackBar.value = true;

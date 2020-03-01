@@ -35,6 +35,7 @@
                   scrollable
                   locale="ru"
                   first-day-of-week="1"
+                  @input="menu = false"
                 >
                   <v-spacer></v-spacer>
                   <v-btn text color="primary" @click="menu = false"
@@ -75,6 +76,7 @@
                   scrollable
                   locale="ru"
                   first-day-of-week="1"
+                  @input="menu2 = false"
                 >
                   <v-spacer></v-spacer>
                   <v-btn text color="primary" @click="menu2 = false"
@@ -107,7 +109,7 @@
             :rules="rules"
           ></v-text-field>
           <v-row class="align-center">
-            <v-col v-if="promo.stockSchemaid && this.promo.cover" cols="2">
+            <v-col v-if="promo.stockSchemaid && this.promo.cover" cols="5">
               <viewer
                 class="main-component-promo__viewer"
                 :images="[serverUrl + this.promo.coverUrl]"
@@ -384,8 +386,8 @@ export default {
         promoObj["isActive"] = false;
       }
       promoObj["stockSchemaid"] = this.schema.stockSchemaid;
-      promoObj["startDt"] = this.date_from + "T00:00:00+03:00";
-      promoObj["endDt"] = this.date_to + "T00:00:00+03:00";
+      promoObj["startDt"] = this.date_from + "T00:00:00";
+      promoObj["endDt"] = this.date_to + "T00:00:00";
       for (let key in promoObj) {
         if (promoObj.hasOwnProperty(key)) {
           if (
