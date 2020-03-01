@@ -45,6 +45,29 @@
             placeholder="Введите координаты"
             :rules="rules"
           ></v-text-field>
+
+          <h2>Поиск адреса</h2>
+          <label>
+            <gmap-autocomplete class="address-search" @place_changed="setPlace">
+            </gmap-autocomplete>
+            <button @click="addMarker">Добавить</button>
+          </label>
+          <br /><br />
+          <GmapMap
+            :center="{
+              lat: parseInt(shop.storeLat),
+              lng: parseInt(shop.storeLng)
+            }"
+            :zoom="9"
+            style="width: 500px; height: 300px"
+          >
+            <gmap-marker
+              :key="index"
+              v-for="(m, index) in markers"
+              :position="m.position"
+              @click="center = m.position"
+            ></gmap-marker>
+          </GmapMap>
           <v-text-field
             v-model="shop.position"
             label="Позиция"
@@ -67,14 +90,6 @@
           ></v-checkbox>
         </v-col>
       </v-row>
-
-      <!--<GmapMap-->
-      <!--:center="{ lat: 10, lng: 10 }"-->
-      <!--:zoom="7"-->
-      <!--map-type-id="terrain"-->
-      <!--style="width: 500px; height: 300px"-->
-      <!--&gt;-->
-      <!--</GmapMap>-->
 
       <v-row>
         <v-col cols="6" sm="12">
@@ -160,14 +175,6 @@
         </v-col>
       </v-row>
 
-      <!--<GmapMap-->
-      <!--:center="{ lat: 10, lng: 10 }"-->
-      <!--:zoom="7"-->
-      <!--map-type-id="terrain"-->
-      <!--style="width: 500px; height: 300px"-->
-      <!--&gt;-->
-      <!--</GmapMap>-->
-
       <v-row>
         <v-col cols="6" sm="12">
           <v-btn
@@ -223,10 +230,28 @@ export default {
       loading: false,
       isNew: false,
       storeNew: {},
-      deleteDialog: false
+      deleteDialog: false,
+      markers: [],
+      places: [],
+      currentPlace: null
     };
   },
   methods: {
+    setPlace(place) {
+      this.currentPlace = place;
+    },
+    addMarker() {
+      if (this.currentPlace) {
+        const marker = {
+          lat: this.currentPlace.geometry.location.lat(),
+          lng: this.currentPlace.geometry.location.lng()
+        };
+        this.markers.push({ position: marker });
+        this.places.push(this.currentPlace);
+        this.center = marker;
+        this.currentPlace = null;
+      }
+    },
     save() {
       if (
         (!this.isNew && !this.$refs.form.validate()) ||
