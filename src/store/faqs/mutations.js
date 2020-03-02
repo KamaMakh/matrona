@@ -8,7 +8,7 @@ function setFaqs(state, faqs) {
 
 function addFaq(state, faq) {
   state.faqs.unshift(faq);
-  setFaq(state);
+  // setFaq(state);
 }
 
 function updateFaq(state, data) {

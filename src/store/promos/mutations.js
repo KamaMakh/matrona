@@ -8,7 +8,7 @@ function setPromos(state, promos) {
 
 function addPromo(state, promo) {
   state.promos.unshift(promo);
-  setPromo(state);
+  // setPromo(state);
 }
 
 function updatePromo(state, data) {

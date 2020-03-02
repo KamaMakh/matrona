@@ -4,7 +4,7 @@ function setStores(state, stores) {
 
 function addStore(state, store) {
   state.stores.unshift(store);
-  setStore(state);
+  // setStore(state);
 }
 
 function updateStore(state, data) {

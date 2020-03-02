@@ -265,6 +265,7 @@ export default {
       if (this.$refs.form) {
         this.$refs.form.resetValidation();
       }
+      this.$store.commit("faqs/setFaq");
     }
   },
   computed: {
@@ -282,9 +283,11 @@ export default {
     });
   },
   watch: {
-    faq() {
-      this.isNew = false;
-      this.faqNew = {};
+    faq(value) {
+      if (value.faqid) {
+        this.isNew = false;
+        this.faqNew = {};
+      }
     }
   }
 };

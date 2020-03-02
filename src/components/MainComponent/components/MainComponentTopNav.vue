@@ -95,12 +95,12 @@ export default {
     },
     myScroll() {
       setTimeout(() => {
-        window.scrollTo({
+        document.getElementById("scrollelement").scrollTo({
           top: 0,
           left: 0,
           behavior: "smooth"
         });
-      }, 1000);
+      }, 500);
     }
   }
 };

@@ -155,7 +155,6 @@
       <v-row>
         <v-col cols="6" sm="12">
           <v-btn
-            small
             color="primary"
             class="mr-md-4 mr-lg-4 mr-sm-0 mb-4"
             @click="save"
@@ -352,6 +351,7 @@ export default {
       if (this.$refs.form) {
         this.$refs.form.resetValidation();
       }
+      this.$store.commit("mechanics/setSchema");
     }
   },
   computed: {
@@ -368,9 +368,11 @@ export default {
     });
   },
   watch: {
-    schema() {
-      this.isNew = false;
-      this.schemaNew = {};
+    schema(value) {
+      if (value.stockSchemaid) {
+        this.isNew = false;
+        this.schemaNew = {};
+      }
     }
   }
 };

@@ -15,7 +15,7 @@ function setPromos(state, data) {
 
 function addSchema(state, schema) {
   state.schemas.unshift(schema);
-  setSchema(state);
+  // setSchema(state);
 }
 
 function addPromo(state, promo) {

@@ -571,6 +571,7 @@ export default {
       if (this.$refs.form) {
         this.$refs.form.resetValidation();
       }
+      this.$store.commit("heading/setPrice");
     }
   },
   computed: {
@@ -589,13 +590,15 @@ export default {
   },
   watch: {
     specPrice(value) {
-      this.isNew = false;
-      this.specPriceNew = {};
-      if (value && value.startDt) {
-        this.date_from = new Date(value.startDt).toISOString().substr(0, 10);
-      }
-      if (value && value.endDt) {
-        this.date_to = new Date(value.endDt).toISOString().substr(0, 10);
+      if (value.specPriceid) {
+        this.isNew = false;
+        this.specPriceNew = {};
+        if (value && value.startDt) {
+          this.date_from = new Date(value.startDt).toISOString().substr(0, 10);
+        }
+        if (value && value.endDt) {
+          this.date_to = new Date(value.endDt).toISOString().substr(0, 10);
+        }
       }
     }
   }

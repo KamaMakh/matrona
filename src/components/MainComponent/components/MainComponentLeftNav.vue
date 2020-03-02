@@ -195,11 +195,16 @@ export default {
   },
   methods: {
     myScroll() {
-      window.scrollTo({
+      document.getElementById("scrollelement").scrollTo({
         top: 0,
         left: 0,
         behavior: "smooth"
       });
+      // window.scrollTo({
+      //   top: 0,
+      //   left: 0,
+      //   behavior: "smooth"
+      // });
     },
     setArticle(article) {
       this.$store.commit("news/setArticle", article);
@@ -215,6 +220,9 @@ export default {
     },
     setStore(store) {
       this.$store.commit("shop/setStore", store);
+      setTimeout(() => {
+        this.myScroll();
+      }, 500);
     },
     setRubric(rubric) {
       this.$store.commit("heading/setRubric", rubric);

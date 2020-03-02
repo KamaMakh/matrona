@@ -94,24 +94,6 @@
               <v-col cols="2" sm="1">
                 <v-radio :value="'video'"></v-radio>
               </v-col>
-              <v-col
-                v-if="
-                  article.articleid &&
-                    article.cover &&
-                    article.articlecoverType === 'video' &&
-                    article.cover.indexOf('youtube') > -1
-                "
-                cols="2"
-                sm="5"
-              >
-                <iframe
-                  width="250"
-                  :src="article.cover"
-                  frameborder="0"
-                  allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
-                  allowfullscreen
-                ></iframe>
-              </v-col>
               <v-col>
                 <v-text-field
                   v-model="article.videoLink"
@@ -151,7 +133,7 @@
             @click="save"
             :disabled="!valid"
             :loading="loading"
-            >Сохранить</v-btn
+            >Добавить</v-btn
           >
           <v-btn
             color="error"
@@ -484,6 +466,7 @@ export default {
       if (this.$refs.form) {
         this.$refs.form.resetValidation();
       }
+      this.$store.commit("news/setArticle");
     }
   },
   computed: {
@@ -501,9 +484,11 @@ export default {
     });
   },
   watch: {
-    article() {
-      this.isNew = false;
-      this.articleNew = {};
+    article(value) {
+      if (value.articleid) {
+        this.isNew = false;
+        this.articleNew = {};
+      }
     }
   }
 };

@@ -159,7 +159,7 @@
             @click="save"
             :disabled="!valid"
             :loading="loading"
-            >Сохранить</v-btn
+            >«Добавить»</v-btn
           >
         </v-col>
       </v-row>
@@ -351,6 +351,7 @@ export default {
       if (this.$refs.form) {
         this.$refs.form.resetValidation();
       }
+      this.$store.commit("heading/setRubric");
     }
   },
   computed: {
@@ -368,9 +369,11 @@ export default {
     });
   },
   watch: {
-    rubric() {
-      this.isNew = false;
-      this.rubricNew = {};
+    rubric(value) {
+      if (value.rubricid) {
+        this.isNew = false;
+        this.rubricNew = {};
+      }
     }
   }
 };

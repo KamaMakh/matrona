@@ -474,6 +474,7 @@ export default {
         });
         this.$store.commit("shop/setStore");
       }, 500);
+      this.$store.commit("shop/setStore");
     }
   },
   computed: {
@@ -504,6 +505,8 @@ export default {
         lat: parseFloat(parseFloat(this.shop.storeLat).toFixed(4)),
         lng: parseFloat(parseFloat(this.shop.storeLng).toFixed(4))
       });
+      let latLng = new google.maps.LatLng(this.shop.storeLat, this.shop.storeLng);
+      this.addMarker(latLng);
     }
   }
 };

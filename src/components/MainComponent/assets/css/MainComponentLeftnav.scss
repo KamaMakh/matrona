@@ -3,7 +3,8 @@
   background: #0277bd;
   height: 100%;
   min-height: 100vh;
-  padding: 10px;
+  padding: 10px 10px 95px;
+  overflow: auto;
   .params {
     max-width: 300px;
   }
@@ -110,8 +111,14 @@ body .main-component-left-nav .theme--light.v-label {
 @media (max-width: 960px) {
   .main-component-left-nav {
     height: auto;
-    max-width: 300px;
-    margin: 0 auto;
+    //max-width: 300px;
+    //margin: 0 auto;
+    .v-list.theme--light.v-sheet {
+      max-width: none !important;
+    }
+  }
+  .main-component-left-nav .v-list.v-sheet .v-list-item.v-list-item--link, .main-component-left-nav .v-list {
+    max-width: none !important;
   }
   .main-component-left-nav .params,
   .main-component-left-nav .v-list.v-sheet {

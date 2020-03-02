@@ -54,7 +54,10 @@ export default {
       // rules: [v => !!v || "Обязательно для заполнения"],
       c_passwordRules: [
         // v => !!v || "Поле обязательное",
-        v => (v && v === this.user.password) || "Пароли не совпадают"
+        v =>
+          !this.user.password ||
+          (v && v === this.user.password) ||
+          "Пароли не совпадают"
       ],
       // emailRules: [
       //   v => !!v || "Обязательно для заполнения",
@@ -84,10 +87,20 @@ export default {
               "createdDt",
               "updatedDt",
               "userid",
+              "userphone",
+              "qrcode",
+              "smscodesentDt",
+              "lastvisitDt",
+              "status",
+              "isAgree",
+              "lastActivity",
+              "smsAttempts",
               "c_password"
             ].indexOf(key) < 0
           ) {
-            formData.append(`user[${key}]`, this.user[key]);
+            if (this.user[key]) {
+              formData.append(`user[${key}]`, this.user[key]);
+            }
           }
         }
       }

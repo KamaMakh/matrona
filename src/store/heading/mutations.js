@@ -20,7 +20,7 @@ function addRubric(state, rubric) {
 
 function addPrice(state, price) {
   state.specPrices.unshift(price);
-  setPrice(state, price);
+  // setPrice(state, price);
 }
 
 function updateRubric(state, data) {

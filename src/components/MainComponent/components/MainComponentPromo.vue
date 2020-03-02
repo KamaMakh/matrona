@@ -516,6 +516,7 @@ export default {
       if (this.$refs.form) {
         // this.$refs.form.resetValidation();
       }
+      this.$store.commit("mechanics/setPromo");
     }
   },
   computed: {
@@ -534,13 +535,15 @@ export default {
   },
   watch: {
     promo(value) {
-      this.isNew = false;
-      this.promoNew = {};
-      if (value && value.startDt) {
-        this.date_from = new Date(value.startDt).toISOString().substr(0, 10);
-      }
-      if (value && value.endDt) {
-        this.date_to = new Date(value.endDt).toISOString().substr(0, 10);
+      if (value.stockid) {
+        this.isNew = false;
+        this.promoNew = {};
+        if (value && value.startDt) {
+          this.date_from = new Date(value.startDt).toISOString().substr(0, 10);
+        }
+        if (value && value.endDt) {
+          this.date_to = new Date(value.endDt).toISOString().substr(0, 10);
+        }
       }
     }
   }
