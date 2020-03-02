@@ -25,7 +25,7 @@ function setStore(state, store) {
     store = {};
   }
   state.oneStore = store;
-  state.map = new Date();
+  if (store.storeid) state.map = new Date();
 }
 
 export { setStore, setStores, addStore, updateStore, deleteStore };

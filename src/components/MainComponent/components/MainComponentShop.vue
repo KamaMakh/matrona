@@ -133,10 +133,10 @@
             id="map2"
             classname="form-control"
             placeholder="Start typing"
-            v-on:placechanged="getAddressData(true)"
+            v-on:placechanged="getAddressData"
           >
           </vue-google-autocomplete>
-          <div id="googleMap" style="width:100%;height:350px;"></div>
+          <div id="googleMap2" style="width:100%;height:350px;"></div>
           <v-row>
             <v-col>
               <v-text-field
@@ -199,7 +199,8 @@
     <v-dialog v-model="deleteDialog" max-width="290">
       <v-card>
         <v-card-title class="headline"
-          >Удалить магазин {{ shop.storeName }}?</v-card-title
+          >Удалить магазин <br />
+          {{ shop.storeName }}?</v-card-title
         >
         <v-card-actions>
           <v-spacer></v-spacer>
@@ -220,7 +221,7 @@
 <script>
 import { mask } from "vue-the-mask";
 import { mapState } from "vuex";
-import VueGoogleAutocomplete from "vue-google-autocomplete"
+import VueGoogleAutocomplete from "vue-google-autocomplete";
 export default {
   name: "MainComponentShop",
   directives: {
@@ -236,12 +237,17 @@ export default {
       rules: [v => !!v || "Обязательно для заполнения"],
       loading: false,
       isNew: false,
-      storeNew: {},
+      storeNew: {
+        storeCity: null,
+        storeAddress: null,
+        storeLng: null,
+        storeLat: null
+      },
       deleteDialog: false,
       markers: [],
       center: {
         lat: 51.508742,
-        lng: -0.120850
+        lng: -0.12085
       },
       places: [],
       currentPlace: null,
@@ -251,15 +257,14 @@ export default {
   },
   methods: {
     /* eslint-disable */
-    getAddressData(place, isNew) {
-      if(isNew) {
+    getAddressData(place) {
+      if(this.isNew) {
         if(place) {
           this.storeNew.storeCity = place.locality;
           this.storeNew.storeAddress = place.route;
-
           this.center.lat = place.latitude;
           this.center.lng = place.longitude;
-          this.mapNew.setCenter({lat:place.latitude, lng:place.longitude});
+          this.map.setCenter({lat:place.latitude, lng:place.longitude});
         }
       } else {
         if(place) {
@@ -289,12 +294,12 @@ export default {
       });
       this.setShopCoords(location);
       google.maps.event.addListener(marker, "click", (event) => {
-        this.setShopCoords(event.latLng, isNew);
+        this.setShopCoords(event.latLng);
       });
       this.markers.push(marker);
     },
-    setShopCoords(location, isNew) {
-      if(isNew) {
+    setShopCoords(location) {
+      if(this.isNew) {
         this.storeNew.storeLng = location.lng();
         this.storeNew.storeLat = location.lat();
       } else {
@@ -434,9 +439,29 @@ export default {
     },
     create() {
       this.isNew = true;
+      this.storeNew = {
+        storeCity: null,
+        storeAddress: null,
+        storeLng: null,
+        storeLat: null
+      };
       if (this.$refs.form) {
         this.$refs.form.resetValidation();
       }
+      if (this.$refs.form2) {
+        this.$refs.form2.resetValidation();
+      }
+      setTimeout(() => {
+        let mapProp= {
+          center:new google.maps.LatLng(this.center.lat,this.center.lng),
+          zoom:15,
+        };
+        this.map = new google.maps.Map(document.getElementById("googleMap2"),mapProp);
+        this.map.addListener('click', (event) => {
+          this.addMarker(event.latLng);
+        });
+        this.$store.commit("shop/setStore");
+      }, 500)
     }
   },
   computed: {
@@ -456,14 +481,16 @@ export default {
     this.myMap();
   },
   watch: {
-    shop() {
-      this.isNew = false;
-      this.storeNew = {};
+    shop(value) {
+      if(value.storeid) {
+        this.isNew = false;
+        this.storeNew = {};
+      }
     },
     shopMap() {
       this.map.setCenter({
-        lat: parseInt(this.shop.storeLat),
-        lng: parseInt(this.shop.storeLng)
+        lat: parseFloat(parseFloat(this.shop.storeLat).toFixed(4)),
+        lng: parseFloat(parseFloat(this.shop.storeLng).toFixed(4))
       });
     }
   }
