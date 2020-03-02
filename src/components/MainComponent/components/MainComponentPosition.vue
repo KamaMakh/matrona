@@ -134,6 +134,9 @@
             :rules="rules"
           ></v-text-field>
           <v-row class="align-center">
+            <v-col cols="12" class="font-weight-bold"
+              >Обложка для карточки</v-col
+            >
             <v-col
               v-if="specPrice.specPriceid && this.specPrice.cover"
               cols="5"
@@ -234,7 +237,7 @@
                 ref="menu4"
                 v-model="menu4"
                 :close-on-content-click="false"
-                :return-value.sync="specPrice.endDt"
+                :return-value.sync="specPriceNew.endDt"
                 transition="scale-transition"
                 offset-y
                 min-width="290px"
@@ -314,6 +317,9 @@
             :rules="rules"
           ></v-text-field>
           <v-row class="align-center">
+            <v-col cols="12" class="font-weight-bold"
+              >Обложка для карточки</v-col
+            >
             <v-col>
               <v-file-input
                 v-model="specPriceNew.coverFile"

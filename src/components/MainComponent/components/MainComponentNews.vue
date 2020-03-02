@@ -192,6 +192,9 @@
             :rules="rules"
           ></v-textarea>
           <v-row class="align-center">
+            <v-col cols="12" class="font-weight-bold"
+              >Обложка для карточки</v-col
+            >
             <v-col>
               <v-file-input
                 v-model="articleNew.previewCoverFile"
@@ -206,6 +209,9 @@
           <v-divider color="#333"></v-divider>
           <v-radio-group v-model="articleNew.articlecoverType" :rules="rules">
             <v-row class="align-center">
+              <v-col cols="12" class="font-weight-bold"
+                >Обложка для экрана просмотра</v-col
+              >
               <v-col cols="2">
                 <v-radio :value="'image'"></v-radio>
               </v-col>

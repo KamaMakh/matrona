@@ -22,6 +22,7 @@
             :rules="rules"
           ></v-text-field>
           <v-row class="align-center">
+            <v-col cols="12" class="font-weight-bold">Дефолтная обложка</v-col>
             <v-col
               v-if="rubric.rubricid && rubric.coverDefaultUrl"
               cols="2"
@@ -46,6 +47,9 @@
             </v-col>
           </v-row>
           <v-row class="align-center">
+            <v-col cols="12" class="font-weight-bold"
+              >Тематическая обложка</v-col
+            >
             <v-col
               v-if="rubric.rubricid && rubric.coverTematicUrl"
               cols="2"
@@ -114,6 +118,7 @@
             type="number"
             :rules="rules"
           ></v-text-field>
+          <v-col cols="12" class="font-weight-bold">Дефолтная обложка</v-col>
           <v-file-input
             v-model="rubricNew.coverDefaultFile"
             label="Дефолтная обложка"
@@ -122,6 +127,7 @@
             show-size
             accept=".png, .jpg, .jpeg, .gif"
           ></v-file-input>
+          <v-col cols="12" class="font-weight-bold">Тематическая обложка</v-col>
           <v-file-input
             v-model="rubricNew.coverTematicFile"
             label="Тематическая обложка"
