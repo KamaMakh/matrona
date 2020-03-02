@@ -377,7 +377,8 @@
     <v-dialog v-model="deleteDialog" max-width="290">
       <v-card>
         <v-card-title class="headline"
-          >Удалить статью {{ specPrice.description | truncate }}?</v-card-title
+          >Удалить позицию <br />
+          {{ specPrice.description | truncate }}?</v-card-title
         >
         <v-card-actions>
           <v-spacer></v-spacer>

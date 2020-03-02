@@ -20,7 +20,7 @@ function addSchema(state, schema) {
 
 function addPromo(state, promo) {
   state.stocks.unshift(promo);
-  setPromo(state, promo);
+  // setPromo(state, promo);
 }
 
 function updateSchema(state, data) {

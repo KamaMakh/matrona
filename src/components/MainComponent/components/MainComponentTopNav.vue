@@ -9,7 +9,6 @@
         v-for="(item, key) in list"
         :key="key"
         text
-        @click="myScroll"
         :to="{ name: item.routeName }"
       >
         {{ item.title }}
@@ -92,9 +91,6 @@ export default {
     exit() {
       VueCookies.remove("token");
       this.$router.push("/auth");
-    },
-    myScroll() {
-      document.getElementById("content").scrollIntoView();
     }
   }
 };

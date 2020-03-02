@@ -105,7 +105,8 @@
     <v-dialog v-model="deleteDialog" max-width="290">
       <v-card>
         <v-card-title class="headline"
-          >Удалить вопрос {{ faq.question }}?</v-card-title
+          >Удалить вопрос <br />
+          {{ faq.question }}?</v-card-title
         >
         <v-card-actions>
           <v-spacer></v-spacer>

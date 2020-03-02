@@ -174,7 +174,8 @@
     <v-dialog v-model="deleteDialog" max-width="290">
       <v-card>
         <v-card-title class="headline"
-          >Удалить рубрику {{ schema.title }}?</v-card-title
+          >Удалить <br />
+          рубрику {{ schema.title }}?</v-card-title
         >
         <v-card-actions>
           <v-spacer></v-spacer>

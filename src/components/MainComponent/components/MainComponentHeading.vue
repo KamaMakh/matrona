@@ -172,7 +172,8 @@
     <v-dialog v-model="deleteDialog" max-width="290">
       <v-card>
         <v-card-title class="headline"
-          >Удалить рубрику {{ rubric.title }}?</v-card-title
+          >Удалить рубрику <br />
+          {{ rubric.title }}?</v-card-title
         >
         <v-card-actions>
           <v-spacer></v-spacer>

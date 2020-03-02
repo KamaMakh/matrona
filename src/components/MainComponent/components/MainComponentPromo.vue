@@ -320,7 +320,8 @@
     <v-dialog v-model="deleteDialog" max-width="290">
       <v-card>
         <v-card-title class="headline"
-          >Удалить вопрос {{ promo.description | truncate }}?</v-card-title
+          >Удалить вопрос <br />
+          {{ promo.description | truncate }}?</v-card-title
         >
         <v-card-actions>
           <v-spacer></v-spacer>

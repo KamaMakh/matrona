@@ -110,6 +110,8 @@ body .main-component-left-nav .theme--light.v-label {
 @media (max-width: 960px) {
   .main-component-left-nav {
     height: auto;
+    max-width: 300px;
+    margin: 0 auto;
   }
   .main-component-left-nav .params,
   .main-component-left-nav .v-list.v-sheet {
