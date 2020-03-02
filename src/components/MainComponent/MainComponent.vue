@@ -22,10 +22,24 @@
                   $route.name
                 ) === -1
             "
+            class="scroll-element"
           >
             <MainComponentLeftNav />
           </v-col>
-          <v-col xl="9" md="9" sm="12" xs="12">
+          <v-col
+            xl="9"
+            md="9"
+            sm="12"
+            xs="12"
+            class="scroll-element"
+            :class="{
+              maxWidthElement: $route.matched.some(
+                ({ name }) =>
+                  name === 'MainComponentSettings' ||
+                  name === 'MainComponentUserSettings'
+              )
+            }"
+          >
             <router-view></router-view>
             <MainComponentLeftNav v-if="windowWidth < 961" />
           </v-col>

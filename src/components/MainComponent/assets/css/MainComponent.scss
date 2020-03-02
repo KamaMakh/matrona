@@ -22,3 +22,38 @@ input.form-control {
   margin-bottom: 15px;
   height: 40px;
 }
+
+html {
+  overflow: hidden !important;
+}
+
+.v-content .v-content__wrap .container .row .col.scroll-element {
+  overflow: scroll;
+  height: 100vh;
+  overflow-x: hidden;
+  align-items: flex-start;
+  @media (max-width: 960px) {
+    max-width: 100%;
+    width: 100%;
+    flex: 1;
+    padding-bottom: 13% !important;
+  }
+  form {
+    padding-bottom: 10%;
+  }
+}
+
+.v-content
+  .v-content__wrap
+  .container
+  .row
+  .col.scroll-element.maxWidthElement {
+  max-width: 100%;
+  flex: 1;
+}
+
+@media (max-width: 960px) {
+  body .v-application .pl-10 {
+    padding-left: 0 !important;
+  }
+}
