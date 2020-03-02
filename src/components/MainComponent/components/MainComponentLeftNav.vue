@@ -194,33 +194,51 @@ export default {
     };
   },
   methods: {
+    myScroll() {
+      window.scrollTo({
+        top: 0,
+        left: 0,
+        behavior: "smooth"
+      });
+    },
     setArticle(article) {
       this.$store.commit("news/setArticle", article);
-      document.getElementById("content").scrollIntoView();
+      setTimeout(() => {
+        this.myScroll();
+      }, 500);
     },
     setFaq(faq) {
-      document.getElementById("content").scrollIntoView();
       this.$store.commit("faqs/setFaq", faq);
+      setTimeout(() => {
+        this.myScroll();
+      }, 500);
     },
     setStore(store) {
-      document.getElementById("content").scrollIntoView();
       this.$store.commit("shop/setStore", store);
     },
     setRubric(rubric) {
-      document.getElementById("content").scrollIntoView();
       this.$store.commit("heading/setRubric", rubric);
+      setTimeout(() => {
+        this.myScroll();
+      }, 500);
     },
     setPrice(price) {
-      document.getElementById("content").scrollIntoView();
       this.$store.commit("heading/setPrice", price);
+      setTimeout(() => {
+        this.myScroll();
+      }, 500);
     },
     setPromo(promo) {
-      document.getElementById("content").scrollIntoView();
       this.$store.commit("mechanics/setPromo", promo);
+      setTimeout(() => {
+        this.myScroll();
+      }, 500);
     },
     setSchema(schema) {
-      document.getElementById("content").scrollIntoView();
       this.$store.commit("mechanics/setSchema", schema);
+      setTimeout(() => {
+        this.myScroll();
+      }, 500);
     }
   },
   filters: {
