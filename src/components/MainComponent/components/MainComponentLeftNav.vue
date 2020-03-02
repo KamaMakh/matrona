@@ -201,6 +201,8 @@ export default {
       this.$store.commit("faqs/setFaq", faq);
     },
     setStore(store) {
+      /* eslint-disable */
+      console.log(555);
       this.$store.commit("shop/setStore", store);
     },
     setRubric(rubric) {
@@ -210,8 +212,6 @@ export default {
       this.$store.commit("heading/setPrice", price);
     },
     setPromo(promo) {
-      /* eslint-disable */
-      console.log(promo);
       this.$store.commit("mechanics/setPromo", promo);
     },
     setSchema(schema) {

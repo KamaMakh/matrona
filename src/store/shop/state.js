@@ -1,4 +1,5 @@
 export default {
   stores: [],
-  oneStore: {}
+  oneStore: {},
+  map: null
 };

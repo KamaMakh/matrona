@@ -11,7 +11,7 @@
           <v-text-field
             v-model="article.articletitleShort"
             label="Короткий заголовок для картинки"
-            placeholder="Введите кароткий заголовок"
+            placeholder="Введите короткий заголовок"
             :rules="rules"
           ></v-text-field>
           <v-text-field
@@ -34,6 +34,8 @@
             :rules="rules"
           ></v-textarea>
           <v-row class="align-center">
+            <v-col cols="12" class="font-weight-bold">Обложка для карточки</v-col>
+            <v-col cols="2" sm="1"></v-col>
             <v-col v-if="article.articleid" cols="2" sm="5">
               <viewer
                 class="main-component-news__viewer"
@@ -56,10 +58,11 @@
           <v-divider color="#333"></v-divider>
           <v-radio-group v-model="article.articlecoverType" :rules="rules">
             <v-row class="align-center">
+              <v-col cols="12" class="font-weight-bold">Обложка для экрана просмотра</v-col>
               <v-col cols="2" sm="1">
                 <v-radio :value="'image'"></v-radio>
               </v-col>
-              <v-col v-if="article.articleid" cols="2" sm="5">
+              <v-col v-if="article.articleid && article.articlecoverType !== 'video'" cols="2" sm="5">
                 <viewer
                   class="main-component-news__viewer"
                   :images="[serverUrl + this.article.coverUrl]"
@@ -87,7 +90,8 @@
                 v-if="
                   article.articleid &&
                     article.cover &&
-                    article.articlecoverType === 'video'
+                    article.articlecoverType === 'video' &&
+                    article.cover.indexOf('youtube') > -1
                 "
                 cols="2"
                 sm="5"
@@ -270,7 +274,7 @@
     <v-dialog v-model="deleteDialog" max-width="290">
       <v-card>
         <v-card-title class="headline"
-          >Удалить статью {{ article.articletitleShort }}?</v-card-title
+          >Удалить статью <br> {{ article.articletitleShort }}?</v-card-title
         >
         <v-card-actions>
           <v-spacer></v-spacer>

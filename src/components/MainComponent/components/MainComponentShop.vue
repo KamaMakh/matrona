@@ -33,42 +33,36 @@
             :rules="rules"
             v-mask="mask"
           ></v-text-field>
-          <v-text-field
-            v-model="shop.storeLng"
-            label="Долгота"
-            placeholder="Введите координаты"
-            :rules="rules"
-          ></v-text-field>
-          <v-text-field
-            v-model="shop.storeLat"
-            label="Широта"
-            placeholder="Введите координаты"
-            :rules="rules"
-          ></v-text-field>
 
           <h2>Поиск адреса</h2>
-          <label>
-            <gmap-autocomplete class="address-search" @place_changed="setPlace">
-            </gmap-autocomplete>
-            <button @click="addMarker">Добавить</button>
-          </label>
-          <br /><br />
-          <GmapMap
-            v-if="this.shop.storeid && !isNew"
-            :center="{
-              lat: parseInt(shop.storeLat),
-              lng: parseInt(shop.storeLng)
-            }"
-            :zoom="9"
-            style="width: 500px; height: 300px"
+          <vue-google-autocomplete
+            id="map"
+            classname="form-control"
+            placeholder="Start typing"
+            v-on:placechanged="getAddressData"
           >
-            <gmap-marker
-              :key="index"
-              v-for="(m, index) in markers"
-              :position="m.position"
-              @click="center = m.position"
-            ></gmap-marker>
-          </GmapMap>
+          </vue-google-autocomplete>
+          <div id="googleMap" style="width:100%;height:350px;"></div>
+
+          <v-row>
+            <v-col>
+              <v-text-field
+                v-model="shop.storeLng"
+                label="Долгота"
+                placeholder="Введите координаты"
+                :rules="rules"
+              ></v-text-field>
+            </v-col>
+            <v-col>
+              <v-text-field
+                v-model="shop.storeLat"
+                label="Широта"
+                placeholder="Введите координаты"
+                :rules="rules"
+              ></v-text-field>
+            </v-col>
+          </v-row>
+
           <v-text-field
             v-model="shop.position"
             label="Позиция"
@@ -76,13 +70,6 @@
             type="number"
             :rules="rules"
           ></v-text-field>
-
-          <v-divider color="#333"></v-divider>
-          <!--<v-checkbox-->
-          <!--v-model="shop.createNotification"-->
-          <!--class="mx-2"-->
-          <!--label="Мобильное уведомление"-->
-          <!--&gt;</v-checkbox>-->
           <v-divider color="#333"></v-divider>
           <v-checkbox
             v-model="shop.isActive"
@@ -141,18 +128,33 @@
             :rules="rules"
             v-mask="mask"
           ></v-text-field>
-          <v-text-field
-            v-model="storeNew.storeLng"
-            label="Долгота"
-            placeholder="Введите координаты"
-            :rules="rules"
-          ></v-text-field>
-          <v-text-field
-            v-model="storeNew.storeLat"
-            label="Широта"
-            placeholder="Введите координаты"
-            :rules="rules"
-          ></v-text-field>
+          <h2>Поиск адреса</h2>
+          <vue-google-autocomplete
+            id="map2"
+            classname="form-control"
+            placeholder="Start typing"
+            v-on:placechanged="getAddressData(true)"
+          >
+          </vue-google-autocomplete>
+          <div id="googleMap" style="width:100%;height:350px;"></div>
+          <v-row>
+            <v-col>
+              <v-text-field
+                v-model="storeNew.storeLng"
+                label="Долгота"
+                placeholder="Введите координаты"
+                :rules="rules"
+              ></v-text-field>
+            </v-col>
+            <v-col>
+              <v-text-field
+                v-model="storeNew.storeLat"
+                label="Широта"
+                placeholder="Введите координаты"
+                :rules="rules"
+              ></v-text-field>
+            </v-col>
+          </v-row>
           <v-text-field
             v-model="storeNew.position"
             label="Позиция"
@@ -218,10 +220,14 @@
 <script>
 import { mask } from "vue-the-mask";
 import { mapState } from "vuex";
+import VueGoogleAutocomplete from "vue-google-autocomplete"
 export default {
   name: "MainComponentShop",
   directives: {
     mask
+  },
+  components: {
+    VueGoogleAutocomplete
   },
   data() {
     return {
@@ -233,24 +239,67 @@ export default {
       storeNew: {},
       deleteDialog: false,
       markers: [],
+      center: {
+        lat: 51.508742,
+        lng: -0.120850
+      },
       places: [],
-      currentPlace: null
+      currentPlace: null,
+      map: null,
+      mapNew: null
     };
   },
   methods: {
-    setPlace(place) {
-      this.currentPlace = place;
+    /* eslint-disable */
+    getAddressData(place, isNew) {
+      if(isNew) {
+        if(place) {
+          this.storeNew.storeCity = place.locality;
+          this.storeNew.storeAddress = place.route;
+
+          this.center.lat = place.latitude;
+          this.center.lng = place.longitude;
+          this.mapNew.setCenter({lat:place.latitude, lng:place.longitude});
+        }
+      } else {
+        if(place) {
+          this.shop.storeCity = place.locality;
+          this.shop.storeAddress = place.route;
+
+          this.center.lat = place.latitude;
+          this.center.lng = place.longitude;
+          this.map.setCenter({lat:place.latitude, lng:place.longitude});
+        }
+      }
     },
-    addMarker() {
-      if (this.currentPlace) {
-        const marker = {
-          lat: this.currentPlace.geometry.location.lat(),
-          lng: this.currentPlace.geometry.location.lng()
-        };
-        this.markers.push({ position: marker });
-        this.places.push(this.currentPlace);
-        this.center = marker;
-        this.currentPlace = null;
+    myMap() {
+      let mapProp= {
+        center:new google.maps.LatLng(this.center.lat,this.center.lng),
+        zoom:15,
+      };
+      this.map = new google.maps.Map(document.getElementById("googleMap"),mapProp);
+      this.map.addListener('click', (event) => {
+        this.addMarker(event.latLng);
+      });
+    },
+    addMarker(location) {
+      let marker = new google.maps.Marker({
+        position: location,
+        map: this.map
+      });
+      this.setShopCoords(location);
+      google.maps.event.addListener(marker, "click", (event) => {
+        this.setShopCoords(event.latLng, isNew);
+      });
+      this.markers.push(marker);
+    },
+    setShopCoords(location, isNew) {
+      if(isNew) {
+        this.storeNew.storeLng = location.lng();
+        this.storeNew.storeLat = location.lat();
+      } else {
+        this.shop.storeLng = location.lng();
+        this.shop.storeLat = location.lat();
       }
     },
     save() {
@@ -394,6 +443,7 @@ export default {
     ...mapState({
       stores: state => state.shop.stores,
       shop: state => state.shop.oneStore,
+      shopMap: state => state.shop.map,
       snackBar: state => state.snackBar
     })
   },
@@ -403,11 +453,18 @@ export default {
         this.create();
       }
     });
+    this.myMap();
   },
   watch: {
     shop() {
       this.isNew = false;
       this.storeNew = {};
+    },
+    shopMap() {
+      this.map.setCenter({
+        lat: parseInt(this.shop.storeLat),
+        lng: parseInt(this.shop.storeLng)
+      });
     }
   }
 };
