@@ -7,17 +7,14 @@
             v-model="user.fullName"
             label="Имя пользователя"
             placeholder="Имя пользователя"
-            :rules="rules"
           ></v-text-field>
           <v-text-field
             v-model="user.email"
             label="Логин"
             placeholder="Логин"
-            :rules="emailRules"
           ></v-text-field>
           <v-text-field
             v-model="user.password"
-            :rules="rules"
             type="password"
             label="Новый пароль"
             placeholder="Новый пароль"
@@ -54,15 +51,15 @@ export default {
   data() {
     return {
       valid: true,
-      rules: [v => !!v || "Обязательно для заполнения"],
+      // rules: [v => !!v || "Обязательно для заполнения"],
       c_passwordRules: [
-        v => !!v || "Поле обязательное",
+        // v => !!v || "Поле обязательное",
         v => (v && v === this.user.password) || "Пароли не совпадают"
       ],
-      emailRules: [
-        v => !!v || "Обязательно для заполнения",
-        v => /.+@.+\..+/.test(v) || "E-mail не валидный"
-      ],
+      // emailRules: [
+      //   v => !!v || "Обязательно для заполнения",
+      //   v => /.+@.+\..+/.test(v) || "E-mail не валидный"
+      // ],
       loading: false
     };
   },
