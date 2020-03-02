@@ -149,3 +149,8 @@ body .main-component-left-nav .theme--light.v-label {
   font-weight: bold;
   font-size: 17px;
 }
+
+
+.main-component-left-nav .v-list.v-sheet .v-list-item, .main-component-left-nav .v-list {
+  max-width: 300px !important;
+}

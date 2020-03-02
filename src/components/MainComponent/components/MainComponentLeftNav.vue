@@ -210,6 +210,8 @@ export default {
       this.$store.commit("heading/setPrice", price);
     },
     setPromo(promo) {
+      /* eslint-disable */
+      console.log(promo);
       this.$store.commit("mechanics/setPromo", promo);
     },
     setSchema(schema) {

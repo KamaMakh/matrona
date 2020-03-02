@@ -34,17 +34,17 @@
             :rules="rules"
           ></v-textarea>
           <v-row class="align-center">
-            <v-col v-if="article.articleid && article.cover" cols="2" sm="5">
+            <v-col v-if="article.articleid" cols="2" sm="5">
               <viewer
                 class="main-component-news__viewer"
-                :images="[serverUrl + this.article.coverUrl]"
+                :images="[serverUrl + this.article.previewCoverUrl]"
               >
-                <img :src="serverUrl + this.article.coverUrl" alt="" />
+                <img :src="serverUrl + this.article.previewCoverUrl" alt="" />
               </viewer>
             </v-col>
             <v-col>
               <v-file-input
-                v-model="article.coverFile"
+                v-model="article.previewCoverFile"
                 label="Обложка для карточки"
                 filled
                 prepend-icon="mdi-camera"
@@ -59,21 +59,17 @@
               <v-col cols="2" sm="1">
                 <v-radio :value="'image'"></v-radio>
               </v-col>
-              <v-col
-                v-if="article.articleid && this.article.cover"
-                cols="2"
-                sm="5"
-              >
+              <v-col v-if="article.articleid" cols="2" sm="5">
                 <viewer
                   class="main-component-news__viewer"
-                  :images="[serverUrl + this.article.previewCoverUrl]"
+                  :images="[serverUrl + this.article.coverUrl]"
                 >
-                  <img :src="serverUrl + this.article.previewCoverUrl" alt="" />
+                  <img :src="serverUrl + this.article.coverUrl" alt="" />
                 </viewer>
               </v-col>
               <v-col>
                 <v-file-input
-                  v-model="article.previewCoverFile"
+                  v-model="article.coverFile"
                   label="Обложка для экрана просмотра"
                   filled
                   prepend-icon="mdi-camera"
@@ -86,6 +82,23 @@
             <v-row class="align-center">
               <v-col cols="2" sm="1">
                 <v-radio :value="'video'"></v-radio>
+              </v-col>
+              <v-col
+                v-if="
+                  article.articleid &&
+                    article.cover &&
+                    article.articlecoverType === 'video'
+                "
+                cols="2"
+                sm="5"
+              >
+                <iframe
+                  width="250"
+                  :src="article.cover"
+                  frameborder="0"
+                  allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+                  allowfullscreen
+                ></iframe>
               </v-col>
               <v-col>
                 <v-text-field

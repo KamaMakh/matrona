@@ -401,7 +401,8 @@ export default {
               "createdDt",
               "updatedDt",
               "cover",
-              "previewCover"
+              "previewCover",
+              "tempTime"
             ].indexOf(key) < 0
           ) {
             if (key === "isActive") {
