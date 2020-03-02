@@ -34,11 +34,11 @@
             v-mask="mask"
           ></v-text-field>
 
-          <h2>Поиск адреса</h2>
+          <h2 class="map-title">Поиск адреса</h2>
           <vue-google-autocomplete
             id="map"
             classname="form-control"
-            placeholder="Start typing"
+            placeholder="Начните писать..."
             v-on:placechanged="getAddressData"
           >
           </vue-google-autocomplete>
@@ -128,11 +128,11 @@
             :rules="rules"
             v-mask="mask"
           ></v-text-field>
-          <h2>Поиск адреса</h2>
+          <h2 class="map-title">Поиск адреса</h2>
           <vue-google-autocomplete
             id="map2"
             classname="form-control"
-            placeholder="Start typing"
+            placeholder="Начните писать..."
             v-on:placechanged="getAddressData"
           >
           </vue-google-autocomplete>
@@ -258,48 +258,57 @@ export default {
   methods: {
     /* eslint-disable */
     getAddressData(place) {
-      if(this.isNew) {
-        if(place) {
+      if (this.isNew) {
+        if (place) {
           this.storeNew.storeCity = place.locality;
           this.storeNew.storeAddress = place.route;
           this.center.lat = place.latitude;
           this.center.lng = place.longitude;
-          this.map.setCenter({lat:place.latitude, lng:place.longitude});
+          this.map.setCenter({ lat: place.latitude, lng: place.longitude });
         }
       } else {
-        if(place) {
+        if (place) {
           this.shop.storeCity = place.locality;
           this.shop.storeAddress = place.route;
 
           this.center.lat = place.latitude;
           this.center.lng = place.longitude;
-          this.map.setCenter({lat:place.latitude, lng:place.longitude});
+          this.map.setCenter({ lat: place.latitude, lng: place.longitude });
         }
       }
     },
     myMap() {
-      let mapProp= {
-        center:new google.maps.LatLng(this.center.lat,this.center.lng),
-        zoom:15,
+      let mapProp = {
+        center: new google.maps.LatLng(this.center.lat, this.center.lng),
+        zoom: 15
       };
-      this.map = new google.maps.Map(document.getElementById("googleMap"),mapProp);
-      this.map.addListener('click', (event) => {
+      this.map = new google.maps.Map(
+        document.getElementById("googleMap"),
+        mapProp
+      );
+      this.map.addListener("click", event => {
         this.addMarker(event.latLng);
       });
     },
     addMarker(location) {
       let marker = new google.maps.Marker({
         position: location,
-        map: this.map
+        map: this.map,
+        animation: google.maps.Animation.BOUNCE //DROP
       });
       this.setShopCoords(location);
-      google.maps.event.addListener(marker, "click", (event) => {
+      google.maps.event.addListener(marker, "click", event => {
         this.setShopCoords(event.latLng);
       });
+
+      for (var i = 0; i < this.markers.length; i++) {
+        this.markers[i].setMap(null);
+      }
+      this.markers = [];
       this.markers.push(marker);
     },
     setShopCoords(location) {
-      if(this.isNew) {
+      if (this.isNew) {
         this.storeNew.storeLng = location.lng();
         this.storeNew.storeLat = location.lat();
       } else {
@@ -452,16 +461,19 @@ export default {
         this.$refs.form2.resetValidation();
       }
       setTimeout(() => {
-        let mapProp= {
-          center:new google.maps.LatLng(this.center.lat,this.center.lng),
-          zoom:15,
+        let mapProp = {
+          center: new google.maps.LatLng(this.center.lat, this.center.lng),
+          zoom: 15
         };
-        this.map = new google.maps.Map(document.getElementById("googleMap2"),mapProp);
-        this.map.addListener('click', (event) => {
+        this.map = new google.maps.Map(
+          document.getElementById("googleMap2"),
+          mapProp
+        );
+        this.map.addListener("click", event => {
           this.addMarker(event.latLng);
         });
         this.$store.commit("shop/setStore");
-      }, 500)
+      }, 500);
     }
   },
   computed: {
@@ -482,7 +494,7 @@ export default {
   },
   watch: {
     shop(value) {
-      if(value.storeid) {
+      if (value.storeid) {
         this.isNew = false;
         this.storeNew = {};
       }
