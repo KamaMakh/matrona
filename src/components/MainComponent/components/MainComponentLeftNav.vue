@@ -196,25 +196,30 @@ export default {
   methods: {
     setArticle(article) {
       this.$store.commit("news/setArticle", article);
+      document.getElementById("content").scrollIntoView();
     },
     setFaq(faq) {
+      document.getElementById("content").scrollIntoView();
       this.$store.commit("faqs/setFaq", faq);
     },
     setStore(store) {
-      /* eslint-disable */
-      console.log(555);
+      document.getElementById("content").scrollIntoView();
       this.$store.commit("shop/setStore", store);
     },
     setRubric(rubric) {
+      document.getElementById("content").scrollIntoView();
       this.$store.commit("heading/setRubric", rubric);
     },
     setPrice(price) {
+      document.getElementById("content").scrollIntoView();
       this.$store.commit("heading/setPrice", price);
     },
     setPromo(promo) {
+      document.getElementById("content").scrollIntoView();
       this.$store.commit("mechanics/setPromo", promo);
     },
     setSchema(schema) {
+      document.getElementById("content").scrollIntoView();
       this.$store.commit("mechanics/setSchema", schema);
     }
   },

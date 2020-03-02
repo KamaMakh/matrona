@@ -438,7 +438,7 @@ export default {
     save() {
       if (
         (!this.isNew && !this.$refs.form.validate()) ||
-        (this.isNew && !this.$refs.form.validate())
+        (this.isNew && !this.$refs.form2.validate())
       ) {
         this.loading = false;
         return;

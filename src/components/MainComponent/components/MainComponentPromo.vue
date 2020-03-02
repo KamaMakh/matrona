@@ -109,6 +109,9 @@
             :rules="rules"
           ></v-text-field>
           <v-row class="align-center">
+            <v-col cols="12" class="font-weight-bold">
+              Обложка для карточки
+            </v-col>
             <v-col v-if="promo.stockSchemaid && this.promo.cover" cols="5">
               <viewer
                 class="main-component-promo__viewer"
@@ -260,6 +263,9 @@
             type="number"
             :rules="rules"
           ></v-text-field>
+          <v-col cols="12" class="font-weight-bold">
+            Обложка для карточки
+          </v-col>
           <v-file-input
             v-model="promoNew.coverFile"
             label="Обложка для карточки"

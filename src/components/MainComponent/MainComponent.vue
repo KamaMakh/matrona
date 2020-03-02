@@ -12,7 +12,7 @@
       <MainComponentTopNav v-if="windowWidth > 960" />
     </v-app-bar>
 
-    <v-content>
+    <v-content id="content">
       <v-container class="fill-height" fluid>
         <v-row>
           <v-col
