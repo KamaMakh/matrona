@@ -169,7 +169,7 @@
           <v-text-field
             v-model="articleNew.articletitleShort"
             label="Короткий заголовок для картинки"
-            placeholder="Введите кароткий заголовок"
+            placeholder="Введите короткий заголовок"
             :rules="rules"
           ></v-text-field>
           <v-text-field
