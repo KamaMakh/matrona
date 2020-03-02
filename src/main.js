@@ -19,7 +19,8 @@ Vue.use(Viewer);
 
 Vue.use(VueGoogleMaps, {
   load: {
-    key: "AIzaSyA9Wze3vMgqskMu3QJJZJjR9GzTsPdckrk",
+    // key: "AIzaSyA9Wze3vMgqskMu3QJJZJjR9GzTsPdckrk",
+    key: "AIzaSyAUvpClRdCDP-HuQPxCyQR69zASuxtiqL0", //develop
     libraries: "places"
   },
   installComponents: true

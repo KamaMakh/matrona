@@ -19,6 +19,7 @@
             label="Позиция"
             placeholder="Позиция"
             :rules="rules"
+            type="number"
           ></v-text-field>
           <v-row>
             <v-col
@@ -109,6 +110,7 @@
             label="Позиция"
             placeholder="Позиция"
             :rules="rules"
+            type="number"
           ></v-text-field>
           <v-file-input
             v-model="schemaNew.coverDefaultFile"

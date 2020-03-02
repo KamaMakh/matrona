@@ -187,6 +187,7 @@
                   scrollable
                   locale="ru"
                   first-day-of-week="1"
+                  @input="menu3 = false"
                 >
                   <v-spacer></v-spacer>
                   <v-btn text color="primary" @click="menu3 = false"
@@ -206,7 +207,7 @@
                 ref="menu4"
                 v-model="menu4"
                 :close-on-content-click="false"
-                :return-value.sync="promo.endDt"
+                :return-value.sync="promoNew.endDt"
                 transition="scale-transition"
                 offset-y
                 min-width="290px"
@@ -227,6 +228,7 @@
                   scrollable
                   locale="ru"
                   first-day-of-week="1"
+                  @input="menu4 = false"
                 >
                   <v-spacer></v-spacer>
                   <v-btn text color="primary" @click="menu4 = false"

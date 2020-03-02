@@ -54,6 +54,7 @@
           </label>
           <br /><br />
           <GmapMap
+            v-if="this.shop.storeid && !isNew"
             :center="{
               lat: parseInt(shop.storeLat),
               lng: parseInt(shop.storeLng)
