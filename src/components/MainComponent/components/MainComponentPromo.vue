@@ -543,10 +543,14 @@ export default {
         this.isNew = false;
         this.promoNew = {};
         if (value && value.startDt) {
-          this.date_from = new Date(value.startDt).toISOString().substr(0, 10);
+          this.date_from = new Date(value.startDt.split(" ")[0])
+            .toISOString()
+            .substr(0, 10);
         }
         if (value && value.endDt) {
-          this.date_to = new Date(value.endDt).toISOString().substr(0, 10);
+          this.date_to = new Date(value.endDt.split(" ")[0])
+            .toISOString()
+            .substr(0, 10);
         }
       }
     }
