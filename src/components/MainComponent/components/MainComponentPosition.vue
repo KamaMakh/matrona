@@ -35,6 +35,7 @@
                   scrollable
                   locale="ru"
                   first-day-of-week="1"
+                  @input="menu = false"
                 >
                   <v-spacer></v-spacer>
                   <v-btn text color="primary" @click="menu = false"
@@ -75,6 +76,7 @@
                   scrollable
                   locale="ru"
                   first-day-of-week="1"
+                  @input="menu2 = false"
                 >
                   <v-spacer></v-spacer>
                   <v-btn text color="primary" @click="menu2 = false"
@@ -218,6 +220,7 @@
                   no-title
                   scrollable
                   first-day-of-week="1"
+                  @input="menu3 = false"
                 >
                   <v-spacer></v-spacer>
                   <v-btn text color="primary" @click="menu3 = false"
@@ -258,6 +261,7 @@
                   no-title
                   scrollable
                   first-day-of-week="1"
+                  @input="menu4 = false"
                 >
                   <v-spacer></v-spacer>
                   <v-btn text color="primary" @click="menu4 = false"
@@ -598,10 +602,10 @@ export default {
         this.isNew = false;
         this.specPriceNew = {};
         if (value && value.startDt) {
-          this.date_from = new Date(value.startDt).toISOString().substr(0, 10);
+          this.date_from = new Date(value.startDt.split(" ")[0]).toISOString().substr(0, 10);
         }
         if (value && value.endDt) {
-          this.date_to = new Date(value.endDt).toISOString().substr(0, 10);
+          this.date_to = new Date(value.endDt.split(" ")[0]).toISOString().substr(0, 10);
         }
       }
     }
