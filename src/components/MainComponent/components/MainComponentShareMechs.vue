@@ -348,8 +348,12 @@ export default {
     },
     create() {
       this.isNew = true;
+      this.schemaNew = {};
       if (this.$refs.form) {
         this.$refs.form.resetValidation();
+      }
+      if (this.$refs.form2) {
+        this.$refs.form2.resetValidation();
       }
       this.$store.commit("mechanics/setSchema");
     }

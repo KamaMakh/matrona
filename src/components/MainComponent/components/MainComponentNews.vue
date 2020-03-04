@@ -133,7 +133,7 @@
             @click="save"
             :disabled="!valid"
             :loading="loading"
-            >Добавить</v-btn
+            >Сохранить</v-btn
           >
           <v-btn
             color="error"
@@ -463,8 +463,12 @@ export default {
     },
     create() {
       this.isNew = true;
+      this.articleNew = {};
       if (this.$refs.form) {
         this.$refs.form.resetValidation();
+      }
+      if (this.$refs.form2) {
+        this.$refs.form2.resetValidation();
       }
       this.$store.commit("news/setArticle");
     }

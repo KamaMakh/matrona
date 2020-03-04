@@ -159,7 +159,7 @@
             @click="save"
             :disabled="!valid"
             :loading="loading"
-            >«Добавить»</v-btn
+            >Добавить</v-btn
           >
         </v-col>
       </v-row>
@@ -348,8 +348,12 @@ export default {
     },
     create() {
       this.isNew = true;
+      this.rubricNew = {};
       if (this.$refs.form) {
         this.$refs.form.resetValidation();
+      }
+      if (this.$refs.form2) {
+        this.$refs.form2.resetValidation();
       }
       this.$store.commit("heading/setRubric");
     }

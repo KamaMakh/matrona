@@ -89,8 +89,8 @@
           </v-row>
           <v-text-field
             v-model="specPrice.discountPercent"
-            label="Скидка"
-            placeholder="Скидка"
+            label="% cкидки"
+            placeholder="% cкидки"
             type="number"
             :rules="rules"
           ></v-text-field>
@@ -272,8 +272,8 @@
           </v-row>
           <v-text-field
             v-model="specPriceNew.discountPercent"
-            label="Скидка"
-            placeholder="Скидка"
+            label="% cкидки"
+            placeholder="% cкидки"
             type="number"
             :rules="rules"
           ></v-text-field>
@@ -451,8 +451,8 @@ export default {
         articleObj["isActive"] = false;
       }
       articleObj["rubricid"] = this.rubric.rubricid;
-      articleObj["startDt"] = this.date_from + "T00:00:00+03:00";
-      articleObj["endDt"] = this.date_to + "T00:00:00+03:00";
+      articleObj["startDt"] = this.date_from + "T00:00:00";
+      articleObj["endDt"] = this.date_to + "T00:00:00";
       for (let key in articleObj) {
         if (articleObj.hasOwnProperty(key)) {
           if (
@@ -568,8 +568,12 @@ export default {
     },
     create() {
       this.isNew = true;
+      this.specPriceNew = {};
       if (this.$refs.form) {
         this.$refs.form.resetValidation();
+      }
+      if (this.$refs.form2) {
+        this.$refs.form2.resetValidation();
       }
       this.$store.commit("heading/setPrice");
     }
