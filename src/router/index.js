@@ -20,36 +20,40 @@ Vue.use(VueRouter);
 const routes = [
   {
     path: "/",
+    redirect: "/crm"
+  },
+  {
+    path: "/crm",
     component: Main,
     redirect: { name: "MainComponentNews" },
     children: [
       {
-        path: "/news",
+        path: "news",
         name: "MainComponentNews",
         component: MainComponentNews
       },
       {
-        path: "/shop",
+        path: "shop",
         name: "MainComponentShop",
         component: MainComponentShop
       },
       {
-        path: "/heading",
+        path: "heading",
         name: "MainComponentHeading",
         component: MainComponentHeading
       },
       {
-        path: "/faq",
+        path: "faq",
         name: "MainComponentFaq",
         component: MainComponentFaq
       },
       {
-        path: "/share-mechs",
+        path: "share-mechs",
         name: "MainComponentShareMechs",
         component: MainComponentShareMechs
       },
       {
-        path: "/settings",
+        path: "settings",
         name: "MainComponentSettings",
         component: MainComponentSettings
       },
@@ -59,19 +63,19 @@ const routes = [
         component: MainComponentUserSettings
       },
       {
-        path: "/promo",
+        path: "promo",
         name: "MainComponentPromo",
         component: MainComponentPromo
       },
       {
-        path: "/position",
+        path: "position",
         name: "MainComponentPosition",
         component: MainComponentPosition
       }
     ]
   },
   {
-    path: "/auth",
+    path: "/crm/auth",
     component: Auth,
     children: [
       {
