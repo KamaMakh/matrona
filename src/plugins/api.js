@@ -33,12 +33,12 @@ let axiosInstance = axios.create({
   validateStatus: function(status) {
     if (status === 401 && !document.location.pathname.includes("auth/")) {
       VueCookies.remove("token");
-      router.push("/auth");
+      router.push("/crm/auth");
     } else if (
       VueCookies.get("token") &&
       document.location.pathname.includes("auth")
     ) {
-      router.push("/main");
+      router.push("/");
     } else {
       return true;
     }

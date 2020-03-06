@@ -91,7 +91,7 @@ export default {
   methods: {
     exit() {
       VueCookies.remove("token");
-      this.$router.push("/auth");
+      this.$router.push("/crm/auth");
     },
     myScroll() {
       setTimeout(() => {
