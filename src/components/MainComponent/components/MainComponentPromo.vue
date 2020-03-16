@@ -30,7 +30,6 @@
                 </template>
                 <v-date-picker
                   v-model="date_from"
-                  :max="date_to"
                   no-title
                   scrollable
                   locale="ru"
@@ -90,12 +89,16 @@
             </v-col>
           </v-row>
           <v-textarea
+            rows="1"
+            auto-grow
             v-model="promo.description"
             label="Описание"
             placeholder="Описание"
             :rules="rules"
           ></v-textarea>
           <v-textarea
+            rows="1"
+            auto-grow
             v-model="promo.limitation"
             label="Ограничения"
             placeholder="Ограничения"
@@ -106,6 +109,7 @@
             label="Позиция"
             placeholder="Позиция"
             type="number"
+            step="0.1"
             :rules="rules"
           ></v-text-field>
           <v-row class="align-center">
@@ -185,7 +189,6 @@
                 </template>
                 <v-date-picker
                   v-model="date_from"
-                  :max="date_to"
                   no-title
                   scrollable
                   locale="ru"
@@ -244,23 +247,28 @@
               </v-menu>
             </v-col>
           </v-row>
-          <v-text-field
+          <v-textarea
+            rows="1"
+            auto-grow
             v-model="promoNew.description"
             label="Описание"
             placeholder="Описание"
             :rules="rules"
-          ></v-text-field>
-          <v-text-field
+          ></v-textarea>
+          <v-textarea
+            rows="1"
+            auto-grow
             v-model="promoNew.limitation"
             label="Ограничения"
             placeholder="Ограничения"
             :rules="rules"
-          ></v-text-field>
+          ></v-textarea>
           <v-text-field
             v-model="promoNew.position"
             label="Позиция"
             placeholder="Позиция"
             type="number"
+            step="0.1"
             :rules="rules"
           ></v-text-field>
           <v-col cols="12" class="font-weight-bold">

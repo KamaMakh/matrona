@@ -1,5 +1,5 @@
 <template>
-  <div class="main-component-left-nav">
+  <div class="main-component-left-nav pr-1 pl-2">
     <!--MainComponentPromo-->
     <div
       v-if="

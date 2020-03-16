@@ -30,7 +30,6 @@
                 </template>
                 <v-date-picker
                   v-model="date_from"
-                  :max="date_to"
                   no-title
                   scrollable
                   locale="ru"
@@ -116,21 +115,26 @@
               ></v-text-field>
             </v-col>
           </v-row>
-          <v-text-field
+          <v-textarea
+            rows="1"
+            auto-grow
             v-model="specPrice.description"
             label="Описание"
             placeholder="Описание"
             :rules="rules"
-          ></v-text-field>
-          <v-text-field
+          ></v-textarea>
+          <v-textarea
+            rows="1"
+            auto-grow
             v-model="specPrice.limitation"
             label="Ограничения"
             placeholder="Ограничения"
             :rules="rules"
-          ></v-text-field>
+          ></v-textarea>
           <v-text-field
             v-model="specPrice.position"
             label="Позиция"
+            step="0.1"
             placeholder="Позиция"
             type="number"
             :rules="rules"
@@ -215,7 +219,6 @@
                 </template>
                 <v-date-picker
                   v-model="date_from"
-                  :max="date_to"
                   locale="ru"
                   no-title
                   scrollable
@@ -301,25 +304,32 @@
               ></v-text-field>
             </v-col>
           </v-row>
-          <v-text-field
+          <v-textarea
+            rows="1"
+            auto-grow
             v-model="specPriceNew.description"
             label="Описание"
             placeholder="Описание"
             :rules="rules"
-          ></v-text-field>
-          <v-text-field
+          ></v-textarea>
+          <v-textarea
+            rows="1"
+            auto-grow
             v-model="specPriceNew.limitation"
             label="Ограничения"
             placeholder="Ограничения"
             :rules="rules"
-          ></v-text-field>
-          <v-text-field
+          ></v-textarea>
+          <v-textarea
+            rows="1"
+            auto-grow
             v-model="specPriceNew.position"
             label="Позиция"
             placeholder="Позиция"
+            step="0.1"
             type="number"
             :rules="rules"
-          ></v-text-field>
+          ></v-textarea>
           <v-row class="align-center">
             <v-col cols="12" class="font-weight-bold"
               >Обложка для карточки</v-col
@@ -602,10 +612,14 @@ export default {
         this.isNew = false;
         this.specPriceNew = {};
         if (value && value.startDt) {
-          this.date_from = new Date(value.startDt.split(" ")[0]).toISOString().substr(0, 10);
+          this.date_from = new Date(value.startDt.split(" ")[0])
+            .toISOString()
+            .substr(0, 10);
         }
         if (value && value.endDt) {
-          this.date_to = new Date(value.endDt.split(" ")[0]).toISOString().substr(0, 10);
+          this.date_to = new Date(value.endDt.split(" ")[0])
+            .toISOString()
+            .substr(0, 10);
         }
       }
     }

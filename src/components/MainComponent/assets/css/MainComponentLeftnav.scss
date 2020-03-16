@@ -166,3 +166,8 @@ body .main-component-left-nav .theme--light.v-label {
 .main-component-left-nav .v-list.v-sheet .v-list-item, .main-component-left-nav .v-list {
   max-width: 300px !important;
 }
+
+.main-component-left-nav .v-list {
+  padding: 0 !important;
+  margin: 0 auto !important;
+}

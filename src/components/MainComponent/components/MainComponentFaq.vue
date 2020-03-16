@@ -23,6 +23,7 @@
           <v-text-field
             v-model="faq.position"
             type="number"
+            step="0.1"
             label="Позиция"
             placeholder="Позиция"
             :rules="rules"
@@ -72,6 +73,7 @@
           <v-text-field
             v-model="faqNew.position"
             type="number"
+            step="0.1"
             label="Позиция"
             placeholder="Позиция"
             :rules="rules"

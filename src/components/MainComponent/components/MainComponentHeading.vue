@@ -8,17 +8,20 @@
     >
       <v-row>
         <v-col cols="12" sm="12" md="8">
-          <v-text-field
+          <v-textarea
+            rows="1"
+            auto-grow
             v-model="rubric.title"
             label="Название рубрики"
             placeholder="Введите название рубрики"
             :rules="rules"
-          ></v-text-field>
+          ></v-textarea>
           <v-text-field
             v-model="rubric.position"
             label="Позиция"
             placeholder="Позиция"
             type="number"
+            step="0.1"
             :rules="rules"
           ></v-text-field>
           <v-row class="align-center">
@@ -105,16 +108,19 @@
     <v-form v-if="isNew" ref="form2" v-model="valid" lazy-validation>
       <v-row>
         <v-col cols="12" sm="12" md="8">
-          <v-text-field
+          <v-textarea
+            rows="1"
+            auto-grow
             v-model="rubricNew.title"
             label="Название рубрики"
             placeholder="Введите название рубрики"
             :rules="rules"
-          ></v-text-field>
+          ></v-textarea>
           <v-text-field
             v-model="rubricNew.position"
             label="Позиция"
             placeholder="Позиция"
+            step="0.1"
             type="number"
             :rules="rules"
           ></v-text-field>

@@ -8,26 +8,33 @@
     >
       <v-row>
         <v-col cols="12" sm="12" md="8" xs="12">
-          <v-text-field
+          <v-textarea
+            rows="1"
+            auto-grow
             v-model="article.articletitleShort"
             label="Короткий заголовок для картинки"
             placeholder="Введите короткий заголовок"
             :rules="rules"
-          ></v-text-field>
-          <v-text-field
+          ></v-textarea>
+          <v-textarea
+            rows="1"
+            auto-grow
             v-model="article.articletitle"
             label="Заголовок"
             placeholder="Введите заголовок"
             :rules="rules"
-          ></v-text-field>
+          ></v-textarea>
           <v-text-field
             v-model="article.position"
             label="Позиция"
             placeholder="Позиция"
             type="number"
+            step="0.1"
             :rules="rules"
           ></v-text-field>
           <v-textarea
+            rows="1"
+            auto-grow
             label="Содержимое"
             placeholder="Введите текст"
             v-model="article.articlecontent"
@@ -95,13 +102,15 @@
                 <v-radio :value="'video'"></v-radio>
               </v-col>
               <v-col>
-                <v-text-field
+                <v-textarea
+                  rows="1"
+                  auto-grow
                   v-model="article.videoLink"
                   label="Адрес видео-обложки"
                   placeholder="Введите ссылку"
                   hide-details
                   :rules="urlRules"
-                ></v-text-field>
+                ></v-textarea>
               </v-col>
             </v-row>
           </v-radio-group>
@@ -148,26 +157,35 @@
     <v-form ref="form2" v-if="isNew" v-model="valid" lazy-validation>
       <v-row>
         <v-col cols="12" sm="12" md="8">
-          <v-text-field
+          <v-textarea
+            rows="1"
+            auto-grow
             v-model="articleNew.articletitleShort"
             label="Короткий заголовок для картинки"
             placeholder="Введите короткий заголовок"
             :rules="rules"
-          ></v-text-field>
-          <v-text-field
+          ></v-textarea>
+          <v-textarea
+            rows="1"
+            auto-grow
             v-model="articleNew.articletitle"
             label="Заголовок"
             placeholder="Введите заголовок"
             :rules="rules"
-          ></v-text-field>
+          ></v-textarea>
           <v-text-field
+            rows="1"
+            auto-grow
             v-model="articleNew.position"
             label="Позиция"
             placeholder="Позиция"
             type="number"
+            step="0.1"
             :rules="rules"
           ></v-text-field>
           <v-textarea
+            rows="1"
+            auto-grow
             label="Содержимое"
             placeholder="Введите текст"
             v-model="articleNew.articlecontent"
@@ -214,13 +232,15 @@
                 <v-radio :value="'video'"></v-radio>
               </v-col>
               <v-col>
-                <v-text-field
+                <v-textarea
+                  rows="1"
+                  auto-grow
                   v-model="articleNew.videoLink"
                   label="Адрес видео-обложки"
                   :rules="urlRules"
                   placeholder="Введите ссылку"
                   hide-details
-                ></v-text-field>
+                ></v-textarea>
               </v-col>
             </v-row>
           </v-radio-group>

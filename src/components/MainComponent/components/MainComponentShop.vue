@@ -8,25 +8,33 @@
     >
       <v-row>
         <v-col cols="12" sm="12" md="8">
-          <v-text-field
+          <v-textarea
+            rows="1"
+            auto-grow
             v-model="shop.storeName"
             label="Название торогового объекта"
             placeholder="Введите название торогового объекта"
             :rules="rules"
-          ></v-text-field>
-          <v-text-field
+          ></v-textarea>
+          <v-textarea
+            rows="1"
+            auto-grow
             v-model="shop.storeCity"
             label="Город"
             placeholder="Введите горд"
             :rules="rules"
-          ></v-text-field>
-          <v-text-field
+          ></v-textarea>
+          <v-textarea
+            rows="1"
+            auto-grow
             v-model="shop.storeAddress"
             label="Адрес магазина"
             placeholder="Введите адрес магазина"
             :rules="rules"
-          ></v-text-field>
+          ></v-textarea>
           <v-text-field
+            rows="1"
+            auto-grow
             v-model="shop.storePhone"
             label="Телефон магазина"
             placeholder="Введите телефон магазина"
@@ -68,6 +76,7 @@
             label="Позиция"
             placeholder="Позиция"
             type="number"
+            step="0.1"
             :rules="rules"
           ></v-text-field>
           <v-divider color="#333"></v-divider>
@@ -103,24 +112,30 @@
     <v-form v-if="isNew" ref="form2" v-model="valid" lazy-validation>
       <v-row>
         <v-col cols="12" sm="12" md="8">
-          <v-text-field
+          <v-textarea
+            rows="1"
+            auto-grow
             v-model="storeNew.storeName"
             label="Название торогового объекта"
             placeholder="Введите название торогового объекта"
             :rules="rules"
-          ></v-text-field>
-          <v-text-field
+          ></v-textarea>
+          <v-textarea
+            rows="1"
+            auto-grow
             v-model="storeNew.storeCity"
             label="Город"
             placeholder="Введите горд"
             :rules="rules"
-          ></v-text-field>
-          <v-text-field
+          ></v-textarea>
+          <v-textarea
+            rows="1"
+            auto-grow
             v-model="storeNew.storeAddress"
             label="Адрес магазина"
             placeholder="Введите адрес магазина"
             :rules="rules"
-          ></v-text-field>
+          ></v-textarea>
           <v-text-field
             v-model="storeNew.storePhone"
             label="Телефон магазина"
@@ -160,6 +175,7 @@
             label="Позиция"
             placeholder="Позиция"
             type="number"
+            step="0.1"
             :rules="rules"
           ></v-text-field>
 
