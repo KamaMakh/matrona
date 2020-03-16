@@ -404,6 +404,7 @@ export default {
             this.snackBar.value = true;
             this.snackBar.text = "Новость обновлена";
             this.snackBar.color = "success";
+            this.getData();
           })
           .catch(error => {
             if (
@@ -431,6 +432,7 @@ export default {
             this.snackBar.text = "Создано успешно";
             this.snackBar.color = "success";
             this.create();
+            this.getData();
           })
           .catch(error => {
             if (
@@ -491,21 +493,25 @@ export default {
         this.$refs.form2.resetValidation();
       }
       this.$store.commit("news/setArticle");
+    },
+    getData() {
+      this.$store.dispatch("news/getAllNews", this.filter).then(response => {
+        if (response.data.result && !response.data.result.length) {
+          this.create();
+        }
+      });
     }
   },
   computed: {
     ...mapState({
       news: state => state.news.news,
       article: state => state.news.oneNews,
-      snackBar: state => state.snackBar
+      snackBar: state => state.snackBar,
+      filter: state => state.filter
     })
   },
   mounted() {
-    this.$store.dispatch("news/getAllNews").then(response => {
-      if (response.data.result && !response.data.result.length) {
-        this.create();
-      }
-    });
+    this.getData();
   },
   watch: {
     article(value) {
@@ -513,6 +519,9 @@ export default {
         this.isNew = false;
         this.articleNew = {};
       }
+    },
+    filter() {
+      this.$store.commit("news/setArticle");
     }
   }
 };

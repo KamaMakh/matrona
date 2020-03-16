@@ -369,15 +369,18 @@ export default {
   computed: {
     ...mapState({
       schema: state => state.mechanics.oneSchema,
-      snackBar: state => state.snackBar
+      snackBar: state => state.snackBar,
+      filter: state => state.filter
     })
   },
   mounted() {
-    this.$store.dispatch("mechanics/getAllSchemas").then(response => {
-      if (response.data.result && !response.data.result.length) {
-        this.create();
-      }
-    });
+    this.$store
+      .dispatch("mechanics/getAllSchemas", this.filter)
+      .then(response => {
+        if (response.data.result && !response.data.result.length) {
+          this.create();
+        }
+      });
   },
   watch: {
     schema(value) {
@@ -385,6 +388,9 @@ export default {
         this.isNew = false;
         this.schemaNew = {};
       }
+    },
+    filter() {
+      this.$store.commit("mechanics/setSchema");
     }
   }
 };

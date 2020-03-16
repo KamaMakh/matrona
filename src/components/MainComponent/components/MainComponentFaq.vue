@@ -185,6 +185,7 @@ export default {
             this.snackBar.value = true;
             this.snackBar.text = "Вопрос и ответ обновлены";
             this.snackBar.color = "success";
+            this.getData();
           })
           .catch(error => {
             if (
@@ -212,6 +213,7 @@ export default {
             this.snackBar.text = "Создано успешно";
             this.snackBar.color = "success";
             this.create();
+            this.getData();
           })
           .catch(error => {
             if (
@@ -272,6 +274,13 @@ export default {
         this.$refs.form2.resetValidation();
       }
       this.$store.commit("faqs/setFaq");
+    },
+    getData() {
+      this.$store.dispatch("faqs/getAllFaqs").then(response => {
+        if (response.data.result && !response.data.result.length) {
+          this.create();
+        }
+      });
     }
   },
   computed: {
@@ -282,11 +291,7 @@ export default {
     })
   },
   mounted() {
-    this.$store.dispatch("faqs/getAllFaqs").then(response => {
-      if (response.data.result && !response.data.result.length) {
-        this.create();
-      }
-    });
+    this.getData();
   },
   watch: {
     faq(value) {

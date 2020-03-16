@@ -17,7 +17,8 @@ export default new Vuex.Store({
       color: "success",
       text: "Внимание!",
       button_text: "Ok"
-    }
+    },
+    filter: {}
   },
   mutations: {},
   actions: {},

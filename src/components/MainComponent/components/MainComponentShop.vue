@@ -385,6 +385,7 @@ export default {
             this.snackBar.value = true;
             this.snackBar.text = "Магазин обновлен";
             this.snackBar.color = "success";
+            this.getData();
           })
           .catch(error => {
             if (
@@ -412,6 +413,7 @@ export default {
             this.snackBar.text = "Создано успешно";
             this.snackBar.color = "success";
             this.create();
+            this.getData();
           })
           .catch(error => {
             if (
@@ -491,6 +493,14 @@ export default {
         this.$store.commit("shop/setStore");
       }, 500);
       this.$store.commit("shop/setStore");
+    },
+    getData() {
+      this.$store.dispatch("shop/getAllStores").then(response => {
+        if (response.data.result && !response.data.result.length) {
+          this.create();
+        }
+      });
+      this.myMap();
     }
   },
   computed: {
@@ -502,12 +512,7 @@ export default {
     })
   },
   mounted() {
-    this.$store.dispatch("shop/getAllStores").then(response => {
-      if (response.data.result && !response.data.result.length) {
-        this.create();
-      }
-    });
-    this.myMap();
+    this.getData();
   },
   watch: {
     shop(value) {

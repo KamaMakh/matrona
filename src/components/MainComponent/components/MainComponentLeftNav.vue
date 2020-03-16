@@ -72,7 +72,7 @@
           ></v-select>
         </v-col>
         <v-col class="d-flex align-end justify-end" cols="6">
-          <v-btn color="#e91e63" dark @click="filter = {}">
+          <v-btn color="#e91e63" dark @click="$store.state.filter = {}">
             Очистить
           </v-btn>
         </v-col>
@@ -274,8 +274,7 @@ export default {
       items: ["item 1", "item 2"],
       localRubric: null,
       localPromo: null,
-      selectLoading: false,
-      filter: {}
+      selectLoading: false
     };
   },
   methods: {
@@ -397,12 +396,13 @@ export default {
       rubrics: state => state.heading.rubrics,
       prices: state => state.heading.specPrices,
       promos: state => state.mechanics.stocks,
-      snackBar: state => state.snackBar
+      snackBar: state => state.snackBar,
+      filter: state => state.filter
     })
   },
   watch: {
     $route() {
-      this.filter = {};
+      this.$store.state.filter = {};
     },
     localRubric(value) {
       this.selectLoading = true;

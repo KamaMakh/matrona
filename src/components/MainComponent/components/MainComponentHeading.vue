@@ -275,6 +275,7 @@ export default {
             this.snackBar.value = true;
             this.snackBar.text = "Рубрика обновлена";
             this.snackBar.color = "success";
+            this.getData();
           })
           .catch(error => {
             if (
@@ -302,6 +303,7 @@ export default {
             this.snackBar.text = "Создано успешно";
             this.snackBar.color = "success";
             this.create();
+            this.getData();
           })
           .catch(error => {
             if (
@@ -362,21 +364,27 @@ export default {
         this.$refs.form2.resetValidation();
       }
       this.$store.commit("heading/setRubric");
+    },
+    getData() {
+      this.$store
+        .dispatch("heading/getAllRubrics", this.filter)
+        .then(response => {
+          if (response.data.result && !response.data.result.length) {
+            this.create();
+          }
+        });
     }
   },
   computed: {
     ...mapState({
       rubrics: state => state.heading.rubrics,
       rubric: state => state.heading.oneRubric,
-      snackBar: state => state.snackBar
+      snackBar: state => state.snackBar,
+      filter: state => state.filter
     })
   },
   mounted() {
-    this.$store.dispatch("heading/getAllRubrics").then(response => {
-      if (response.data.result && !response.data.result.length) {
-        this.create();
-      }
-    });
+    this.getData();
   },
   watch: {
     rubric(value) {
@@ -384,6 +392,9 @@ export default {
         this.isNew = false;
         this.rubricNew = {};
       }
+    },
+    filter() {
+      this.$store.commit("heading/setRubric");
     }
   }
 };
