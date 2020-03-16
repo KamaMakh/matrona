@@ -45,10 +45,10 @@ function updateFaqs({ commit }, data) {
   });
 }
 
-function getAllFaqs({ commit }) {
+function getAllFaqs({ commit }, data) {
   return new Promise((resolve, reject) => {
     api
-      .get(getFaqsUrl)
+      .get(getFaqsUrl, { params: data })
       .then(response => {
         if (response.status === 200) {
           commit("setFaqs", response.data);

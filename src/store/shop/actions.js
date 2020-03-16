@@ -45,10 +45,10 @@ function updateStore({ commit }, data) {
   });
 }
 
-function getAllStores({ commit }) {
+function getAllStores({ commit }, data) {
   return new Promise((resolve, reject) => {
     api
-      .get(getStoresUrl)
+      .get(getStoresUrl, { params: data })
       .then(response => {
         if (response.status === 200) {
           commit("setStores", response.data.result);

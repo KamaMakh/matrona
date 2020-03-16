@@ -88,10 +88,10 @@ function updatePrice({ commit }, data) {
   });
 }
 
-function getAllRubrics({ commit }) {
+function getAllRubrics({ commit }, data) {
   return new Promise((resolve, reject) => {
     api
-      .get(getRubricsUrl)
+      .get(getRubricsUrl, { params: data })
       .then(response => {
         if (response.status === 200) {
           commit("setRubrics", response.data.result);

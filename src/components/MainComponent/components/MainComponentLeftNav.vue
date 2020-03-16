@@ -1,6 +1,90 @@
 <template>
   <div class="main-component-left-nav pr-1 pl-2">
-    <!--MainComponentPromo-->
+    <div
+      v-if="['MainComponentFaq', 'MainComponentShop'].indexOf($route.name) < 0"
+      class="filter-wrap"
+    >
+      <v-row class="ml-0 mr-0">
+        <v-col class="d-flex" cols="6">
+          <v-select
+            v-model="filter.year"
+            dark
+            :items="[
+              2010,
+              2011,
+              2012,
+              2013,
+              2014,
+              2015,
+              2016,
+              2017,
+              2018,
+              2019,
+              2020,
+              2021,
+              2022,
+              2023
+            ]"
+            label="Год"
+          ></v-select>
+        </v-col>
+        <v-col class="d-flex" cols="6">
+          <v-select
+            v-model="filter.month"
+            dark
+            item-text="title"
+            item-value="value"
+            :items="[
+              { title: 'Январь', value: 1 },
+              { title: 'Февраль', value: 2 },
+              { title: 'Март', value: 3 },
+              { title: 'Апрель', value: 4 },
+              { title: 'Май', value: 5 },
+              { title: 'Июнь', value: 6 },
+              { title: 'Июль', value: 7 },
+              { title: 'Август', value: 8 },
+              { title: 'Сентябрь', value: 9 },
+              { title: 'Октябрь', value: 10 },
+              { title: 'Ноябрь', value: 11 },
+              { title: 'Декабрь', value: 12 }
+            ]"
+            label="Месяц"
+          ></v-select>
+        </v-col>
+      </v-row>
+      <v-row class="ml-0 mr-0 mb-4">
+        <v-col
+          v-if="$route.name === 'MainComponentNews'"
+          class="d-flex"
+          cols="6"
+        >
+          <v-select
+            v-model="filter.type"
+            dark
+            hide-details
+            item-text="title"
+            item-value="value"
+            :items="[
+              { title: 'Новость', value: 1 },
+              { title: 'Статья', value: 2 }
+            ]"
+            label="Тип"
+          ></v-select>
+        </v-col>
+        <v-col class="d-flex align-end justify-end" cols="6">
+          <v-btn color="#e91e63" dark @click="filter = {}">
+            Очистить
+          </v-btn>
+        </v-col>
+      </v-row>
+      <v-row class="ml-0 mr-0">
+        <v-col class="d-flex align-end justify-center">
+          <v-btn color="#e91e63" dark @click="filterList">
+            Найти
+          </v-btn>
+        </v-col>
+      </v-row>
+    </div>
     <div
       v-if="
         ['MainComponentPromo', 'MainComponentPosition'].indexOf($route.name) >
@@ -190,10 +274,56 @@ export default {
       items: ["item 1", "item 2"],
       localRubric: null,
       localPromo: null,
-      selectLoading: false
+      selectLoading: false,
+      filter: {}
     };
   },
   methods: {
+    filterList() {
+      if (this.$route.name === "MainComponentNews") {
+        this.$store.dispatch("news/getAllNews", {
+          year: this.filter.year || "",
+          month: this.filter.month || "",
+          type: this.filter.type || ""
+        });
+      }
+      if (this.$route.name === "MainComponentShop") {
+        this.$store.dispatch("shop/getAllStores", {
+          year: this.filter.year || "",
+          month: this.filter.month || ""
+        });
+      }
+      if (this.$route.name === "MainComponentHeading") {
+        this.$store.dispatch("heading/getAllRubrics", {
+          year: this.filter.year || "",
+          month: this.filter.month || ""
+        });
+      }
+      if (this.$route.name === "MainComponentFaq") {
+        this.$store.dispatch("faqs/getAllFaqs", {
+          year: this.filter.year || "",
+          month: this.filter.month || ""
+        });
+      }
+      if (this.$route.name === "MainComponentShareMechs") {
+        this.$store.dispatch("mechanics/getAllSchemas", {
+          year: this.filter.year || "",
+          month: this.filter.month || ""
+        });
+      }
+      if (this.$route.name === "MainComponentPromo") {
+        this.$store.dispatch("mechanics/getAllSchemas", {
+          year: this.filter.year || "",
+          month: this.filter.month || ""
+        });
+      }
+      if (this.$route.name === "MainComponentPosition") {
+        this.$store.dispatch("heading/getAllRubrics", {
+          year: this.filter.year || "",
+          month: this.filter.month || ""
+        });
+      }
+    },
     myScroll() {
       document.getElementById("scrollelement").scrollTo({
         top: 0,
@@ -271,10 +401,17 @@ export default {
     })
   },
   watch: {
+    $route() {
+      this.filter = {};
+    },
     localRubric(value) {
       this.selectLoading = true;
       this.$store
-        .dispatch("heading/getAllPrices", { id: value })
+        .dispatch("heading/getAllPrices", {
+          id: value,
+          year: this.filter.year || "",
+          month: this.filter.month || ""
+        })
         .then(() => {
           this.setPrice();
         })
@@ -300,7 +437,11 @@ export default {
     localPromo(value) {
       this.selectLoading = true;
       this.$store
-        .dispatch("mechanics/getAllPromos", { id: value })
+        .dispatch("mechanics/getAllPromos", {
+          id: value,
+          year: this.filter.year || "",
+          month: this.filter.month || ""
+        })
         .then(() => {
           this.setPromo();
         })

@@ -14,7 +14,7 @@
 
     <v-content id="content">
       <v-container class="fill-height" fluid>
-        <v-row>
+        <v-row class="ml-0">
           <v-col
             v-if="
               windowWidth > 960 &&

@@ -89,10 +89,10 @@ function updatePromo({ commit }, data) {
   });
 }
 
-function getAllSchemas({ commit }) {
+function getAllSchemas({ commit }, data) {
   return new Promise((resolve, reject) => {
     api
-      .get(getMechanicsUrl)
+      .get(getMechanicsUrl, { params: data })
       .then(response => {
         if (response.status === 200) {
           commit("setSchemas", response.data.result);
