@@ -5,6 +5,7 @@
       v-model="valid"
       lazy-validation
       v-show="this.shop.storeid && !isNew"
+      @submit.prevent="save"
     >
       <v-row>
         <v-col cols="12" sm="12" md="8">
@@ -240,6 +241,24 @@ import { mapState } from "vuex";
 import VueGoogleAutocomplete from "vue-google-autocomplete";
 export default {
   name: "MainComponentShop",
+  beforeRouteLeave(to, from, next) {
+    if (
+      this.isNew ||
+      JSON.stringify(this.shop) !=
+        JSON.stringify(this.$store.state.shop.oneStore)
+    ) {
+      const answer = window.confirm(
+        "Вы хотите уйти? У вас есть несохранённые изменения!"
+      );
+      if (answer) {
+        next();
+      } else {
+        next(false);
+      }
+    } else {
+      next();
+    }
+  },
   directives: {
     mask
   },
@@ -506,7 +525,7 @@ export default {
   computed: {
     ...mapState({
       stores: state => state.shop.stores,
-      shop: state => state.shop.oneStore,
+      shop: state => JSON.parse(JSON.stringify(state.shop.oneStore)),
       shopMap: state => state.shop.map,
       snackBar: state => state.snackBar
     })

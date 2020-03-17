@@ -212,6 +212,24 @@ import { mapState } from "vuex";
 import { serverUrl } from "@/store/urls";
 export default {
   name: "MainComponentHeading",
+  beforeRouteLeave(to, from, next) {
+    if (
+      this.isNew ||
+      JSON.stringify(this.rubric) !=
+        JSON.stringify(this.$store.state.heading.oneRubric)
+    ) {
+      const answer = window.confirm(
+        "Вы хотите уйти? У вас есть несохранённые изменения!"
+      );
+      if (answer) {
+        next();
+      } else {
+        next(false);
+      }
+    } else {
+      next();
+    }
+  },
   data() {
     return {
       heading: {},
@@ -378,7 +396,7 @@ export default {
   computed: {
     ...mapState({
       rubrics: state => state.heading.rubrics,
-      rubric: state => state.heading.oneRubric,
+      rubric: state => JSON.parse(JSON.stringify(state.heading.oneRubric)),
       snackBar: state => state.snackBar,
       filter: state => state.filter
     })

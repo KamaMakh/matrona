@@ -363,6 +363,24 @@ import { serverUrl } from "@/store/urls";
 import "../assets/css/MainComponentPromo.css";
 export default {
   name: "MainComponentPromo",
+  beforeRouteLeave(to, from, next) {
+    if (
+      this.isNew ||
+      JSON.stringify(this.promo) !=
+        JSON.stringify(this.$store.state.mechanics.oneStock)
+    ) {
+      const answer = window.confirm(
+        "Вы хотите уйти? У вас есть несохранённые изменения!"
+      );
+      if (answer) {
+        next();
+      } else {
+        next(false);
+      }
+    } else {
+      next();
+    }
+  },
   data() {
     return {
       date_from: new Date().toISOString().substr(0, 10),
@@ -533,7 +551,7 @@ export default {
   },
   computed: {
     ...mapState({
-      promo: state => state.mechanics.oneStock,
+      promo: state => JSON.parse(JSON.stringify(state.mechanics.oneStock)),
       schema: state => state.mechanics.oneSchema,
       snackBar: state => state.snackBar,
       filter: state => state.filter

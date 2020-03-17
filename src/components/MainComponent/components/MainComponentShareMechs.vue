@@ -215,6 +215,24 @@ import { mapState } from "vuex";
 import { serverUrl } from "@/store/urls";
 export default {
   name: "MainComponentShareMechs",
+  beforeRouteLeave(to, from, next) {
+    if (
+      this.isNew ||
+      JSON.stringify(this.schema) !=
+        JSON.stringify(this.$store.state.mechanics.oneSchema)
+    ) {
+      const answer = window.confirm(
+        "Вы хотите уйти? У вас есть несохранённые изменения!"
+      );
+      if (answer) {
+        next();
+      } else {
+        next(false);
+      }
+    } else {
+      next();
+    }
+  },
   data() {
     return {
       valid: true,
@@ -368,7 +386,7 @@ export default {
   },
   computed: {
     ...mapState({
-      schema: state => state.mechanics.oneSchema,
+      schema: state => JSON.parse(JSON.stringify(state.mechanics.oneSchema)),
       snackBar: state => state.snackBar,
       filter: state => state.filter
     })

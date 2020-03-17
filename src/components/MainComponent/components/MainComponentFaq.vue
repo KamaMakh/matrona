@@ -132,6 +132,23 @@ import { serverUrl } from "@/store/urls";
 import "../assets/css/MainComponentFaq.css";
 export default {
   name: "MainComponentFaq",
+  beforeRouteLeave(to, from, next) {
+    if (
+      this.isNew ||
+      JSON.stringify(this.faq) != JSON.stringify(this.$store.state.faqs.oneFaqs)
+    ) {
+      const answer = window.confirm(
+        "Вы хотите уйти? У вас есть несохранённые изменения!"
+      );
+      if (answer) {
+        next();
+      } else {
+        next(false);
+      }
+    } else {
+      next();
+    }
+  },
   data() {
     return {
       valid: true,
@@ -286,7 +303,7 @@ export default {
   computed: {
     ...mapState({
       faqs: state => state.faqs.faqs,
-      faq: state => state.faqs.oneFaqs,
+      faq: state => JSON.parse(JSON.stringify(state.faqs.oneFaqs)),
       snackBar: state => state.snackBar
     })
   },

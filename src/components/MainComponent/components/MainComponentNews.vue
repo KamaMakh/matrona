@@ -5,6 +5,7 @@
       v-show="this.article.articleid && !isNew"
       v-model="valid"
       lazy-validation
+      @submit.prevent="save"
     >
       <v-row>
         <v-col cols="12" sm="12" md="8" xs="12">
@@ -315,8 +316,27 @@ import { serverUrl } from "@/store/urls";
 import "../assets/css/MainComponentNews.css";
 export default {
   name: "MainComponentNews",
+  beforeRouteLeave(to, from, next) {
+    if (
+      this.isNew ||
+      JSON.stringify(this.article) !=
+        JSON.stringify(this.$store.state.news.oneNews)
+    ) {
+      const answer = window.confirm(
+        "Вы хотите уйти? У вас есть несохранённые изменения!"
+      );
+      if (answer) {
+        next();
+      } else {
+        next(false);
+      }
+    } else {
+      next();
+    }
+  },
   data() {
     return {
+      editing: false,
       valid: true,
       rules: [v => !!v || "Обязательно для заполнения"],
       urlRules: [
@@ -505,7 +525,7 @@ export default {
   computed: {
     ...mapState({
       news: state => state.news.news,
-      article: state => state.news.oneNews,
+      article: state => JSON.parse(JSON.stringify(state.news.oneNews)),
       snackBar: state => state.snackBar,
       filter: state => state.filter
     })

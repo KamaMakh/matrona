@@ -425,6 +425,24 @@ import { mapState } from "vuex";
 import { serverUrl } from "@/store/urls";
 export default {
   name: "MainComponentPosition",
+  beforeRouteLeave(to, from, next) {
+    if (
+      this.isNew ||
+      JSON.stringify(this.specPrice) !=
+        JSON.stringify(this.$store.state.heading.oneSpecPrice)
+    ) {
+      const answer = window.confirm(
+        "Вы хотите уйти? У вас есть несохранённые изменения!"
+      );
+      if (answer) {
+        next();
+      } else {
+        next(false);
+      }
+    } else {
+      next();
+    }
+  },
   data() {
     return {
       date_from: new Date().toISOString().substr(0, 10),
@@ -594,7 +612,8 @@ export default {
   },
   computed: {
     ...mapState({
-      specPrice: state => state.heading.oneSpecPrice,
+      specPrice: state =>
+        JSON.parse(JSON.stringify(state.heading.oneSpecPrice)),
       rubric: state => state.heading.oneRubric,
       snackBar: state => state.snackBar
     })
