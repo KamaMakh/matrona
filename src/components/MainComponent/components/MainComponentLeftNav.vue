@@ -1,7 +1,14 @@
 <template>
   <div class="main-component-left-nav pr-1 pl-2">
     <div
-      v-if="['MainComponentFaq', 'MainComponentShop'].indexOf($route.name) < 0"
+      v-if="
+        [
+          'MainComponentFaq',
+          'MainComponentShop',
+          'MainComponentHeading',
+          'MainComponentPosition'
+        ].indexOf($route.name) < 0
+      "
       class="filter-wrap"
     >
       <v-row class="ml-0 mr-0">
@@ -9,6 +16,7 @@
           <v-select
             v-model="filter.year"
             dark
+            @input="filterList"
             :items="[
               2010,
               2011,
@@ -34,6 +42,7 @@
             dark
             item-text="title"
             item-value="value"
+            @input="filterList"
             :items="[
               { title: 'Январь', value: 1 },
               { title: 'Февраль', value: 2 },
@@ -63,6 +72,7 @@
             dark
             hide-details
             item-text="title"
+            @input="filterList"
             item-value="value"
             :items="[
               { title: 'Новость', value: 1 },
@@ -70,18 +80,6 @@
             ]"
             label="Тип"
           ></v-select>
-        </v-col>
-        <v-col class="d-flex align-end justify-end" cols="6">
-          <v-btn color="#e91e63" dark @click="$store.state.filter = {}">
-            Очистить
-          </v-btn>
-        </v-col>
-      </v-row>
-      <v-row class="ml-0 mr-0">
-        <v-col class="d-flex align-end justify-center">
-          <v-btn color="#e91e63" dark @click="filterList">
-            Найти
-          </v-btn>
         </v-col>
       </v-row>
     </div>
