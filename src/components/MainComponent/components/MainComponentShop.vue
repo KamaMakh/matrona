@@ -242,14 +242,27 @@ import VueGoogleAutocomplete from "vue-google-autocomplete";
 export default {
   name: "MainComponentShop",
   beforeRouteLeave(to, from, next) {
-    this.shop["storePhone"] = this.formattedPhone(this.shop["storePhone"]);
-    this.shop["storeLat"] = this.shop["storeLat"] + "";
-    this.shop["storeLng"] = this.shop["storeLng"] + "";
-    if (
-      (this.isNew && Object.keys(this.storeNew).length) ||
-      JSON.stringify(this.shop) !=
+    /* eslint-disable */
+    let edited = false;
+    if (Object.keys(this.shop).length && !this.isNew) {
+      this.shop["storePhone"] = this.formattedPhone(this.shop["storePhone"]);
+      this.shop["storeLat"] = this.shop["storeLat"] + "";
+      this.shop["storeLng"] = this.shop["storeLng"] + "";
+      if (
+        JSON.stringify(this.shop) !=
         JSON.stringify(this.$store.state.shop.oneStore)
-    ) {
+      ) {
+        edited = true;
+      }
+    }
+    if (this.isNew && Object.keys(this.storeNew).length) {
+      for(let i in this.storeNew) {
+        if(this.storeNew.hasOwnProperty(i) && this.storeNew[i] !== undefined && this.storeNew[i] !== null) {
+          edited = true;
+        }
+      }
+    }
+    if (edited) {
       const answer = window.confirm(
         "Вы хотите уйти? У вас есть несохранённые изменения!"
       );

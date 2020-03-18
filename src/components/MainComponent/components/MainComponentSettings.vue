@@ -101,7 +101,9 @@ export default {
   },
   methods: {
     formattedPhone(value) {
-      return value.replace("+","").replace(/-/g,"");
+      if(value) {
+        return value.replace("+","").replace(/-/g,"");
+      }
     },
     save() {
       if (!this.$refs.form.validate()) {
