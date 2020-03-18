@@ -109,7 +109,7 @@ function getAllRubrics({ commit }, data) {
 function getAllPrices({ commit }, data) {
   return new Promise((resolve, reject) => {
     api
-      .get(getPricesUrl + data.id + "/prices-full")
+      .get(getPricesUrl + data.id + "/prices-full", { params: data })
       .then(response => {
         if (response.status === 200) {
           commit("setPrices", {

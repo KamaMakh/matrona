@@ -6,7 +6,7 @@
           'MainComponentFaq',
           'MainComponentShop',
           'MainComponentHeading',
-          'MainComponentPosition'
+          'MainComponentShareMechs'
         ].indexOf($route.name) < 0
       "
       class="filter-wrap"
@@ -284,41 +284,11 @@ export default {
           type: this.filter.type || ""
         });
       }
-      if (this.$route.name === "MainComponentShop") {
-        this.$store.dispatch("shop/getAllStores", {
-          year: this.filter.year || "",
-          month: this.filter.month || ""
-        });
-      }
-      if (this.$route.name === "MainComponentHeading") {
-        this.$store.dispatch("heading/getAllRubrics", {
-          year: this.filter.year || "",
-          month: this.filter.month || ""
-        });
-      }
-      if (this.$route.name === "MainComponentFaq") {
-        this.$store.dispatch("faqs/getAllFaqs", {
-          year: this.filter.year || "",
-          month: this.filter.month || ""
-        });
-      }
-      if (this.$route.name === "MainComponentShareMechs") {
-        this.$store.dispatch("mechanics/getAllSchemas", {
-          year: this.filter.year || "",
-          month: this.filter.month || ""
-        });
-      }
       if (this.$route.name === "MainComponentPromo") {
-        this.$store.dispatch("mechanics/getAllSchemas", {
-          year: this.filter.year || "",
-          month: this.filter.month || ""
-        });
+        this.getLocalPromo();
       }
       if (this.$route.name === "MainComponentPosition") {
-        this.$store.dispatch("heading/getAllRubrics", {
-          year: this.filter.year || "",
-          month: this.filter.month || ""
-        });
+        this.getLocalRubric();
       }
     },
     myScroll() {
@@ -374,35 +344,40 @@ export default {
       setTimeout(() => {
         this.myScroll();
       }, 500);
-    }
-  },
-  filters: {
-    truncate: function(value) {
-      if (!value) return "";
-      if (value.length > 30) {
-        value = value.substring(0, 30) + "...";
-      }
-      return value;
-    }
-  },
-  computed: {
-    ...mapState({
-      articles: state => state.news.news,
-      schemas: state => state.mechanics.schemas,
-      faqs: state => state.faqs.faqs,
-      stores: state => state.shop.stores,
-      rubrics: state => state.heading.rubrics,
-      prices: state => state.heading.specPrices,
-      promos: state => state.mechanics.stocks,
-      snackBar: state => state.snackBar,
-      filter: state => state.filter
-    })
-  },
-  watch: {
-    $route() {
-      this.$store.state.filter = {};
     },
-    localRubric(value) {
+    getLocalPromo(value) {
+      if (!value) value = this.localPromo;
+      this.selectLoading = true;
+      this.$store
+        .dispatch("mechanics/getAllPromos", {
+          id: this.localPromo,
+          year: this.filter.year || "",
+          month: this.filter.month || ""
+        })
+        .then(() => {
+          this.setPromo();
+        })
+        .catch(error => {
+          if (
+            error.response &&
+            error.response.error &&
+            error.response.error.message
+          ) {
+            this.snackBar.value = true;
+            this.snackBar.text = error.response.error.message;
+            this.snackBar.color = "error";
+          } else {
+            this.snackBar.value = true;
+            this.snackBar.text = "Ошибка!";
+            this.snackBar.color = "error";
+          }
+        })
+        .finally(() => {
+          this.selectLoading = false;
+        });
+    },
+    getLocalRubric(value) {
+      if (!value) value = this.localRubric;
       this.selectLoading = true;
       this.$store
         .dispatch("heading/getAllPrices", {
@@ -431,36 +406,36 @@ export default {
         .finally(() => {
           this.selectLoading = false;
         });
+    }
+  },
+  filters: {
+    truncate: function(value) {
+      if (!value) return "";
+      if (value.length > 30) {
+        value = value.substring(0, 30) + "...";
+      }
+      return value;
+    }
+  },
+  computed: {
+    ...mapState({
+      articles: state => state.news.news,
+      schemas: state => state.mechanics.schemas,
+      faqs: state => state.faqs.faqs,
+      stores: state => state.shop.stores,
+      rubrics: state => state.heading.rubrics,
+      prices: state => state.heading.specPrices,
+      promos: state => state.mechanics.stocks,
+      snackBar: state => state.snackBar,
+      filter: state => state.filter
+    })
+  },
+  watch: {
+    localRubric(value) {
+      this.getLocalRubric(value);
     },
     localPromo(value) {
-      this.selectLoading = true;
-      this.$store
-        .dispatch("mechanics/getAllPromos", {
-          id: value,
-          year: this.filter.year || "",
-          month: this.filter.month || ""
-        })
-        .then(() => {
-          this.setPromo();
-        })
-        .catch(error => {
-          if (
-            error.response &&
-            error.response.error &&
-            error.response.error.message
-          ) {
-            this.snackBar.value = true;
-            this.snackBar.text = error.response.error.message;
-            this.snackBar.color = "error";
-          } else {
-            this.snackBar.value = true;
-            this.snackBar.text = "Ошибка!";
-            this.snackBar.color = "error";
-          }
-        })
-        .finally(() => {
-          this.selectLoading = false;
-        });
+      this.getLocalPromo(value);
     }
   }
 };

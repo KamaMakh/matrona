@@ -384,13 +384,11 @@ export default {
       this.$store.commit("heading/setRubric");
     },
     getData() {
-      this.$store
-        .dispatch("heading/getAllRubrics", this.filter)
-        .then(response => {
-          if (response.data.result && !response.data.result.length) {
-            this.create();
-          }
-        });
+      this.$store.dispatch("heading/getAllRubrics").then(response => {
+        if (response.data.result && !response.data.result.length) {
+          this.create();
+        }
+      });
     }
   },
   computed: {

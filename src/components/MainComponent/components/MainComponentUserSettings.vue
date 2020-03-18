@@ -50,8 +50,7 @@ export default {
   name: "MainComponentUserSettings",
   beforeRouteLeave(to, from, next) {
     if (
-      JSON.stringify(this.user) !=
-      JSON.stringify(this.$store.state.user.user)
+      JSON.stringify(this.user) != JSON.stringify(this.$store.state.user.user)
     ) {
       const answer = window.confirm(
         "Вы хотите уйти? У вас есть несохранённые изменения!"

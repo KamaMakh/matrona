@@ -18,7 +18,10 @@ export default new Vuex.Store({
       text: "Внимание!",
       button_text: "Ok"
     },
-    filter: {}
+    filter: {
+      year: new Date().getFullYear(),
+      month: new Date().getMonth() + 1
+    }
   },
   mutations: {},
   actions: {},

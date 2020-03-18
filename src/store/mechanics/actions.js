@@ -110,7 +110,7 @@ function getAllSchemas({ commit }, data) {
 function getAllPromos({ commit }, data) {
   return new Promise((resolve, reject) => {
     api
-      .get(getPromosUrl + data.id + "/stocks-full")
+      .get(getPromosUrl + data.id + "/stocks-full", { params: data })
       .then(response => {
         if (response.status === 200) {
           commit("setPromos", {

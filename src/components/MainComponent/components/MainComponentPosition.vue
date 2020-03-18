@@ -615,7 +615,8 @@ export default {
       specPrice: state =>
         JSON.parse(JSON.stringify(state.heading.oneSpecPrice)),
       rubric: state => state.heading.oneRubric,
-      snackBar: state => state.snackBar
+      snackBar: state => state.snackBar,
+      filter: state => state.filter
     })
   },
   mounted() {
