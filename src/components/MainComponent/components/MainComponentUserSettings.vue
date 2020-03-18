@@ -48,21 +48,32 @@
 import { mapState } from "vuex";
 export default {
   name: "MainComponentUserSettings",
+  beforeRouteLeave(to, from, next) {
+    if (
+      JSON.stringify(this.user) !=
+      JSON.stringify(this.$store.state.user.user)
+    ) {
+      const answer = window.confirm(
+        "Вы хотите уйти? У вас есть несохранённые изменения!"
+      );
+      if (answer) {
+        next();
+      } else {
+        next(false);
+      }
+    } else {
+      next();
+    }
+  },
   data() {
     return {
       valid: true,
-      // rules: [v => !!v || "Обязательно для заполнения"],
       c_passwordRules: [
-        // v => !!v || "Поле обязательное",
         v =>
           !this.user.password ||
           (v && v === this.user.password) ||
           "Пароли не совпадают"
       ],
-      // emailRules: [
-      //   v => !!v || "Обязательно для заполнения",
-      //   v => /.+@.+\..+/.test(v) || "E-mail не валидный"
-      // ],
       loading: false
     };
   },
@@ -137,7 +148,7 @@ export default {
   },
   computed: {
     ...mapState({
-      user: state => state.user.user,
+      user: state => JSON.parse(JSON.stringify(state.user.user)),
       snackBar: state => state.snackBar
     })
   },

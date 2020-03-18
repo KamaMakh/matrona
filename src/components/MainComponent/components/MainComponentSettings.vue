@@ -67,6 +67,23 @@ export default {
   directives: {
     mask
   },
+  beforeRouteLeave(to, from, next) {
+    if (
+      JSON.stringify(this.settings) !=
+      JSON.stringify(this.$store.state.user.settings)
+    ) {
+      const answer = window.confirm(
+        "Вы хотите уйти? У вас есть несохранённые изменения!"
+      );
+      if (answer) {
+        next();
+      } else {
+        next(false);
+      }
+    } else {
+      next();
+    }
+  },
   data() {
     return {
       valid: true,
@@ -131,7 +148,7 @@ export default {
   },
   computed: {
     ...mapState({
-      settings: state => state.user.settings,
+      settings: state => JSON.parse(JSON.stringify(state.user.settings)),
       snackBar: state => state.snackBar
     })
   },
