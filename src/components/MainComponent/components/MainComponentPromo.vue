@@ -21,10 +21,11 @@
               >
                 <template v-slot:activator="{ on }">
                   <v-text-field
+                    ref="dateFrom"
                     v-model="date_from"
                     label="Начало"
+                    :rules="dateFromRule"
                     prepend-icon="event"
-                    readonly
                     v-on="on"
                   ></v-text-field>
                 </template>
@@ -64,7 +65,6 @@
                     v-model="date_to"
                     label="Окончание"
                     prepend-icon="event"
-                    readonly
                     v-on="on"
                   ></v-text-field>
                 </template>
@@ -182,8 +182,9 @@
                   <v-text-field
                     v-model="date_from"
                     label="Начало"
+                    ref="dateFrom"
+                    :rules="dateFromRule"
                     prepend-icon="event"
-                    readonly
                     v-on="on"
                   ></v-text-field>
                 </template>
@@ -223,7 +224,6 @@
                     v-model="date_to"
                     label="Окончание"
                     prepend-icon="event"
-                    readonly
                     v-on="on"
                   ></v-text-field>
                 </template>
@@ -234,7 +234,10 @@
                   scrollable
                   locale="ru"
                   first-day-of-week="1"
-                  @input="menu4 = false"
+                  @input="
+                    menu4 = false;
+                    $refs.dateFrom.validate();
+                  "
                 >
                   <v-spacer></v-spacer>
                   <v-btn text color="primary" @click="menu4 = false"
@@ -387,6 +390,14 @@ export default {
       date_to: new Date().toISOString().substr(0, 10),
       valid: true,
       rules: [v => !!v || "Обязательно для заполнения"],
+      dateFromRule: [
+        v => {
+          return (
+            new Date(v) <= new Date(this.date_to) ||
+            "Дата начала не может быть позже даты конца периода"
+          );
+        }
+      ],
       loading: false,
       menu: false,
       menu2: false,
@@ -583,6 +594,9 @@ export default {
     },
     filter() {
       this.$store.commit("mechanics/setPromo");
+    },
+    date_to() {
+      this.$refs.dateFrom.validate();
     }
   }
 };

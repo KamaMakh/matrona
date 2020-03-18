@@ -24,7 +24,8 @@
                     v-model="date_from"
                     label="Начало"
                     prepend-icon="event"
-                    readonly
+                    ref="dateFrom"
+                    :rules="dateFromRule"
                     v-on="on"
                   ></v-text-field>
                 </template>
@@ -64,7 +65,6 @@
                     v-model="date_to"
                     label="Окончание"
                     prepend-icon="event"
-                    readonly
                     v-on="on"
                   ></v-text-field>
                 </template>
@@ -213,7 +213,8 @@
                     v-model="date_from"
                     label="Начало"
                     prepend-icon="event"
-                    readonly
+                    ref="dateFrom"
+                    :rules="dateFromRule"
                     v-on="on"
                   ></v-text-field>
                 </template>
@@ -253,7 +254,6 @@
                     v-model="date_to"
                     label="Окончание"
                     prepend-icon="event"
-                    readonly
                     v-on="on"
                   ></v-text-field>
                 </template>
@@ -457,7 +457,15 @@ export default {
       isNew: false,
       specPriceNew: {},
       serverUrl: serverUrl,
-      deleteDialog: false
+      deleteDialog: false,
+      dateFromRule: [
+        v => {
+          return (
+            new Date(v) <= new Date(this.date_to) ||
+            "Дата начала не может быть позже даты конца периода"
+          );
+        }
+      ]
     };
   },
   filters: {
@@ -642,6 +650,9 @@ export default {
             .substr(0, 10);
         }
       }
+    },
+    date_to() {
+      this.$refs.dateFrom.validate();
     }
   }
 };
