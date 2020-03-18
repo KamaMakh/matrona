@@ -214,7 +214,7 @@ export default {
   name: "MainComponentHeading",
   beforeRouteLeave(to, from, next) {
     if (
-      this.isNew ||
+      (this.isNew && Object.keys(this.rubricNew).length) ||
       JSON.stringify(this.rubric) !=
         JSON.stringify(this.$store.state.heading.oneRubric)
     ) {

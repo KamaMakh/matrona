@@ -134,7 +134,7 @@ export default {
   name: "MainComponentFaq",
   beforeRouteLeave(to, from, next) {
     if (
-      this.isNew ||
+      (this.isNew && Object.keys(this.faqNew).length) ||
       JSON.stringify(this.faq) != JSON.stringify(this.$store.state.faqs.oneFaqs)
     ) {
       const answer = window.confirm(

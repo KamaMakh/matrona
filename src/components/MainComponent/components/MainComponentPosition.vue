@@ -427,7 +427,7 @@ export default {
   name: "MainComponentPosition",
   beforeRouteLeave(to, from, next) {
     if (
-      this.isNew ||
+      (this.isNew && Object.keys(this.specPriceNew).length) ||
       JSON.stringify(this.specPrice) !=
         JSON.stringify(this.$store.state.heading.oneSpecPrice)
     ) {

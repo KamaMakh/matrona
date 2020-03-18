@@ -365,7 +365,7 @@ export default {
   name: "MainComponentPromo",
   beforeRouteLeave(to, from, next) {
     if (
-      this.isNew ||
+      (this.isNew && Object.keys(this.promoNew).length) ||
       JSON.stringify(this.promo) !=
         JSON.stringify(this.$store.state.mechanics.oneStock)
     ) {

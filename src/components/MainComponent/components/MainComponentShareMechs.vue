@@ -217,7 +217,7 @@ export default {
   name: "MainComponentShareMechs",
   beforeRouteLeave(to, from, next) {
     if (
-      this.isNew ||
+      (this.isNew && Object.keys(this.schemaNew).length) ||
       JSON.stringify(this.schema) !=
         JSON.stringify(this.$store.state.mechanics.oneSchema)
     ) {

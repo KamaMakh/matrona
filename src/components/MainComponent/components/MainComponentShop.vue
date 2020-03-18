@@ -242,8 +242,11 @@ import VueGoogleAutocomplete from "vue-google-autocomplete";
 export default {
   name: "MainComponentShop",
   beforeRouteLeave(to, from, next) {
+    this.shop["storePhone"] = this.formattedPhone(this.shop["storePhone"]);
+    this.shop["storeLat"] = this.shop["storeLat"] + "";
+    this.shop["storeLng"] = this.shop["storeLng"] + "";
     if (
-      this.isNew ||
+      (this.isNew && Object.keys(this.storeNew).length) ||
       JSON.stringify(this.shop) !=
         JSON.stringify(this.$store.state.shop.oneStore)
     ) {
@@ -292,6 +295,9 @@ export default {
   },
   methods: {
     /* eslint-disable */
+    formattedPhone(value) {
+      return value.replace("+","").replace(/-/g,"");
+    },
     getAddressData(place) {
       if (this.isNew) {
         if (place) {
@@ -542,8 +548,8 @@ export default {
     },
     shopMap() {
       this.map.setCenter({
-        lat: parseFloat(parseFloat(this.shop.storeLat).toFixed(4)),
-        lng: parseFloat(parseFloat(this.shop.storeLng).toFixed(4))
+        lat: parseFloat(parseFloat(this.shop.storeLat)),
+        lng: parseFloat(parseFloat(this.shop.storeLng))
       });
       let latLng = new google.maps.LatLng(this.shop.storeLat, this.shop.storeLng);
       this.addMarker(latLng);

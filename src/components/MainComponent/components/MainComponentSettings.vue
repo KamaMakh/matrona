@@ -68,6 +68,9 @@ export default {
     mask
   },
   beforeRouteLeave(to, from, next) {
+    /* eslint-disable */
+    this.settings["settingsPhone1"] = this.formattedPhone(this.settings["settingsPhone1"]);
+    this.settings["settingsPhone2"] = this.formattedPhone(this.settings["settingsPhone2"]);
     if (
       JSON.stringify(this.settings) !=
       JSON.stringify(this.$store.state.user.settings)
@@ -97,6 +100,9 @@ export default {
     };
   },
   methods: {
+    formattedPhone(value) {
+      return value.replace("+","").replace(/-/g,"");
+    },
     save() {
       if (!this.$refs.form.validate()) {
         this.loading = false;

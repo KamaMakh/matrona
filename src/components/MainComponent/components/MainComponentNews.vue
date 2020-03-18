@@ -318,7 +318,7 @@ export default {
   name: "MainComponentNews",
   beforeRouteLeave(to, from, next) {
     if (
-      this.isNew ||
+      (this.isNew && Object.keys(this.articleNew).length) ||
       JSON.stringify(this.article) !=
         JSON.stringify(this.$store.state.news.oneNews)
     ) {
