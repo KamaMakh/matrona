@@ -410,7 +410,9 @@ export default {
       }
     },
     filter() {
-      this.$store.commit("heading/setRubric");
+      if (this.rubric && this.rubric.rubricid) {
+        this.$store.commit("heading/setRubric");
+      }
     }
   }
 };

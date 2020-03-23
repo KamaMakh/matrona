@@ -285,10 +285,20 @@ export default {
         });
       }
       if (this.$route.name === "MainComponentPromo") {
-        this.getLocalPromo();
+        if (
+          this.$store.state.mechanics.oneSchema &&
+          this.$store.state.mechanics.oneSchema.stockSchemaid
+        ) {
+          this.getLocalPromo();
+        }
       }
       if (this.$route.name === "MainComponentPosition") {
-        this.getLocalRubric();
+        if (
+          this.$store.state.heading.oneRubric &&
+          this.$store.state.heading.oneRubric.rubricid
+        ) {
+          this.getLocalRubric();
+        }
       }
     },
     myScroll() {

@@ -19,12 +19,22 @@ function addSchema(state, schema) {
 }
 
 function addPromo(state, promo) {
-  state.stocks.unshift(promo);
-  // setPromo(state, promo);
+  if (state.stocks) {
+    state.stocks.unshift(promo);
+  }
 }
 
 function updateSchema(state, data) {
-  setSchema(state, data.response);
+  if (state.schemas.length) {
+    state.schemas.forEach((item, key) => {
+      if (
+        parseInt(item.stockSchemaid) === parseInt(data.schema.stockSchemaid)
+      ) {
+        state.schemas[key] = data.response;
+        setSchema(state, data.response);
+      }
+    });
+  }
 }
 
 function updatePromo(state, data) {
@@ -48,6 +58,13 @@ function deletePromo(state, data) {
   if (state.stocks.indexOf(data.promo) !== -1) {
     state.stocks.splice(state.stocks.indexOf(data.promo), 1);
     state.oneStock = {};
+  } else if (state.stocks.length) {
+    state.stocks.forEach((item, key) => {
+      if (parseInt(item.stockid) === parseInt(data.promo.stockid)) {
+        state.stocks.splice(key, 1);
+        state.oneStock = {};
+      }
+    });
   }
 }
 

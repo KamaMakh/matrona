@@ -3,7 +3,9 @@ function setArticles(state, articles) {
 }
 
 function addArticle(state, article) {
-  state.news.unshift(article);
+  if (state.news) {
+    state.news.unshift(article);
+  }
   // setArticle(state);
 }
 
@@ -16,15 +18,19 @@ function updateArticle(state, data) {
       }
     });
   }
-  // if (state.news.indexOf(data.article) > -1) {
-  //   state.news[state.news.indexOf(data.article)] = data.response;
-  // }
 }
 
 function deleteArticle(state, data) {
   if (state.news.indexOf(data.article) !== -1) {
     state.news.splice(state.news.indexOf(data.article), 1);
     state.oneNews = {};
+  } else if (state.news.length) {
+    state.news.forEach((item, key) => {
+      if (parseInt(item.articleid) === parseInt(data.article.articleid)) {
+        state.news.splice(key, 1);
+        state.oneNews = {};
+      }
+    });
   }
 }
 

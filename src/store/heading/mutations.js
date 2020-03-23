@@ -14,13 +14,16 @@ function setPrices(state, data) {
 }
 
 function addRubric(state, rubric) {
-  state.rubrics.unshift(rubric);
-  setRubric(state);
+  if (state.rubrics) {
+    state.rubrics.unshift(rubric);
+    setRubric(state);
+  }
 }
 
 function addPrice(state, price) {
-  state.specPrices.unshift(price);
-  // setPrice(state, price);
+  if (state.specPrices) {
+    state.specPrices.unshift(price);
+  }
 }
 
 function updateRubric(state, data) {
@@ -30,6 +33,13 @@ function updateRubric(state, data) {
 function updatePrice(state, data) {
   if (state.specPrices.indexOf(data.price) > -1) {
     setPrice(state, data.response);
+  } else if (state.specPrices.length) {
+    state.specPrices.forEach((item, key) => {
+      if (parseInt(item.specPriceid) === parseInt(data.price.specPriceid)) {
+        state.specPrices[key] = data.response;
+        setPrice(state, data.response);
+      }
+    });
   }
 }
 
@@ -37,6 +47,13 @@ function deleteRubric(state, data) {
   if (state.rubrics.indexOf(data.rubric) !== -1) {
     state.rubrics.splice(state.rubrics.indexOf(data.rubric), 1);
     state.oneRubric = {};
+  } else if (state.rubrics.length) {
+    state.rubrics.forEach((item, key) => {
+      if (parseInt(item.rubricid) === parseInt(data.rubric.rubricid)) {
+        state.rubrics.splice(key, 1);
+        state.oneRubric = {};
+      }
+    });
   }
 }
 
@@ -44,6 +61,13 @@ function deletePrice(state, data) {
   if (state.specPrices.indexOf(data.price) !== -1) {
     state.specPrices.splice(state.specPrices.indexOf(data.price), 1);
     state.oneSpecPrice = {};
+  } else if (state.specPrices.length) {
+    state.specPrices.forEach((item, key) => {
+      if (parseInt(item.specPriceid) === parseInt(data.price.specPriceid)) {
+        state.specPrices.splice(key, 1);
+        state.oneSpecPrice = {};
+      }
+    });
   }
 }
 

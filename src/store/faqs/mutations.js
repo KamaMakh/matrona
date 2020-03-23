@@ -7,13 +7,21 @@ function setFaqs(state, faqs) {
 }
 
 function addFaq(state, faq) {
-  state.faqs.unshift(faq);
-  // setFaq(state);
+  if (state.faqs) {
+    state.faqs.unshift(faq);
+  }
 }
 
 function updateFaq(state, data) {
   if (state.faqs.indexOf(data.faq) > -1) {
     state.faqs[state.faqs.indexOf(data.faq)] = data.response;
+  } else if (state.faqs.length) {
+    state.faqs.forEach((item, key) => {
+      if (parseInt(item.faqid) === parseInt(data.faq.faqid)) {
+        state.faqs[key] = data.response;
+        setFaq(state, data.response);
+      }
+    });
   }
 }
 
@@ -21,6 +29,13 @@ function deleteFaq(state, data) {
   if (state.faqs.indexOf(data.faq) !== -1) {
     state.faqs.splice(state.faqs.indexOf(data.faq), 1);
     state.oneFaqs = {};
+  } else if (state.faqs.length) {
+    state.faqs.forEach((item, key) => {
+      if (parseInt(item.faqid) === parseInt(data.faq.faqid)) {
+        state.faqs.splice(key, 1);
+        state.oneFaqs = {};
+      }
+    });
   }
 }
 
