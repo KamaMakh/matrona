@@ -88,14 +88,39 @@
               </v-menu>
             </v-col>
           </v-row>
-          <v-textarea
-            rows="1"
-            auto-grow
-            v-model="promo.description"
-            label="Описание"
-            placeholder="Описание"
-            :rules="rules"
-          ></v-textarea>
+          <!--<v-textarea-->
+          <!--rows="1"-->
+          <!--auto-grow-->
+          <!--v-model="promo.description"-->
+          <!--label="Описание"-->
+          <!--placeholder="Описание"-->
+          <!--:rules="rules"-->
+          <!--&gt;</v-textarea>-->
+          <v-row>
+            <v-col cols="12" md="6">
+              <v-textarea
+                rows="1"
+                auto-grow
+                v-model="promo.description"
+                label="Описание"
+                placeholder="Описание"
+                :rules="rules"
+                @input="markdownRender(promo.description)"
+              ></v-textarea>
+            </v-col>
+            <v-col cols="12" md="6" class="d-flex align-center">
+              <markdown-it-vue
+                v-if="promo.description"
+                class="md-body pb-2"
+                style="border-bottom: 1px solid;"
+                :content="content"
+                :options="options"
+              />
+              <vue-markdown style="display: none;">
+                {{ promo.description }}
+              </vue-markdown>
+            </v-col>
+          </v-row>
           <v-textarea
             rows="1"
             auto-grow
@@ -250,14 +275,39 @@
               </v-menu>
             </v-col>
           </v-row>
-          <v-textarea
-            rows="1"
-            auto-grow
-            v-model="promoNew.description"
-            label="Описание"
-            placeholder="Описание"
-            :rules="rules"
-          ></v-textarea>
+          <!--<v-textarea-->
+          <!--rows="1"-->
+          <!--auto-grow-->
+          <!--v-model="promoNew.description"-->
+          <!--label="Описание"-->
+          <!--placeholder="Описание"-->
+          <!--:rules="rules"-->
+          <!--&gt;</v-textarea>-->
+          <v-row>
+            <v-col cols="12" md="6">
+              <v-textarea
+                rows="1"
+                auto-grow
+                v-model="promoNew.description"
+                label="Описание"
+                placeholder="Описание"
+                :rules="rules"
+                @input="markdownRender(promoNew.description)"
+              ></v-textarea>
+            </v-col>
+            <v-col cols="12" md="6" class="d-flex align-center">
+              <markdown-it-vue
+                v-if="promoNew.description"
+                class="md-body pb-2"
+                style="border-bottom: 1px solid;"
+                :content="content"
+                :options="options"
+              />
+              <vue-markdown style="display: none;">
+                {{ promoNew.description }}
+              </vue-markdown>
+            </v-col>
+          </v-row>
           <v-textarea
             rows="1"
             auto-grow
@@ -364,8 +414,15 @@
 import { mapState } from "vuex";
 import { serverUrl } from "@/store/urls";
 import "../assets/css/MainComponentPromo.css";
+import MarkdownItVue from "markdown-it-vue";
+import "markdown-it-vue/dist/markdown-it-vue.css";
+import VueMarkdown from "vue-markdown";
 export default {
   name: "MainComponentPromo",
+  components: {
+    MarkdownItVue,
+    VueMarkdown
+  },
   beforeRouteLeave(to, from, next) {
     if (
       (this.isNew && Object.keys(this.promoNew).length) ||
@@ -404,6 +461,18 @@ export default {
       menu3: false,
       menu4: false,
       serverUrl: serverUrl,
+      options: {
+        markdownIt: {
+          linkify: true
+        },
+        linkAttributes: {
+          attrs: {
+            target: "_blank",
+            rel: "noopener"
+          }
+        }
+      },
+      content: "",
       isNew: false,
       promoNew: {},
       deleteDialog: false
@@ -558,6 +627,10 @@ export default {
         this.$refs.form2.resetValidation();
       }
       this.$store.commit("mechanics/setPromo");
+    },
+    markdownRender(value) {
+      this.content = "";
+      this.content = value;
     }
   },
   computed: {
@@ -590,6 +663,7 @@ export default {
             .toISOString()
             .substr(0, 10);
         }
+        this.content = value.description;
       }
     },
     filter() {

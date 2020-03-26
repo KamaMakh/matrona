@@ -40,7 +40,20 @@
             placeholder="Введите текст"
             v-model="article.articlecontent"
             :rules="rules"
+            @input="markdownRender(article.articlecontent)"
           ></v-textarea>
+
+          <markdown-it-vue
+            v-if="article.articlecontent"
+            class="md-body pb-2"
+            style="border-bottom: 1px solid;"
+            :content="content"
+            :options="options"
+          />
+          <vue-markdown style="display: none;">
+            {{ article.articlecontent }}
+          </vue-markdown>
+
           <v-row class="align-center">
             <v-col cols="12" class="font-weight-bold"
               >Обложка для карточки</v-col
@@ -191,7 +204,18 @@
             placeholder="Введите текст"
             v-model="articleNew.articlecontent"
             :rules="rules"
+            @input="markdownRender(articleNew.articlecontent)"
           ></v-textarea>
+          <markdown-it-vue
+            v-if="articleNew.articlecontent"
+            class="md-body pb-2"
+            style="border-bottom: 1px solid;"
+            :content="content"
+            :options="options"
+          />
+          <vue-markdown style="display: none;">
+            {{ articleNew.articlecontent }}
+          </vue-markdown>
           <v-row class="align-center">
             <v-col cols="12" class="font-weight-bold"
               >Обложка для карточки</v-col
@@ -314,8 +338,15 @@
 import { mapState } from "vuex";
 import { serverUrl } from "@/store/urls";
 import "../assets/css/MainComponentNews.css";
+import MarkdownItVue from "markdown-it-vue";
+import "markdown-it-vue/dist/markdown-it-vue.css";
+import VueMarkdown from "vue-markdown";
 export default {
   name: "MainComponentNews",
+  components: {
+    MarkdownItVue,
+    VueMarkdown
+  },
   beforeRouteLeave(to, from, next) {
     if (
       (this.isNew && Object.keys(this.articleNew).length) ||
@@ -357,6 +388,18 @@ export default {
           }
         }
       ],
+      options: {
+        markdownIt: {
+          linkify: true
+        },
+        linkAttributes: {
+          attrs: {
+            target: "_blank",
+            rel: "noopener"
+          }
+        }
+      },
+      content: "",
       loading: false,
       serverUrl: serverUrl,
       isNew: false,
@@ -520,6 +563,10 @@ export default {
           this.create();
         }
       });
+    },
+    markdownRender(value) {
+      this.content = "";
+      this.content = value;
     }
   },
   computed: {
@@ -538,6 +585,7 @@ export default {
       if (value.articleid) {
         this.isNew = false;
         this.articleNew = {};
+        this.content = value.articlecontent;
       }
     },
     filter() {

@@ -4,9 +4,8 @@ import router from "./router";
 import store from "./store";
 import vuetify from "./plugins/vuetify";
 import VueCookies from "vue-cookies";
-// import api from "./plugins/api";
 import VueWindowSize from "vue-window-size";
-// import * as VueGoogleMaps from "vue2-google-maps";
+const MarkdownItVue = require("markdown-it-vue");
 
 import "viewerjs/dist/viewer.css";
 import Viewer from "v-viewer";
@@ -16,6 +15,7 @@ Vue.config.productionTip = false;
 Vue.use(VueCookies);
 Vue.use(VueWindowSize);
 Vue.use(Viewer);
+Vue.use(MarkdownItVue);
 
 // Vue.use(VueGoogleMaps, {
 //   load: {
