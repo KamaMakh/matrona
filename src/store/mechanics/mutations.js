@@ -38,7 +38,16 @@ function updateSchema(state, data) {
 }
 
 function updatePromo(state, data) {
-  setPromo(state, data.response);
+  //stocks
+
+  if (state.stocks.length) {
+    state.stocks.forEach((item, key) => {
+      if (parseInt(item.stockid) === parseInt(data.promo.stockid)) {
+        state.stocks[key] = data.response;
+        setPromo(state, data.response);
+      }
+    });
+  }
 }
 
 function deleteSchema(state, data) {

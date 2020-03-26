@@ -202,7 +202,7 @@
       >
         <v-list-item-content>
           <v-list-item-title>
-            {{ price.description | truncate }}
+            {{ price.description }}
           </v-list-item-title>
         </v-list-item-content>
       </v-list-item>
@@ -227,7 +227,7 @@
       >
         <v-list-item-content>
           <v-list-item-title>
-            {{ promo.description | truncate }}
+            {{ promo.description }}
           </v-list-item-title>
         </v-list-item-content>
       </v-list-item>
