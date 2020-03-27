@@ -116,7 +116,7 @@
             </v-col>
           </v-row>
           <v-row>
-            <v-col cols="12" md="6">
+            <v-col cols="12" sm="6">
               <v-textarea
                 rows="1"
                 auto-grow
@@ -127,10 +127,10 @@
                 @input="markdownRender(specPrice.description)"
               ></v-textarea>
             </v-col>
-            <v-col cols="12" md="6" class="d-flex align-center">
+            <v-col cols="12" sm="6">
               <markdown-it-vue
                 v-if="specPrice.description"
-                class="md-body pb-2"
+                class="md-body"
                 style="border-bottom: 1px solid;"
                 :content="content"
                 :options="options"
@@ -331,7 +331,7 @@
           <!--@input="markdownRender(specPriceNew.description)"-->
           <!--&gt;</v-textarea>-->
           <v-row>
-            <v-col cols="12" md="6">
+            <v-col cols="12" sm="6">
               <v-textarea
                 rows="1"
                 auto-grow
@@ -342,10 +342,10 @@
                 @input="markdownRender(specPriceNew.description)"
               ></v-textarea>
             </v-col>
-            <v-col cols="12" md="6" class="d-flex align-center">
+            <v-col cols="12" sm="6">
               <markdown-it-vue
                 v-if="specPriceNew.description"
-                class="md-body pb-2"
+                class="md-body"
                 style="border-bottom: 1px solid;"
                 :content="content"
                 :options="options"

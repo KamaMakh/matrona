@@ -97,7 +97,7 @@
           <!--:rules="rules"-->
           <!--&gt;</v-textarea>-->
           <v-row>
-            <v-col cols="12" md="6">
+            <v-col cols="12" sm="6">
               <v-textarea
                 rows="1"
                 auto-grow
@@ -108,10 +108,10 @@
                 @input="markdownRender(promo.description)"
               ></v-textarea>
             </v-col>
-            <v-col cols="12" md="6" class="d-flex align-center">
+            <v-col cols="12" sm="6">
               <markdown-it-vue
                 v-if="promo.description"
-                class="md-body pb-2"
+                class="md-body"
                 style="border-bottom: 1px solid;"
                 :content="content"
                 :options="options"
@@ -284,7 +284,7 @@
           <!--:rules="rules"-->
           <!--&gt;</v-textarea>-->
           <v-row>
-            <v-col cols="12" md="6">
+            <v-col cols="12" sm="6">
               <v-textarea
                 rows="1"
                 auto-grow
@@ -295,10 +295,10 @@
                 @input="markdownRender(promoNew.description)"
               ></v-textarea>
             </v-col>
-            <v-col cols="12" md="6" class="d-flex align-center">
+            <v-col cols="12" sm="6">
               <markdown-it-vue
                 v-if="promoNew.description"
-                class="md-body pb-2"
+                class="md-body"
                 style="border-bottom: 1px solid;"
                 :content="content"
                 :options="options"

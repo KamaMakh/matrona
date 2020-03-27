@@ -74,3 +74,11 @@ h2.map-title {
 .scroll-element, .v-content .v-content__wrap .container .row .col.scroll-element {
   //margin-top: 65px !important;
 }
+
+
+.markdown-body {
+  padding-bottom: 0 !important;
+  p {
+    line-height: 28px;
+  }
+}

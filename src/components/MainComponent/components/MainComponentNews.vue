@@ -33,27 +33,31 @@
             step="0.1"
             :rules="rules"
           ></v-text-field>
-          <v-textarea
-            rows="1"
-            auto-grow
-            label="Содержимое"
-            placeholder="Введите текст"
-            v-model="article.articlecontent"
-            :rules="rules"
-            @input="markdownRender(article.articlecontent)"
-          ></v-textarea>
-
-          <markdown-it-vue
-            v-if="article.articlecontent"
-            class="md-body pb-2"
-            style="border-bottom: 1px solid;"
-            :content="content"
-            :options="options"
-          />
-          <vue-markdown style="display: none;">
-            {{ article.articlecontent }}
-          </vue-markdown>
-
+          <v-row>
+            <v-col cols="12" sm="6">
+              <v-textarea
+                rows="1"
+                auto-grow
+                label="Содержимое"
+                placeholder="Введите текст"
+                v-model="article.articlecontent"
+                :rules="rules"
+                @input="markdownRender(article.articlecontent)"
+              ></v-textarea>
+            </v-col>
+            <v-col cols="12" sm="6">
+              <markdown-it-vue
+                v-if="article.articlecontent"
+                class="md-body"
+                style="border-bottom: 1px solid; padding-top: 16px;"
+                :content="content"
+                :options="options"
+              />
+              <vue-markdown style="display: none;">
+                {{ article.articlecontent }}
+              </vue-markdown>
+            </v-col>
+          </v-row>
           <v-row class="align-center">
             <v-col cols="12" class="font-weight-bold"
               >Обложка для карточки</v-col
@@ -197,25 +201,31 @@
             step="0.1"
             :rules="rules"
           ></v-text-field>
-          <v-textarea
-            rows="1"
-            auto-grow
-            label="Содержимое"
-            placeholder="Введите текст"
-            v-model="articleNew.articlecontent"
-            :rules="rules"
-            @input="markdownRender(articleNew.articlecontent)"
-          ></v-textarea>
-          <markdown-it-vue
-            v-if="articleNew.articlecontent"
-            class="md-body pb-2"
-            style="border-bottom: 1px solid;"
-            :content="content"
-            :options="options"
-          />
-          <vue-markdown style="display: none;">
-            {{ articleNew.articlecontent }}
-          </vue-markdown>
+          <v-row>
+            <v-col cols="12" sm="6">
+              <v-textarea
+                rows="1"
+                auto-grow
+                label="Содержимое"
+                placeholder="Введите текст"
+                v-model="articleNew.articlecontent"
+                :rules="rules"
+                @input="markdownRender(articleNew.articlecontent)"
+              ></v-textarea>
+            </v-col>
+            <v-col cols="12" sm="6">
+              <markdown-it-vue
+                v-if="articleNew.articlecontent"
+                class="md-body"
+                style="border-bottom: 1px solid;"
+                :content="content"
+                :options="options"
+              />
+              <vue-markdown style="display: none;">
+                {{ articleNew.articlecontent }}
+              </vue-markdown>
+            </v-col>
+          </v-row>
           <v-row class="align-center">
             <v-col cols="12" class="font-weight-bold"
               >Обложка для карточки</v-col
