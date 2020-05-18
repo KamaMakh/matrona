@@ -84,6 +84,10 @@ export default {
         {
           title: "Профиль пользователя",
           routeName: "MainComponentUserSettings"
+        },
+        {
+          title: "Рассылка",
+          routeName: "MainComponentSMS"
         }
       ]
     };

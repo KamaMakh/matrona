@@ -1,5 +1,8 @@
 <template>
-  <div class="main-component-left-nav pr-1 pl-2">
+  <div
+    v-if="$route.name !== 'MainComponentSMS'"
+    class="main-component-left-nav pr-1 pl-2"
+  >
     <div
       v-if="
         [
@@ -255,6 +258,22 @@
         <v-list-item-content>
           <v-list-item-title>
             {{ schema.title }}
+          </v-list-item-title>
+        </v-list-item-content>
+      </v-list-item>
+    </v-list>
+  </div>
+  <div v-else class="main-component-left-nav pr-1 pl-2">
+    <v-list dense>
+      <v-list-item
+        link
+        dark
+        class="elevation-3 mb-1"
+        :to="{ name: 'MainComponentSMS' }"
+      >
+        <v-list-item-content>
+          <v-list-item-title>
+            Push уведомления
           </v-list-item-title>
         </v-list-item-content>
       </v-list-item>

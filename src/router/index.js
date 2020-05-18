@@ -14,6 +14,8 @@ import MainComponentSettings from "@/components/MainComponent/components/MainCom
 import MainComponentUserSettings from "@/components/MainComponent/components/MainComponentUserSettings";
 import MainComponentPromo from "@/components/MainComponent/components/MainComponentPromo";
 import MainComponentPosition from "@/components/MainComponent/components/MainComponentPosition";
+import MainComponentMailing from "../components/MainComponent/components/MainComponentMailing";
+import MainComponentSMS from "../components/MainComponent/components/MainComponentSMS";
 
 Vue.use(VueRouter);
 
@@ -71,6 +73,18 @@ const routes = [
         path: "position",
         name: "MainComponentPosition",
         component: MainComponentPosition
+      },
+      {
+        path: "mailing",
+        // name: "MainComponentMailing",
+        component: MainComponentMailing,
+        children: [
+          {
+            path: "/",
+            name: "MainComponentSMS",
+            component: MainComponentSMS
+          }
+        ]
       }
     ]
   },

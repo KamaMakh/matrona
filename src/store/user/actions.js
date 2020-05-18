@@ -4,7 +4,8 @@ import {
   getSettingsUrl,
   editSettingsUrl,
   getUserUrl,
-  editUserUrl
+  editUserUrl,
+  smsUrl
 } from "@/store/urls";
 // import router from "@/router";
 import VueCookies from "vue-cookies";
@@ -100,4 +101,21 @@ function updateUser({ commit }, data) {
       });
   });
 }
-export { login, getSettings, updateSettings, getUser, updateUser };
+
+function sendSMS({ commit }, data) {
+  return new Promise((resolve, reject) => {
+    api
+      .post(smsUrl, data)
+      .then(response => {
+        if (response.status === 200) {
+          resolve(response);
+        } else {
+          reject(response);
+        }
+      })
+      .catch(error => {
+        reject(error);
+      });
+  });
+}
+export { login, getSettings, updateSettings, getUser, updateUser, sendSMS };

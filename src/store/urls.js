@@ -40,6 +40,8 @@ const editSettingsUrl = `${serverUrl}/settings/edit`;
 const getUserUrl = `${serverUrl}/user/current`;
 const editUserUrl = `${serverUrl}/user/`;
 
+const smsUrl = `${serverUrl}/notifications/push-send`;
+
 export {
   serverUrl,
   loginUrl,
@@ -74,5 +76,6 @@ export {
   getSettingsUrl,
   editSettingsUrl,
   getUserUrl,
-  editUserUrl
+  editUserUrl,
+  smsUrl
 };
