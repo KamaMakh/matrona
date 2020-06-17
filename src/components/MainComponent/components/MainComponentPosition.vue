@@ -402,6 +402,57 @@
           ></v-checkbox>
         </v-col>
       </v-row>
+      <v-card v-if="specPriceNew.createNotification" max-width="640">
+        <v-card-text>
+          <v-row>
+            <v-col>
+              <v-radio-group v-model="sms.who">
+                <v-row class="align-center">
+                  <v-col cols="2" sm="1">
+                    <v-radio :value="'all'"></v-radio>
+                  </v-col>
+                  <v-col>
+                    Всем
+                  </v-col>
+                </v-row>
+                <v-row class="align-center">
+                  <v-col cols="2" sm="1">
+                    <v-radio :value="'phones'"></v-radio>
+                  </v-col>
+                  <v-col>
+                    <v-textarea
+                      rows="1"
+                      auto-grow
+                      :disabled="sms.who !== 'phones'"
+                      v-model="sms.phones"
+                      label="Введите номера через запятую"
+                      hide-details
+                    ></v-textarea>
+                  </v-col>
+                </v-row>
+                <v-row>
+                  <v-col>
+                    <v-text-field
+                      v-model="sms.title"
+                      label="Заголовок"
+                    ></v-text-field>
+                  </v-col>
+                </v-row>
+                <v-row>
+                  <v-col>
+                    <v-textarea
+                      rows="4"
+                      auto-grow
+                      v-model="sms.body"
+                      label="Текст уведомления"
+                    ></v-textarea>
+                  </v-col>
+                </v-row>
+              </v-radio-group>
+            </v-col>
+          </v-row>
+        </v-card-text>
+      </v-card>
       <v-row>
         <v-col cols="6" sm="12">
           <v-btn
@@ -527,7 +578,13 @@ export default {
             "Дата начала не может быть позже даты конца периода"
           );
         }
-      ]
+      ],
+      sms: {
+        who: "all",
+        title: "",
+        body: "",
+        phones: ""
+      }
     };
   },
   filters: {
@@ -577,6 +634,35 @@ export default {
               }
             } else {
               formData.append(`spec_price[${key}]`, articleObj[key]);
+            }
+
+            if (this.isNew) {
+              if (key === "createNotification") {
+                if (articleObj[key]) {
+                  formData.append(
+                    `spec_price[sendNotification][type]`,
+                    this.sms.who === "all" ? 1 : 2
+                  );
+                  formData.append(
+                    `spec_price[sendNotification][title]`,
+                    this.sms.title ? this.sms.title : null
+                  );
+                  formData.append(
+                    `spec_price[sendNotification][body]`,
+                    this.sms.body ? this.sms.body : null
+                  );
+                  formData.append(
+                    `spec_price[sendNotification][phones]`,
+                    this.sms.phones ? this.sms.phones : null
+                  );
+                }
+              }
+            } else {
+              formData.delete("spec_price[sendNotification][type]");
+              formData.delete("spec_price[sendNotification][title]");
+              formData.delete("spec_price[sendNotification][body]");
+              formData.delete("spec_price[sendNotification][phones]");
+              formData.delete("spec_price[sendNotification]");
             }
           }
         }

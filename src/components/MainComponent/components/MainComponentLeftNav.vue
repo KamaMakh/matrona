@@ -267,9 +267,11 @@
     <v-list dense>
       <v-list-item
         link
-        dark
         class="elevation-3 mb-1"
-        :to="{ name: 'MainComponentSMS' }"
+        @click="$router.push({ name: 'MainComponentSMS' })"
+        :class="{
+          active: $route.name === 'MainComponentSMS'
+        }"
       >
         <v-list-item-content>
           <v-list-item-title>

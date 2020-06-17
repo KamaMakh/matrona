@@ -29,8 +29,7 @@
                       auto-grow
                       :disabled="sms.who !== 'phones'"
                       v-model="sms.phones"
-                      label="Адрес видео-обложки"
-                      placeholder="Введите ссылку"
+                      label="Введите номера через запятую"
                       :rules="sms.who === 'phones' ? rules : [true]"
                       hide-details
                     ></v-textarea>
