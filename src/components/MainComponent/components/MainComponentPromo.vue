@@ -166,10 +166,16 @@
             class="mx-2"
             label="Опубликовать"
           ></v-checkbox>
+          <v-checkbox
+            v-model="promo.createNotification"
+            class="mx-2"
+            label="Мобильное уведомление"
+            @click.native="showNotificationCard = promo.createNotification"
+          ></v-checkbox>
         </v-col>
       </v-row>
 
-      <v-card v-if="!isNew" max-width="640">
+      <v-card v-if="showNotificationCard" max-width="640">
         <v-card-text>
           <v-row>
             <v-col>
@@ -394,6 +400,57 @@
             class="mx-2"
             label="Мобильное уведомление"
           ></v-checkbox>
+          <v-card v-if="promoNew.createNotification" max-width="640">
+            <v-card-text>
+              <v-row>
+                <v-col>
+                  <v-radio-group v-model="sms.who">
+                    <v-row class="align-center">
+                      <v-col cols="2" sm="1">
+                        <v-radio :value="'all'"></v-radio>
+                      </v-col>
+                      <v-col>
+                        Всем
+                      </v-col>
+                    </v-row>
+                    <v-row class="align-center">
+                      <v-col cols="2" sm="1">
+                        <v-radio :value="'phones'"></v-radio>
+                      </v-col>
+                      <v-col>
+                        <v-textarea
+                          rows="1"
+                          auto-grow
+                          :disabled="sms.who !== 'phones'"
+                          v-model="sms.phones"
+                          label="Введите номера через запятую"
+                          hide-details
+                        ></v-textarea>
+                      </v-col>
+                    </v-row>
+                    <v-row>
+                      <v-col>
+                        <v-text-field
+                          v-model="sms.title"
+                          label="Заголовок"
+                        ></v-text-field>
+                      </v-col>
+                    </v-row>
+                    <v-row>
+                      <v-col>
+                        <v-textarea
+                          rows="4"
+                          auto-grow
+                          v-model="sms.body"
+                          label="Текст уведомления"
+                        ></v-textarea>
+                      </v-col>
+                    </v-row>
+                  </v-radio-group>
+                </v-col>
+              </v-row>
+            </v-card-text>
+          </v-card>
           <v-divider color="#333"></v-divider>
           <v-checkbox
             v-model="promoNew.isActive"
@@ -402,59 +459,6 @@
           ></v-checkbox>
         </v-col>
       </v-row>
-
-      <v-card v-if="promoNew.createNotification" max-width="640">
-        <v-card-text>
-          <v-row>
-            <v-col>
-              <v-radio-group v-model="sms.who">
-                <v-row class="align-center">
-                  <v-col cols="2" sm="1">
-                    <v-radio :value="'all'"></v-radio>
-                  </v-col>
-                  <v-col>
-                    Всем
-                  </v-col>
-                </v-row>
-                <v-row class="align-center">
-                  <v-col cols="2" sm="1">
-                    <v-radio :value="'phones'"></v-radio>
-                  </v-col>
-                  <v-col>
-                    <v-textarea
-                      rows="1"
-                      auto-grow
-                      :disabled="sms.who !== 'phones'"
-                      v-model="sms.phones"
-                      label="Введите номера через запятую"
-                      hide-details
-                    ></v-textarea>
-                  </v-col>
-                </v-row>
-                <v-row>
-                  <v-col>
-                    <v-text-field
-                      v-model="sms.title"
-                      label="Заголовок"
-                    ></v-text-field>
-                  </v-col>
-                </v-row>
-                <v-row>
-                  <v-col>
-                    <v-textarea
-                      rows="4"
-                      auto-grow
-                      v-model="sms.body"
-                      label="Текст уведомления"
-                    ></v-textarea>
-                  </v-col>
-                </v-row>
-              </v-radio-group>
-            </v-col>
-          </v-row>
-        </v-card-text>
-      </v-card>
-
       <v-row>
         <v-col cols="6" sm="12">
           <v-btn
@@ -548,6 +552,7 @@ export default {
   },
   data() {
     return {
+      showNotificationCard: false,
       date_from: new Date().toISOString().substr(0, 10),
       date_to: new Date().toISOString().substr(0, 10),
       valid: true,
@@ -640,7 +645,7 @@ export default {
               formData.append(`stock[${key}]`, promoObj[key]);
             }
 
-            if (key === "createNotification" || !this.isNew) {
+            if (key === "createNotification") {
               if (promoObj[key]) {
                 formData.append(
                   `stock[sendNotification][type]`,
@@ -691,6 +696,7 @@ export default {
           })
           .finally(() => {
             this.loading = false;
+            this.showNotificationCard = false;
           });
       } else {
         this.$store
