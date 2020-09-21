@@ -78,6 +78,10 @@ export default {
           routeName: "MainComponentPromo"
         },
         {
+          title: "Категории скидок",
+          routeName: "MainComponentCatStock"
+        },
+        {
           title: "Настройки",
           routeName: "MainComponentSettings"
         },
