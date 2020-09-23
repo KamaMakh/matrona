@@ -9,6 +9,7 @@
           'MainComponentFaq',
           'MainComponentShop',
           'MainComponentHeading',
+          'MainComponentCatStock',
           'MainComponentShareMechs'
         ].indexOf($route.name) < 0
       "
@@ -16,50 +17,11 @@
     >
       <v-row class="ml-0 mr-0">
         <v-col class="d-flex" cols="6">
-          <v-select
-            v-model="filter.year"
-            dark
-            @input="filterList"
-            :items="[
-              2010,
-              2011,
-              2012,
-              2013,
-              2014,
-              2015,
-              2016,
-              2017,
-              2018,
-              2019,
-              2020,
-              2021,
-              2022,
-              2023
-            ]"
-            label="Год"
-          ></v-select>
+          <v-select v-model="filter.year" dark @input="filterList" :items="years" label="Год"></v-select>
         </v-col>
         <v-col class="d-flex" cols="6">
-          <v-select
-            v-model="filter.month"
-            dark
-            item-text="title"
-            item-value="value"
-            @input="filterList"
-            :items="[
-              { title: 'Январь', value: 1 },
-              { title: 'Февраль', value: 2 },
-              { title: 'Март', value: 3 },
-              { title: 'Апрель', value: 4 },
-              { title: 'Май', value: 5 },
-              { title: 'Июнь', value: 6 },
-              { title: 'Июль', value: 7 },
-              { title: 'Август', value: 8 },
-              { title: 'Сентябрь', value: 9 },
-              { title: 'Октябрь', value: 10 },
-              { title: 'Ноябрь', value: 11 },
-              { title: 'Декабрь', value: 12 }
-            ]"
+          <v-select v-model="filter.month" dark item-text="title" item-value="value" @input="filterList"
+            :items="months"
             label="Месяц"
           ></v-select>
         </v-col>
@@ -86,13 +48,7 @@
         </v-col>
       </v-row>
     </div>
-    <div
-      v-if="
-        ['MainComponentPromo', 'MainComponentPosition'].indexOf($route.name) >
-          -1
-      "
-      class="params"
-    >
+    <div v-if="['MainComponentPromo', 'MainComponentPosition'].indexOf($route.name) > -1" class="params">
       <v-select
         v-if="$route.name === 'MainComponentPromo'"
         :items="schemas"
@@ -186,6 +142,25 @@
         <v-list-item-content>
           <v-list-item-title>
             {{ rubric.title }}
+          </v-list-item-title>
+        </v-list-item-content>
+      </v-list-item>
+    </v-list>
+
+    <v-list v-else-if="$route.name === 'MainComponentCatStock'" dense>
+      <v-list-item
+        v-for="(category, key) in categoryStocks"
+        :key="key"
+        link
+        class="elevation-3 mb-1"
+        :class="{
+          active: $store.state.catStock.oneCategoryStock.id === category.id
+        }"
+        @click="setCategoryStock(category)"
+      >
+        <v-list-item-content>
+          <v-list-item-title>
+            {{ category.name }}
           </v-list-item-title>
         </v-list-item-content>
       </v-list-item>
@@ -291,6 +266,38 @@ export default {
   data() {
     return {
       items: ["item 1", "item 2"],
+      years: [
+          2010,
+          2011,
+          2012,
+          2013,
+          2014,
+          2015,
+          2016,
+          2017,
+          2018,
+          2019,
+          2020,
+          2021,
+          2022,
+          2023,
+          2024,
+          2025
+      ],
+      months: [
+          { title: 'Январь', value: 1 },
+          { title: 'Февраль', value: 2 },
+          { title: 'Март', value: 3 },
+          { title: 'Апрель', value: 4 },
+          { title: 'Май', value: 5 },
+          { title: 'Июнь', value: 6 },
+          { title: 'Июль', value: 7 },
+          { title: 'Август', value: 8 },
+          { title: 'Сентябрь', value: 9 },
+          { title: 'Октябрь', value: 10 },
+          { title: 'Ноябрь', value: 11 },
+          { title: 'Декабрь', value: 12 }
+      ],
       localRubric: null,
       localPromo: null,
       selectLoading: false
@@ -376,6 +383,12 @@ export default {
         this.myScroll();
       }, 500);
     },
+    setCategoryStock(schema) {
+      this.$store.commit("catStock/setCategoryStock", schema);
+      setTimeout(() => {
+        this.myScroll();
+      }, 500);
+    },
     getLocalPromo(value) {
       if (!value) value = this.localPromo;
       this.selectLoading = true;
@@ -455,6 +468,7 @@ export default {
       faqs: state => state.faqs.faqs,
       stores: state => state.shop.stores,
       rubrics: state => state.heading.rubrics,
+      categoryStocks: state => state.catStock.categoryStocks,
       prices: state => state.heading.specPrices,
       promos: state => state.mechanics.stocks,
       snackBar: state => state.snackBar,

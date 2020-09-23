@@ -13,6 +13,7 @@ import MainComponentShareMechs from "@/components/MainComponent/components/MainC
 import MainComponentSettings from "@/components/MainComponent/components/MainComponentSettings";
 import MainComponentUserSettings from "@/components/MainComponent/components/MainComponentUserSettings";
 import MainComponentPromo from "@/components/MainComponent/components/MainComponentPromo";
+import MainComponentCatStock from "@/components/MainComponent/components/MainComponentCatStock";
 import MainComponentPosition from "@/components/MainComponent/components/MainComponentPosition";
 import MainComponentMailing from "../components/MainComponent/components/MainComponentMailing";
 import MainComponentSMS from "../components/MainComponent/components/MainComponentSMS";
@@ -68,6 +69,11 @@ const routes = [
         path: "promo",
         name: "MainComponentPromo",
         component: MainComponentPromo
+      },
+      {
+        path: "category-stock",
+        name: "MainComponentCatStock",
+        component: MainComponentCatStock
       },
       {
         path: "position",

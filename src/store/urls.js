@@ -7,22 +7,31 @@ const createNewsUrl = `${serverUrl}/article/new`;
 const getArticlesUrl = `${serverUrl}/article/full-list`;
 const editArticlesUrl = `${serverUrl}/article/`;
 const deleteArticlesUrl = `${serverUrl}/article/`;
+
 const createFaqsUrl = `${serverUrl}/faq/new`;
 const getFaqsUrl = `${serverUrl}/faq/full-list`;
 const editFaqsUrl = `${serverUrl}/faq/`;
 const deleteFaqsUrl = `${serverUrl}/faq/`;
+
 const createStoreUrl = `${serverUrl}/store/new`;
 const getStoresUrl = `${serverUrl}/store/full-list`;
 const editStoreUrl = `${serverUrl}/store/`;
 const deleteStoreUrl = `${serverUrl}/store/`;
+
 const createRubricUrl = `${serverUrl}/rubric/new`;
 const getRubricsUrl = `${serverUrl}/rubric/full-list`;
 const editRubricUrl = `${serverUrl}/rubric/`;
 const deleteRubricUrl = `${serverUrl}/rubric/`;
-const createPriceUrl = `${serverUrl}/spec-price/new`;
 const getPricesUrl = `${serverUrl}/rubric/`;
+
+const createPriceUrl = `${serverUrl}/spec-price/new`;
 const editPriceUrl = `${serverUrl}/spec-price/`;
 const deletePriceUrl = `${serverUrl}/spec-price/`;
+
+const createCategoryStockUrl = `${serverUrl}/category-stock/new`;
+const editCategoryStockUrl = `${serverUrl}/category-stock/`;
+const deleteCategoryStockUrl = `${serverUrl}/category-stock/`;
+const allCategoryStockUrl = `${serverUrl}/category-stock/all`;
 
 const createMechanicUrl = `${serverUrl}/stock-schema/new`;
 const getMechanicsUrl = `${serverUrl}/stock-schema/full-list`;
@@ -77,5 +86,9 @@ export {
   editSettingsUrl,
   getUserUrl,
   editUserUrl,
-  smsUrl
+  smsUrl,
+  createCategoryStockUrl,
+  editCategoryStockUrl,
+  deleteCategoryStockUrl,
+  allCategoryStockUrl
 };

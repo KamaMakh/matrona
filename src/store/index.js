@@ -7,6 +7,7 @@ import shop from "./shop";
 import heading from "./heading";
 import promos from "./promos";
 import mechanics from "./mechanics";
+import catStock from "./catStock";
 
 Vue.use(Vuex);
 
@@ -32,6 +33,7 @@ export default new Vuex.Store({
     shop,
     heading,
     promos,
-    mechanics
+    mechanics,
+    catStock
   }
 });
