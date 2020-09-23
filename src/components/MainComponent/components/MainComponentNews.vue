@@ -590,15 +590,15 @@ export default {
                 );
                 formData.append(
                   `article[sendNotification][title]`,
-                  this.sms.title ? this.sms.title : null
+                  this.sms.title ? this.sms.title : ""
                 );
                 formData.append(
                   `article[sendNotification][body]`,
-                  this.sms.body ? this.sms.body : null
+                  this.sms.body ? this.sms.body : ""
                 );
                 formData.append(
                   `article[sendNotification][phones]`,
-                  this.sms.phones ? this.sms.phones : null
+                  this.sms.phones ? this.sms.phones : ""
                 );
               }
             }

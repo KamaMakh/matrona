@@ -406,15 +406,15 @@ export default {
                 );
                 formData.append(
                   `rubric[sendNotification][title]`,
-                  this.sms.title ? this.sms.title : null
+                  this.sms.title ? this.sms.title : ""
                 );
                 formData.append(
                   `rubric[sendNotification][body]`,
-                  this.sms.body ? this.sms.body : null
+                  this.sms.body ? this.sms.body : ""
                 );
                 formData.append(
                   `rubric[sendNotification][phones]`,
-                  this.sms.phones ? this.sms.phones : null
+                  this.sms.phones ? this.sms.phones : ""
                 );
               }
             }

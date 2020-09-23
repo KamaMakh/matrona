@@ -653,15 +653,15 @@ export default {
                 );
                 formData.append(
                   `stock[sendNotification][title]`,
-                  this.sms.title ? this.sms.title : null
+                  this.sms.title ? this.sms.title : ""
                 );
                 formData.append(
                   `stock[sendNotification][body]`,
-                  this.sms.body ? this.sms.body : null
+                  this.sms.body ? this.sms.body : ""
                 );
                 formData.append(
                   `stock[sendNotification][phones]`,
-                  this.sms.phones ? this.sms.phones : null
+                  this.sms.phones ? this.sms.phones : ""
                 );
               }
             }

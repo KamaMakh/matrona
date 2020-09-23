@@ -705,15 +705,15 @@ export default {
                 );
                 formData.append(
                   `spec_price[sendNotification][title]`,
-                  this.sms.title ? this.sms.title : null
+                  this.sms.title ? this.sms.title : ""
                 );
                 formData.append(
                   `spec_price[sendNotification][body]`,
-                  this.sms.body ? this.sms.body : null
+                  this.sms.body ? this.sms.body : ""
                 );
                 formData.append(
                   `spec_price[sendNotification][phones]`,
-                  this.sms.phones ? this.sms.phones : null
+                  this.sms.phones ? this.sms.phones : ""
                 );
               }
             }
